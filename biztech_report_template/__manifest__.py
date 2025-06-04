@@ -7,7 +7,7 @@
     'author': 'Appjetty',
     'license': 'OPL-1',
     'category': 'Accounting',
-    'depends': ['account', 'sale_management', 'purchase', 'barcodes'],
+    'depends': ['account', 'sale_management', 'purchase', 'barcodes','sale_stock'],
     'website': 'https://www.appjetty.com',
     'description': '''Professiona Templates ,
     Professional Report Templates , Customizable Invoice Templates ,

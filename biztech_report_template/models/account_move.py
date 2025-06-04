@@ -24,7 +24,6 @@ class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     def _prepare_invoice(self):
-        print("\n prepare ------")
         invoice_vals = super(PurchaseOrder, self)._prepare_invoice()
         if invoice_vals:
             invoice_vals.update(
