@@ -231,7 +231,7 @@
     </template>
 
     <template id="sale_order_lines_subtotal_tem">
-        <div class="clearfix">
+        <!-- <div class="clearfix">
             <div class="row" name="total" t-att-style="'background-color: %s;float:right; color: %s; '%(ol_color, text_color)">
                 <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-7 col-5'} ml-auto">
                     <table class="table table-borderless">
@@ -241,30 +241,6 @@
                                 <span t-field="o.amount_untaxed"/>
                             </td>
                         </tr>
-                        <!--t t-foreach="o.amount_by_group" t-as="amount_by_group">
-                            <tr style="border-bottom:1px solid #dddddd;">
-                                <t t-if="amount_by_group[3] == 1 and o.amount_untaxed == amount_by_group[2]">
-                                    <td>
-                                        <span t-out="amount_by_group[0]"/>
-                                        <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-out="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/></span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span t-out="amount_by_group[1]"
-                                            t-options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/>
-                                    </td>
-                                </t>
-                                <t t-else ="">
-                                    <td>
-                                        <span t-out="amount_by_group[0]"/>
-                                    </td>
-                                    <td class="text-right">
-                                        <span t-out="amount_by_group[1]"
-                                            t
-                                            -options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/>
-                                    </td>
-                                </t>
-                            </tr>
-                        </t-->
                         <t t-set="tax_totals" t-value="o.tax_totals"/>
                         <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
                             <t t-set="subtotal_to_show" t-value="subtotal['name']"/>
@@ -299,7 +275,45 @@
                     </table>
                 </div>
             </div>
+        </div> -->
+<!--         <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row mt-n3" name="total" t-att-style="'background-color: %s;float:right; color: %s; '%(ol_color, text_color)">
+                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+                        <table class="o_total_table table table-borderless">
+                            <t t-call="sale.document_tax_totals">
+                                <t t-set="tax_totals" t-value="o.tax_totals"/>
+                                <t t-set="currency" t-value="o.currency_id"/>
+                            </t>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+
+        <div class="clearfix" name="so_total_summary">
+        <div id="total" class="row">
+        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-7 col-5'} ms-auto">
+            <table class="table table-sm text-end">
+                <!-- Untaxed Amount -->
+                <tr>
+                    <td><strong>Untaxed Amount:</strong></td>
+                    <td t-esc="o.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
+                </tr>
+
+                <!-- Taxes -->
+                <tr>
+                    <td><strong>Tax:</strong></td>
+                    <td t-esc="o.amount_tax" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
+                </tr>
+
+                <!-- Total -->
+                <tr>
+                    <td><strong>Total:</strong></td>
+                    <td t-esc="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
+                </tr>
+            </table>
         </div>
+    </div>
+    </div>
     </template>
     <template id="sale_templates_notes">
         <ul t-attf-style="padding-left:0px; margin:0; color: #{text_color or '#000000'};">

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 08:54+0000\n"
-"PO-Revision-Date: 2023-02-10 08:54+0000\n"
+"POT-Creation-Date: 2025-06-05 10:28+0000\n"
+"PO-Revision-Date: 2025-06-05 10:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_suggested_order_line
 msgid "% discount"
-msgstr ""
+msgstr "% rabais"
 
 #. module: general_template
 #: model:ir.actions.report,print_report_name:general_template.report_delivery_advanced
@@ -42,7 +42,7 @@ msgstr ""
 #: model:ir.actions.report,print_report_name:general_template.report_delivery_incredible
 msgid ""
 "'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
-msgstr ""
+msgstr "'Opérations de prélèvement - %s - %s' % (object.partner_id.name or '', object.name)"
 
 #. module: general_template
 #: model:ir.actions.report,print_report_name:general_template.report_invoice_template_advanced
@@ -64,16 +64,21 @@ msgstr ""
 msgid ""
 "(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or "
 "'Order - %s' % (object.name)"
-msgstr ""
+msgstr "'Commande - %s' % (object.name)"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "(reload fonts)"
-msgstr ""
+msgstr "(recharger les polices)"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "01 February, 2016"
+msgstr ""
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "1.05"
 msgstr ""
 
 #. module: general_template
@@ -145,6 +150,21 @@ msgid "20 March, 2016"
 msgstr ""
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "27.00"
+msgstr ""
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "31.05"
+msgstr ""
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "4.05"
+msgstr ""
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "4569896347"
 msgstr ""
@@ -172,17 +192,16 @@ msgstr ""
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_elegant_main
 msgid "<b class=\"text-left\">Payment Term:</b>"
-msgstr "<b class=\"text-left\">Payment Term:</b>"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_order_main
 #: model_terms:ir.ui.view,arch_db:general_template.sale_creative_header
 msgid "<b class=\"text-left\">Payment Term:</b><br/>"
-msgstr "<b class=\"text-left\">Payment Term:</b><br/>"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_advanced_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_quotation_advanced_main
 msgid "<b class=\"text-left\">Purchase Representative:</b>"
 msgstr "<b class=\"text-left\">Représentant des achats:</b>"
 
@@ -236,7 +255,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_company_details
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_customer_details
 msgid "<b>Biztech IT Consultancy Pvt. Ltd.</b>"
-msgstr "<b>Biztech IT Consultancy Pvt. Ltd.</b>"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_elegant_main
@@ -264,7 +283,9 @@ msgstr "<b>Commentaire: </b>"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "<b>Comment:</b>We are a highly qualified team of well-rounded software"
-msgstr "<b>Commentaire: </b>Nous sommes une équipe hautement qualifiée de logiciels complets"
+msgstr ""
+"<b>Commentaire: </b>Nous sommes une équipe hautement qualifiée de logiciels "
+"complets"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_elegant_main
@@ -278,6 +299,19 @@ msgstr "<b>Date d'engagement:</b>"
 #: model_terms:ir.ui.view,arch_db:general_template.template_picking_header
 msgid "<b>Commitment Date:</b><br/>"
 msgstr "<b>Date d'engagement:</b><br/>"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_elegant_main
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_incredible_main
+msgid "<b>Customer Reference:</b>"
+msgstr "<b>Référence client :</b>"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_creative_main
+#: model_terms:ir.ui.view,arch_db:general_template.template_delivery_header
+msgid "<b>Customer Reference:</b><br/>"
+msgstr "<b>Référence client :</b>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.creative_header
@@ -332,10 +366,11 @@ msgid ""
 msgstr ""
 "<b>Date d'échéance:</b>\n"
 "                                <br/>"
+
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
 msgid "<b>Due Date:</b><br/>"
-msgstr "<b>Due Date:</b><br/>"
+msgstr "<b>Date d'échéance:</b><br/>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_elegant_main
@@ -360,20 +395,14 @@ msgstr "<b>Position fiscale Remarque: </b>"
 msgid ""
 "<b>Fiscal Position Remark:</b>20% VAT applies to all Electronic Devices"
 msgstr ""
-"<b>Position fiscale Remarque: </b>20% de TVA s'applique à tous les appareils électroniques"
+"<b>Position fiscale Remarque: </b>20% de TVA s'applique à tous les appareils"
+" électroniques"
 
 #. module: general_template
-#: model_terms:ir.ui.view,arch_db:general_template.creative_header
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_elegant_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_incredible_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_template_main
 msgid "<b>Grand Total:</b>"
 msgstr "<b>Total:</b>"
-
-#. module: general_template
-#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
-msgid "<b>Grand Total:</b><br/>"
-msgstr "<b>Total:</b><br/>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_notes
@@ -454,7 +483,6 @@ msgstr "<b>Commande (Origine):</b><br/>"
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_custom
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_incredible
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_innovative
-#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_elegant_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_incredible_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_template_main
@@ -473,13 +501,19 @@ msgstr ""
 "                                <br/>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
+msgid "<b>Order Date:</b><br/>"
+msgstr "
+<b>Date de commande :</b><br/>"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_advanced
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_creative
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_custom
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_incredible
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_innovative
 msgid "<b>PO:</b>"
-msgstr "<b>PO:</b>"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_elegant
@@ -489,8 +523,6 @@ msgid ""
 "<b>PO:</b>\n"
 "                                <br/>"
 msgstr ""
-"<b>PO:</b>\n"
-"                                <br/>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_incredible_main
@@ -542,6 +574,19 @@ msgid "<b>Purchase Representative:</b><br/>"
 msgstr "<b>Représentant des achats:</b><br/>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.creative_header
+#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_elegant_main
+#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_incredible_main
+#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_template_main
+msgid "<b>Reference:</b>"
+msgstr "<b>Référence :</b>"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
+msgid "<b>Reference:</b><br/>"
+msgstr "<b>Référence :</b><br/>"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_order_main
 #: model_terms:ir.ui.view,arch_db:general_template.sale_creative_header
@@ -572,12 +617,13 @@ msgstr "<b>Date prévue:</b><br/>"
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_incredible_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_template_main
 msgid "<b>Source:</b>"
-msgstr "<b>Source:</b>"
+msgstr "<b>Source :</b>
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
 msgid "<b>Source:</b><br/>"
-msgstr "<b>Source:</b><br/>"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_elegant_main
@@ -593,19 +639,31 @@ msgid "<b>State:</b><br/>"
 msgstr "<b>État:</b><br/>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
+msgid "<b>Total Weight::</b><br/>"
+msgstr "<b>Poids total::</b><br/>"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_elegant_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_incredible_main
+msgid "<b>Total Weight:</b>"
+msgstr "<b>Poids total:</b>"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.template_delivery_header
+msgid "<b>Total Weight:</b><br/>"
+msgstr "<b>Poids total:</b><br/>"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_elegant_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_incredible_main
 msgid "<b>Weight:</b>"
 msgstr "<b>Lester:</b>"
 
 #. module: general_template
-#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_creative_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_creative_main
-#: model_terms:ir.ui.view,arch_db:general_template.template_delivery_header
 #: model_terms:ir.ui.view,arch_db:general_template.template_picking_header
 msgid "<b>Weight:</b><br/>"
 msgstr "<b>Lester:</b><br/>"
@@ -658,6 +716,11 @@ msgstr ""
 "transform:capitalize; margin-top:8px;\">historique de paiement</span>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "<span> on </span>"
+msgstr "<span> sur </span>"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.advanced_header
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_advanced_header
 #: model_terms:ir.ui.view,arch_db:general_template.picking_advanced_header
@@ -699,6 +762,11 @@ msgid "<span>Commitment Date:</span>"
 msgstr "<span>Date d'engagement:</span>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_exclusive_main
+msgid "<span>Customer Reference:</span>"
+msgstr "<span>Référence client :</span>"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_exclusive_main
 msgid "<span>Customer code:</span>"
 msgstr "<span>Code client:</span>"
@@ -716,7 +784,8 @@ msgstr "<span>Date d'échéance:</span>"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_exclusive_main
 msgid "<span>Expiration Date:</span>"
-msgstr ""
+msgstr "<span>Date d'expiration
+:</span>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_exclusive_main
@@ -726,7 +795,8 @@ msgstr "<span>Total:</span>"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_tem
 msgid "<span>Image</span>"
-msgstr "<span>Image</span>"
+msgstr "<span>Image</span>
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_exclusive_main
@@ -766,11 +836,6 @@ msgid "<span>Picking No # :</span>"
 msgstr "<span>Cueillette Non # :</span>"
 
 #. module: general_template
-#: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
-msgid "<span>Preview Template</span>"
-msgstr "<span>Aperçu du modèle</span>"
-
-#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_exclusive_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_incredible_main
@@ -786,6 +851,12 @@ msgid "<span>Purchase Representative:</span>"
 msgstr "<span>Représentant des achats:</span>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_invoice_exclusive_main
+msgid "<span>Reference:</span>"
+msgstr "<span>Référence :</span>
+"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "<span>Report Extra Content</span>"
 msgstr "<span>Signaler un contenu supplémentaire</span>"
@@ -793,6 +864,7 @@ msgstr "<span>Signaler un contenu supplémentaire</span>"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.quotation_delivery_creative_header
 #: model_terms:ir.ui.view,arch_db:general_template.quotation_template_header
+#: model_terms:ir.ui.view,arch_db:general_template.report_quotation_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_quotation_exclusive_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_quotation_incredible_main
 msgid "<span>Request for Quotation # </span>"
@@ -812,7 +884,8 @@ msgstr "<span>Date prévue:</span>"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_exclusive_main
 msgid "<span>Source:</span>"
-msgstr "<span>Source:</span>"
+msgstr "<span>Source :</span>
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_exclusive_main
@@ -831,6 +904,11 @@ msgstr "<span>Impôts</span>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_exclusive_main
+msgid "<span>Total Weight:</span>"
+msgstr "<span>Poids total :</span>
+"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_exclusive_main
 msgid "<span>Weight:</span>"
 msgstr "<span>Lester:</span>"
@@ -857,8 +935,7 @@ msgid ""
 "<strong class=\"text-center\">Scan me with your banking "
 "app.</strong><br/><br/>"
 msgstr ""
-"<strong class=\"text-center\">Scan me with your banking "
-"app.</strong><br/><br/>"
+"<strong class=\"text-center\">Scannez-moi avec votre application bancaire.</strong><br/><br/>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.invoice_subtotal_tem
@@ -947,15 +1024,29 @@ msgid "<strong>Shipping address:</strong>"
 msgstr "<strong>Adresse de livraison:</strong>"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.signature_in_delivery
+msgid "<strong>Signature</strong>"
+msgstr ""
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_subtotal_tem
-msgid "<strong>Subtotal</strong>"
-msgstr "<strong>Total</strong>"
+msgid "<strong>Tax:</strong>"
+msgstr ""
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_subtotal_tem
+msgid "<strong>Total:</strong>"
+msgstr "<strong>Totale:</strong>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
-#: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_subtotal_tem
 msgid "<strong>Total</strong>"
-msgstr "<strong>Total</strong>"
+msgstr "<strong>Totale</strong>"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_subtotal_tem
+msgid "<strong>Untaxed Amount:</strong>"
+msgstr "<strong>Montant non taxé:</strong>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.invoice_templates_customer_details
@@ -963,12 +1054,12 @@ msgstr "<strong>Total</strong>"
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_invoice_customer_details
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_invoice_customer_shipping_details
 msgid "<strong>Vat: </strong>"
-msgstr "<strong>Vat: </strong>"
+msgstr "<strong>T.V.A: </strong>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.templates_customer_details
 msgid "<strong>Vat:</strong>"
-msgstr "<strong>Vat:</strong>"
+msgstr "<strong>T.V.A: </strong>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_exclusive
@@ -986,27 +1077,29 @@ msgid ""
 "All products could not be reserved. Click on the \"Check Availability\" "
 "button to try to reserve products"
 msgstr ""
+"Tous les produits n'ont pas pu être réservés. Cliquez sur le bouton « Vérifier la disponibilité » pour essayer de réserver des produits."
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__append_extra_content
 msgid "Append Extra Content"
-msgstr ""
+msgstr "Ajouter du contenu supplémentaire"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "Apple Mobile"
-msgstr ""
+msgstr "Apple Mobile
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
 msgid "Barcode"
-msgstr ""
+msgstr "Code à barres"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_company_details
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_customer_details
 msgid "Biztech IT Consultancy Pvt. Ltd."
-msgstr "Biztech IT Consultancy Pvt. Ltd."
+msgstr ""
 
 #. module: general_template
 #: model:ir.actions.report,name:general_template.report_delivery_elegant
@@ -1015,7 +1108,7 @@ msgstr "Biztech IT Consultancy Pvt. Ltd."
 #: model:ir.actions.report,name:general_template.report_sale_order_elegant
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__standard_template__bold
 msgid "Bold"
-msgstr ""
+msgstr "Audacieuse"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_company_details
@@ -1027,11 +1120,6 @@ msgid ""
 "                Prahalad Nagar, Gujarat, India.\n"
 "                <br/>"
 msgstr ""
-"C/801, Dev Aurum Commercial,\n"
-"                \n"
-"                <br/>\n"
-"                Prahalad Nagar, Gujarat, India.\n"
-"                <br/>"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.creative_header
@@ -1054,12 +1142,12 @@ msgstr "Facture annulée"
 #: model:ir.actions.report,name:general_template.report_sale_order_incredible
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__standard_template__classic
 msgid "Classic"
-msgstr ""
+msgstr "Classique"
 
 #. module: general_template
 #: model_terms:ir.actions.act_window,help:general_template.action_report_extracontent
 msgid "Click to create a Report append extra content."
-msgstr ""
+msgstr "Cliquez pour créer un rapport et ajouter du contenu supplémentaire."
 
 #. module: general_template
 #: model:ir.model,name:general_template.model_res_company
@@ -1069,17 +1157,19 @@ msgstr "Sociétés"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__company_id
 msgid "Company"
-msgstr ""
+msgstr "Entreprise"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__company_address_color
 msgid "Company Address Color"
-msgstr ""
+msgstr "
+Couleur de l'adresse de l'entreprise"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__company_color
 msgid "Company Name Color"
-msgstr ""
+msgstr "
+Couleur du nom de l’entreprise"
 
 #. module: general_template
 #: model:ir.model,name:general_template.model_res_partner
@@ -1093,19 +1183,19 @@ msgstr ""
 #: model:ir.actions.report,name:general_template.report_sale_order_exclusive
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__standard_template__corporate
 msgid "Corporate"
-msgstr ""
+msgstr "Entreprise"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__create_uid
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__create_date
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.creative_header
@@ -1125,7 +1215,8 @@ msgstr "Client"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__customer_address_color
 msgid "Customer Address Color"
-msgstr ""
+msgstr "
+Couleur de l'adresse du client"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
@@ -1146,7 +1237,7 @@ msgstr "Adresse du client:"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__customer_color
 msgid "Customer Name Color"
-msgstr ""
+msgstr "Couleur du nom du client"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_customer_details
@@ -1155,8 +1246,9 @@ msgstr "Adresse du client:"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_customer_details
-msgid "Customer and shipping address:"
-msgstr "Client et adresse de livraison:"
+msgid "Customer, invoice and shipping address:"
+msgstr "
+Adresse du client, de la facture et de la livraison"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_template_header
@@ -1189,12 +1281,18 @@ msgstr "Date requise"
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_partner_sale_order
 msgid "Default Report Settings"
-msgstr ""
+msgstr "
+Paramètres de rapport par défaut"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "Default Template Settings"
-msgstr ""
+msgstr "Paramètres du modèle par défaut"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
+msgid "Delivered"
+msgstr "Livré"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
@@ -1216,25 +1314,31 @@ msgstr "Adresse de livraison:"
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_creative_header
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_elegant_header
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_exclusive_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_incredible_main
 #: model_terms:ir.ui.view,arch_db:general_template.template_delivery_header
 msgid "Delivery Note"
 msgstr "Bon de livraison"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.report_delivery_exclusive_main
+msgid "Delivery Note #"
+msgstr "Numéro de bon de livraison"
+
+#. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_delivery_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_delivery_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_delivery_template_id
 msgid "Delivery Note Template"
-msgstr ""
+msgstr "
+Modèle de bon de livraison"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_delivery_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_delivery_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_delivery_template_id1
 msgid "Delivery Note Template1"
-msgstr ""
+msgstr "
+Modèle de bon de livraison1"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_template_order_lines
@@ -1244,12 +1348,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_tem
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_suggested_order_line
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
 msgid "Destination"
-msgstr "Destination"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_order_lines
@@ -1260,28 +1364,31 @@ msgstr "Disque.(%)"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__add_amount_in_words
 msgid "Display Amount In Word"
-msgstr ""
+msgstr "
+Afficher le montant en mots"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_company_bold
 msgid "Display Company Name in Bold"
-msgstr ""
+msgstr "Afficher le nom de l'entreprise en gras"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_customer_bold
 msgid "Display Customer Name in Bold"
-msgstr ""
+msgstr "
+Afficher le nom du client en gras"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__display_name
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_show_notes
 msgid "Display Notes"
-msgstr ""
+msgstr "Afficher les notes
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_show_payment_description
@@ -1291,37 +1398,44 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_show_payment_notes
 msgid "Display Payment Notes"
-msgstr ""
+msgstr "
+Afficher la description du paiement"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_description
 msgid "Display Product Description"
-msgstr ""
+msgstr "
+Afficher la description du produit"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__add_product_image
 msgid "Display Product Image"
-msgstr ""
+msgstr "
+Afficher l'image du produit"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_show_barcode
 msgid "Display Report Barcode"
-msgstr ""
+msgstr "
+Afficher le code-barres du rapport"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_show_signature
 msgid "Display Signature"
-msgstr ""
+msgstr "Afficher la signature
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__watermark
 msgid "Display Watermark"
-msgstr ""
+msgstr "Afficher le filigrane
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__is_show_watermark
 msgid "Display Watermark?"
-msgstr ""
+msgstr "Afficher le filigrane ?
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.creative_header
@@ -1351,22 +1465,26 @@ msgstr "Date prévue"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__file_name
 msgid "File name"
-msgstr ""
+msgstr "Nom de fichier
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__name
 msgid "Font Name"
-msgstr ""
+msgstr "Nom de la police
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__family
 msgid "Font family"
-msgstr ""
+msgstr "Famille de polices
+"
 
 #. module: general_template
 #: model:ir.model,name:general_template.model_report_fonts
 msgid "Fonts available"
-msgstr ""
+msgstr "Polices disponibles
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
@@ -1376,13 +1494,14 @@ msgstr "Depuis"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__text_color
 msgid "General Text Color"
-msgstr ""
+msgstr "Couleur générale du texte
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__id
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__id
 msgid "ID"
-msgstr ""
+msgstr "IDENTIFIANT"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.creative_header
@@ -1397,12 +1516,11 @@ msgstr "FACTURE"
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_order_lines
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_suggested_order_line
 msgid "Image"
-msgstr "Image"
+msgstr ""
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_account_bank_statement_line__amount_to_text
 #: model:ir.model.fields,field_description:general_template.field_account_move__amount_to_text
-#: model:ir.model.fields,field_description:general_template.field_account_payment__amount_to_text
 #: model:ir.model.fields,field_description:general_template.field_purchase_order__amount_to_text
 #: model:ir.model.fields,field_description:general_template.field_sale_order__amount_to_text
 msgid "In Words"
@@ -1439,22 +1557,22 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_account_bank_statement_line__report_template_id
 #: model:ir.model.fields,field_description:general_template.field_account_move__report_template_id
-#: model:ir.model.fields,field_description:general_template.field_account_payment__report_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_template_id
 msgid "Invoice Template"
-msgstr ""
+msgstr "Modèle de facture
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_account_bank_statement_line__report_template_id1
 #: model:ir.model.fields,field_description:general_template.field_account_move__report_template_id1
-#: model:ir.model.fields,field_description:general_template.field_account_payment__report_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_template_id1
 msgid "Invoice Template1"
-msgstr ""
+msgstr "Modèle de facture 1
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_advanced
@@ -1479,27 +1597,34 @@ msgid "Invoicing and shipping address:"
 msgstr "Adresse de facturation et de livraison:"
 
 #. module: general_template
-#: model:ir.model,name:general_template.model_account_move
-msgid "Journal Entry"
-msgstr "Pièce comptable"
+#: model:ir.model.fields,field_description:general_template.field_sale_order__sale_is_show_signature
+msgid "Is Signature Show Sale Report"
+msgstr "
+Rapport de vente du salon Signature"
 
 #. module: general_template
-#: model:ir.model.fields,field_description:general_template.field_report_extra_content____last_update
-#: model:ir.model.fields,field_description:general_template.field_report_fonts____last_update
-msgid "Last Modified on"
+#: model_terms:ir.ui.view,arch_db:general_template.signature_in_delivery
+msgid "John Doe"
 msgstr ""
+
+#. module: general_template
+#: model:ir.model,name:general_template.model_account_move
+msgid "Journal Entry"
+msgstr "Entrée de journal
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__write_uid
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__write_date
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "
+Dernière mise à jour le"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
@@ -1529,7 +1654,8 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.constraint,message:general_template.constraint_report_extra_content_unique_model_company
 msgid "Model and Company must be unique."
-msgstr ""
+msgstr "
+Le modèle et l'entreprise doivent être uniques."
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.advanced_header
@@ -1553,7 +1679,8 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__report_footer_selection__multi_columns
 msgid "Multi Columns Footer"
-msgstr ""
+msgstr "
+Pied de page multi-colonnes"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_template_order_lines
@@ -1563,7 +1690,8 @@ msgstr "Prix net"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "Online Bank Transfer"
-msgstr ""
+msgstr "
+Virement bancaire en ligne"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_sale_advanced_main
@@ -1576,6 +1704,11 @@ msgid "Order #"
 msgstr "Commande #"
 
 #. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
+msgid "Ordered"
+msgstr "Ordonnée"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.creative_header
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_elegant_main
@@ -1583,7 +1716,7 @@ msgstr "Commande #"
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_incredible_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_template_main
 msgid "PO:"
-msgstr "PO:"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
@@ -1599,10 +1732,7 @@ msgid ""
 "                    / \n"
 "                    <span class=\"topage\"/>"
 msgstr ""
-"Page: \n"
-"                    <span class=\"page\"/>\n"
-"                    / \n"
-"                    <span class=\"topage\"/>"
+
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.invoice_subtotal_tem
 msgid "Paid on"
@@ -1611,7 +1741,7 @@ msgstr "Payé le"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_fonts__path
 msgid "Path"
-msgstr ""
+msgstr "Chemin"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_custom_main
@@ -1647,7 +1777,8 @@ msgstr "Téléphone:"
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_picking_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_picking_template_id
 msgid "Picking List Template"
-msgstr ""
+msgstr "Modèle de liste de prélèvement
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_creative_header
@@ -1659,6 +1790,10 @@ msgstr "Opérations de prélèvement"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_exclusive_main
+msgid "Picking Operations #"
+msgstr "Opérations de prélèvement"
+
+#. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_incredible_main
 msgid "Picking Operations:"
 msgstr "Opérations de prélèvement:"
@@ -1666,48 +1801,57 @@ msgstr "Opérations de prélèvement:"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_stock_picking__report_template_id
 msgid "Picking Template"
-msgstr ""
+msgstr "Modèle de sélection
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_stock_picking__report_template_id1
 msgid "Picking Template1"
-msgstr ""
+msgstr "Modèle de sélection1
+"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_show_watermark
 msgid "Please check if want to display watermark"
-msgstr ""
+msgstr "
+Veuillez cocher si vous souhaitez afficher un filigrane"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__add_product_image
 msgid "Please check it if you want to Product Image"
-msgstr ""
+msgstr "
+Veuillez le vérifier si vous souhaitez une image du produit"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_company_bold
 msgid "Please check it if you want to show Company Name in Bold."
-msgstr ""
+msgstr "
+Veuillez cocher cette case si vous souhaitez afficher le nom de l'entreprise en gras."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_customer_bold
 msgid "Please check it if you want to show Customer Name in Bold."
-msgstr ""
+msgstr "
+Veuillez cocher cette case si vous souhaitez afficher le nom du client en gras."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_show_notes
 msgid ""
 "Please check it if you want to show Invoice, Sale, Purchase Notes in pdf."
-msgstr ""
+msgstr "
+Veuillez le cocher si vous souhaitez afficher la facture, la vente et les notes d'achat au format PDF."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_show_payment_description
 msgid "Please check it if you want to show Payment Description in pdf."
-msgstr ""
+msgstr "
+Veuillez le cocher si vous souhaitez afficher la description du paiement au format PDF."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_show_payment_notes
 msgid "Please check it if you want to show Payment Notes in pdf."
-msgstr ""
+msgstr "
+Veuillez le cocher si vous souhaitez afficher les notes de paiement au format PDF."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_description
@@ -1717,42 +1861,47 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_show_barcode
 msgid "Please check it if you want to show report barcode in pdf."
-msgstr ""
+msgstr "Veuillez le vérifier si vous souhaitez afficher le code-barres du rapport au format PDF."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__is_show_signature
 msgid "Please check it if you want to show signature in PDF."
-msgstr ""
+msgstr "
+Veuillez le cocher si vous souhaitez afficher la signature dans le PDF."
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid ""
 "Please click here if you want to get all the fonts of your system. After "
 "click please reload the page."
-msgstr ""
+msgstr "
+Cliquez ici pour obtenir toutes les polices de votre système. Après avoir cliqué, veuillez recharger la page."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__watermark_text
 msgid "Please enter watermark text"
-msgstr ""
+msgstr "
+Veuillez saisir le texte du filigrane"
 
 #. module: general_template
 #. odoo-python
 #: code:addons/general_template/models/res_company.py:0
-#, python-format
 msgid ""
 "Please input font size is greater than 10 and lower than 25, otherwise your "
 "report will very massive."
-msgstr ""
+msgstr "
+"
+"Veuillez saisir une taille de police supérieure à 10 et inférieure à 25, sinon votre rapport sera très volumineux."
 
 #. module: general_template
 #. odoo-python
 #: code:addons/general_template/models/res_company.py:0
-#, python-format
 msgid ""
 "Please input watermark text font size is greater than 0 and lower than 10, "
 "otherwise your report will very massive."
 msgstr ""
+"Veuillez saisir une taille de police de texte de filigrane supérieure à 0 et inférieure à 10,"
+"sinon votre rapport sera très volumineux."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__report_delivery_template_id
@@ -1762,15 +1911,14 @@ msgstr ""
 #: model:ir.model.fields,help:general_template.field_res_users__report_delivery_template_id
 #: model:ir.model.fields,help:general_template.field_res_users__report_delivery_template_id1
 msgid "Please select Template report for Delivery Note "
-msgstr ""
+msgstr "
+Veuillez sélectionner le modèle de rapport pour le bon de livraison"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_account_bank_statement_line__report_template_id
 #: model:ir.model.fields,help:general_template.field_account_bank_statement_line__report_template_id1
 #: model:ir.model.fields,help:general_template.field_account_move__report_template_id
 #: model:ir.model.fields,help:general_template.field_account_move__report_template_id1
-#: model:ir.model.fields,help:general_template.field_account_payment__report_template_id
-#: model:ir.model.fields,help:general_template.field_account_payment__report_template_id1
 #: model:ir.model.fields,help:general_template.field_res_company__report_template_id
 #: model:ir.model.fields,help:general_template.field_res_company__report_template_id1
 #: model:ir.model.fields,help:general_template.field_res_partner__report_template_id
@@ -1778,20 +1926,22 @@ msgstr ""
 #: model:ir.model.fields,help:general_template.field_res_users__report_template_id
 #: model:ir.model.fields,help:general_template.field_res_users__report_template_id1
 msgid "Please select Template report for Invoice"
-msgstr ""
+msgstr "Veuillez sélectionner le modèle de rapport pour la facture"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_stock_picking__report_template_id
 #: model:ir.model.fields,help:general_template.field_stock_picking__report_template_id1
 msgid "Please select Template report for Picking"
-msgstr ""
+msgstr "
+Veuillez sélectionner le modèle de rapport pour la sélection"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__report_picking_template_id
 #: model:ir.model.fields,help:general_template.field_res_partner__report_picking_template_id
 #: model:ir.model.fields,help:general_template.field_res_users__report_picking_template_id
 msgid "Please select Template report for Picking List"
-msgstr ""
+msgstr "
+Veuillez sélectionner un modèle de rapport pour la liste de sélection"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_purchase_order__report_template_id
@@ -1803,14 +1953,16 @@ msgstr ""
 #: model:ir.model.fields,help:general_template.field_res_users__report_po_template_id
 #: model:ir.model.fields,help:general_template.field_res_users__report_po_template_id1
 msgid "Please select Template report for Purchase Order"
-msgstr ""
+msgstr "
+Veuillez sélectionner le modèle de rapport pour le bon de commande"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__report_rfq_template_id
 #: model:ir.model.fields,help:general_template.field_res_partner__report_rfq_template_id
 #: model:ir.model.fields,help:general_template.field_res_users__report_rfq_template_id
 msgid "Please select Template report for RFQ"
-msgstr ""
+msgstr "
+Veuillez sélectionner un modèle de rapport pour la demande de devis"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__report_sale_template_id
@@ -1822,102 +1974,122 @@ msgstr ""
 #: model:ir.model.fields,help:general_template.field_sale_order__report_template_id
 #: model:ir.model.fields,help:general_template.field_sale_order__report_template_id1
 msgid "Please select Template report for Sale Order"
-msgstr ""
+msgstr "
+Veuillez sélectionner un modèle de rapport pour le bon de commande"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__standard_template
 msgid ""
 "Please select your choice Standard Color Configuration for all Template."
-msgstr ""
+msgstr "
+Veuillez sélectionner votre choix Configuration de couleur standard pour tous les modèles."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__logo_footer
 msgid "Please set Footer Logo for Report."
-msgstr ""
+msgstr "
+Veuillez définir le logo de pied de page pour le rapport."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__company_address_color
 msgid "Please set Hex color for Company Address."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour l'adresse de l'entreprise."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__company_color
 msgid "Please set Hex color for Company Name."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour le nom de l'entreprise."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__customer_address_color
 msgid "Please set Hex color for Customer Address."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour l'adresse du client."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__customer_color
 msgid "Please set Hex color for Customer Name."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour le nom du client."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__text_color
 msgid "Please set Hex color for General Text."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour le texte général."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__even_party_color
 msgid "Please set Hex color for Table Even Parity."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour la parité paire de la table."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__odd_party_color
 msgid "Please set Hex color for Table Odd Parity."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour la parité impaire du tableau."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__theme_text_color
 msgid "Please set Hex color for Template Text."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour le texte du modèle."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__theme_color
 msgid "Please set Hex color for Template."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour le modèle."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__watermark_text_color
 msgid "Please set Hex color for Watermark text."
-msgstr ""
+msgstr "
+Veuillez définir la couleur hexadécimale pour le texte du filigrane."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__watermark_logo
 msgid "Please set Watermark Logo for Report."
-msgstr ""
+msgstr "Veuillez définir le logo en filigrane pour le rapport."
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__watermark_text_font_size
 msgid "Please set watermark text font size"
-msgstr ""
+msgstr "Veuillez définir la taille de la police du texte du filigrane"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__add_amount_in_words
 msgid "Please unchecked if you want to hide amount in words"
-msgstr ""
+msgstr "
+Veuillez décocher cette case si vous souhaitez masquer le montant en mots"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_report_extra_content__append_extra_content
-msgid ""
-"Please upload file (You can upload file like jpg, png, pdf, docx, pptx, "
-"xlsx, doc, ppt, xls, txt)"
-msgstr ""
+msgid "Please upload file (You can upload file like jpg, png, pdf, txt)"
+msgstr "
+Veuillez télécharger le fichier (vous pouvez télécharger un fichier au format jpg, png, pdf, txt)"
 
 #. module: general_template
 #. odoo-python
 #: code:addons/general_template/models/report_extra_content.py:0
-#, python-format
 msgid "Please upload pdf file only"
-msgstr ""
+msgstr "Veuillez télécharger uniquement le fichier PDF"
+
+#. module: general_template
+#. odoo-python
+#: code:addons/general_template/models/report_extra_content.py:0
+msgid "Please upload pdf, image or txt file only"
+msgstr "
+Veuillez télécharger uniquement un fichier PDF, image ou txt"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__signature
 msgid "Please upload signature image to display in report"
-msgstr ""
+msgstr "
+Veuillez télécharger l'image de signature à afficher dans le rapport"
 
 #. module: general_template
 #: model:ir.actions.report,name:general_template.report_delivery_advanced
@@ -1926,12 +2098,13 @@ msgstr ""
 #: model:ir.actions.report,name:general_template.report_sale_order_advanced
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__standard_template__polished
 msgid "Polished"
-msgstr ""
+msgstr "Brillante"
 
 #. module: general_template
 #: model:ir.actions.report,name:general_template.report_demo_template
 msgid "Preview Template"
-msgstr ""
+msgstr "Modèle d'aperçu
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
@@ -1959,8 +2132,6 @@ msgstr "Commande fournisseur"
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_exclusive_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_incredible_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_quotation_advanced_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_quotation_incredible_main
 msgid "Purchase Order Confirmation #"
 msgstr "Confirmation du bon de commande #"
 
@@ -1969,24 +2140,27 @@ msgstr "Confirmation du bon de commande #"
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_po_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_po_template_id
 msgid "Purchase Order Template"
-msgstr ""
+msgstr "Modèle de bon de commande"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_po_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_po_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_po_template_id1
 msgid "Purchase Order Template1"
-msgstr ""
+msgstr "
+Modèle de bon de commande1"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_purchase_order__report_template_id
 msgid "Purchase Template"
-msgstr ""
+msgstr "Modèle d'achat
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_purchase_order__report_template_id1
 msgid "Purchase Template1"
-msgstr ""
+msgstr "Modèle d'achat1
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
@@ -1996,7 +2170,6 @@ msgid "Qty"
 msgstr "Qté"
 
 #. module: general_template
-#: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_order_lines
 #: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_tem
@@ -2038,19 +2211,22 @@ msgstr "Date de cotation:"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_sale_template_id
 msgid "Quotation/Order Template"
-msgstr ""
+msgstr "
+Modèle de devis/commande"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_sale_template_id1
 msgid "Quotation/Order Template1"
-msgstr ""
+msgstr "
+Modèle de devis/commande 1"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_rfq_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_rfq_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_rfq_template_id
 msgid "RFQ Template"
-msgstr ""
+msgstr "
+Modèle de demande de prix"
 
 #. module: general_template
 #: model:ir.model,name:general_template.model_ir_actions_report
@@ -2065,53 +2241,62 @@ msgstr ""
 #. module: general_template
 #: model:ir.actions.act_window,name:general_template.action_report_extracontent
 msgid "Report Extra Content"
-msgstr ""
+msgstr "
+Configuration du rapport"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__font_id
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "Report Font"
-msgstr ""
+msgstr "Police du rapport
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__font_size
 msgid "Report Font Size(px)"
-msgstr ""
+msgstr "
+Taille de la police du rapport (px)"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "Report Footer"
-msgstr ""
+msgstr "
+Pied de page du rapport"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__logo_footer
 msgid "Report Footer Logo"
-msgstr ""
+msgstr "
+Logo du pied de page du rapport"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__invoice_logo
 msgid "Report Logo"
-msgstr ""
+msgstr "
+Logo du rapport"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_report_extra_content__model_id
 msgid "Report Type"
-msgstr ""
+msgstr "Type de rapport
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__watermark_logo
 msgid "Report Watermark Logo"
-msgstr ""
+msgstr "Logo en filigrane de rapport"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "Report font"
-msgstr ""
+msgstr "Police du rapport
+"
 
 #. module: general_template
 #: model:ir.model,name:general_template.model_report_extra_content
 msgid "ReportExtraContent"
-msgstr ""
+msgstr "RapportContenu supplémentaire
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_delivery_creative_header
@@ -2121,10 +2306,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_advanced_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_exclusive_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_purchase_incredible_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_quotation_advanced_main
-#: model_terms:ir.ui.view,arch_db:general_template.report_quotation_incredible_main
 msgid "Request for Quotation #"
 msgstr "Demande de devis #"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "Rounding"
+msgstr "Arrondie"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_advanced
@@ -2146,21 +2334,22 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_incredible_main
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_template_main
 msgid "SO:"
-msgstr "SO:"
+msgstr ""
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_sale_template_id
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_sale_template_id
 #: model:ir.model.fields,field_description:general_template.field_sale_order__report_template_id
 msgid "Sale Order Template"
-msgstr ""
+msgstr "
+Modèle de commande de vente"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_partner__report_sale_template_id1
 #: model:ir.model.fields,field_description:general_template.field_res_users__report_sale_template_id1
 #: model:ir.model.fields,field_description:general_template.field_sale_order__report_template_id1
 msgid "Sale Order Template1"
-msgstr ""
+msgstr "Modèle de bon de vente1"
 
 #. module: general_template
 #: model:ir.model,name:general_template.model_sale_order
@@ -2170,12 +2359,14 @@ msgstr "Bon de commande"
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__report_footer_selection
 msgid "Select Report Footer"
-msgstr ""
+msgstr "
+Sélectionnez le pied de page du rapport"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__report_footer_selection
 msgid "Select footer style if you want to show in report"
-msgstr ""
+msgstr "
+Sélectionnez le style de pied de page si vous souhaitez l'afficher dans le rapport"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
@@ -2187,23 +2378,24 @@ msgstr "Numéro de série"
 msgid ""
 "Set the font into the report header, it will be used as default font in the "
 "clever reports of the user company"
-msgstr ""
+msgstr "Définissez la police dans l'en-tête du rapport ; elle sera utilisée comme police par défaut dans les rapports intelligents de l'entreprise utilisatrice."
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.invoice_templates_customer_shipping_details
 msgid "Shipping address:"
-msgstr "Shipping address:"
+msgstr "Adresse de livraison
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__signature
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "Signature"
-msgstr "Signature"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
 msgid "Source"
-msgstr "Source"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.delivery_note_templates_order_line
@@ -2214,17 +2406,17 @@ msgstr "Source"
 #: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_tem
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_suggested_order_line
 msgid "Sr."
-msgstr "Sr."
+msgstr ""
 
 #. module: general_template
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__report_footer_selection__standard
 msgid "Standard"
-msgstr "Standard"
+msgstr ""
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__standard_template
 msgid "Standard Template Configuration"
-msgstr ""
+msgstr "Configuration du modèle standard"
 
 #. module: general_template
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__watermark__status
@@ -2246,7 +2438,14 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__odd_party_color
 msgid "Table Odd Parity Color"
-msgstr ""
+msgstr "
+Tableau des couleurs de parité impaire"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "Tax 15%"
+msgstr "Taxe 15%
+"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_template_order_lines
@@ -2254,17 +2453,20 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:general_template.report_invoice_order_lines
 #: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_tem
 msgid "Taxes"
-msgstr "Taxes"
+msgstr "Impôts
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__theme_color
 msgid "Template Base Color"
-msgstr ""
+msgstr "
+Couleur de base du modèle"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__theme_text_color
 msgid "Template Text Color"
-msgstr ""
+msgstr "
+Couleur du texte du modèle"
 
 #. module: general_template
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__watermark__text
@@ -2274,16 +2476,15 @@ msgstr "Texte"
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_account_bank_statement_line__amount_to_text
 #: model:ir.model.fields,help:general_template.field_account_move__amount_to_text
-#: model:ir.model.fields,help:general_template.field_account_payment__amount_to_text
 #: model:ir.model.fields,help:general_template.field_purchase_order__amount_to_text
 #: model:ir.model.fields,help:general_template.field_sale_order__amount_to_text
 msgid "The amount in words"
-msgstr ""
+msgstr "Le montant en mots
+"
 
 #. module: general_template
 #. odoo-python
 #: code:addons/general_template/models/ir_actions_report.py:0
-#, python-format
 msgid ""
 "The report's template %r is wrong, please contact your administrator. \n"
 "\n"
@@ -2293,7 +2494,8 @@ msgstr ""
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__invoice_logo
 msgid "This field holds the image used as Logo for Invoice template report"
-msgstr ""
+msgstr "
+Ce champ contient l'image utilisée comme logo pour le rapport de modèle de facture"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.picking_templates_order_lines
@@ -2313,9 +2515,9 @@ msgstr "Transfert"
 #. module: general_template
 #. odoo-python
 #: code:addons/general_template/models/ir_actions_report.py:0
-#, python-format
 msgid "Unable to find Wkhtmltopdf on this system. The PDF can not be created."
-msgstr ""
+msgstr "
+Impossible de trouver Wkhtmltopdf sur ce système. Le PDF ne peut pas être créé."
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_template_order_lines
@@ -2325,6 +2527,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:general_template.sale_templates_suggested_order_line
 msgid "Unit Price"
 msgstr "Prix unitaire"
+
+#. module: general_template
+#: model_terms:ir.ui.view,arch_db:general_template.document_tax_totals_custom
+msgid "Untaxed Amount"
+msgstr "
+Montant non taxé"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_incredible_main
@@ -2374,12 +2582,12 @@ msgstr "Note de crédit fournisseur"
 #: model:ir.actions.report,name:general_template.report_sale_order_contemporary
 #: model:ir.model.fields.selection,name:general_template.selection__res_company__standard_template__vintage
 msgid "Vintage"
-msgstr ""
+msgstr "Ancienne"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_picking_incredible_main
 msgid "Warehouse"
-msgstr "Warehouse"
+msgstr "Entrepôt"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_delivery_advanced_main
@@ -2400,45 +2608,52 @@ msgstr "Adresse de l'entrepôt:"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
 msgid "Watermark"
-msgstr ""
+msgstr "Filigrane"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__watermark_text
 msgid "Watermark Text"
-msgstr ""
+msgstr "Texte en filigrane
+"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__watermark_text_color
 msgid "Watermark Text Color"
-msgstr ""
+msgstr "Couleur du texte du filigrane"
 
 #. module: general_template
 #: model:ir.model.fields,field_description:general_template.field_res_company__watermark_text_font_size
 msgid "Watermark Text Font Size(em)"
-msgstr ""
+msgstr "
+Taille de police du texte du filigrane (em)"
 
 #. module: general_template
 #: model:ir.model.fields,help:general_template.field_res_company__watermark
 msgid "We can choose watermark for pdf either logo or text or status."
-msgstr ""
+msgstr "
+Nous pouvons choisir un filigrane pour le PDF, soit un logo, soit un texte, soit un statut."
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.template_footer
 #: model_terms:ir.ui.view,arch_db:general_template.templates_footer
 msgid "Web:"
-msgstr "Web:"
+msgstr "Internet"
 
 #. module: general_template
 #: model_terms:ir.actions.act_window,help:general_template.action_report_extracontent
 msgid ""
 "You can append extra content while print report based on model\n"
 "                for eg. if you want to add brochure, while print Quotation."
-msgstr ""
+msgstr "
+"
+"Vous pouvez ajouter du contenu supplémentaire lors de l'impression du rapport en fonction du modèle\n"
+"Par exemple, si vous souhaitez ajouter une brochure lors de l'impression d'un devis."
 
 #. module: general_template
 #: model:ir.model.constraint,message:general_template.constraint_report_fonts_name_font_uniq
 msgid "You can not register two fonts with the same name"
-msgstr ""
+msgstr "
+Vous ne pouvez pas enregistrer deux polices avec le même nom"
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
@@ -2448,7 +2663,7 @@ msgstr "montant"
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "date"
-msgstr "date"
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.view_report_company_sale_order
@@ -2506,7 +2721,6 @@ msgid "method"
 msgstr "méthode"
 
 #. module: general_template
-#: model_terms:ir.ui.view,arch_db:general_template.sale_order_lines_subtotal_tem
 #: model_terms:ir.ui.view,arch_db:general_template.tax_groups_totals_custom
 msgid "on"
 msgstr "sur"
@@ -2524,7 +2738,7 @@ msgstr "réf."
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "sr."
-msgstr "sr."
+msgstr ""
 
 #. module: general_template
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
@@ -2535,4 +2749,4 @@ msgstr "impôts"
 #: model_terms:ir.ui.view,arch_db:general_template.purchase_template_order_subtotal
 #: model_terms:ir.ui.view,arch_db:general_template.report_demo_template_main
 msgid "total"
-msgstr "total"
+msgstr "totale"
