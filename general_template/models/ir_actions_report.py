@@ -15,7 +15,8 @@ from collections import OrderedDict
 from odoo.tools import config, pdf
 from PIL import Image
 _logger = logging.getLogger(__name__)
-
+from PyPDF2.generic import TextStringObject
+from odoo.tools import format_amount, format_date, format_datetime, pdf
 
 def _get_wkhtmltopdf_bin():
     return find_in_path('wkhtmltopdf')
@@ -84,6 +85,46 @@ class IrActionsReport(models.Model):
                         'Error when trying to remove file %s' % temporary_file)
 
         return pdf_content_stream
+
+    def _get_form_fields_mapping(self, order, doc_line_id_mapping=None):
+        order.ensure_one()
+        env = self.with_context(use_babel=True).env
+        tz = order.partner_id.tz or self.env.user.tz or 'UTC'
+        lang_code = order.partner_id.lang or self.env.user.lang
+        form_fields_mapping = {
+            'name': order.name,
+            'partner_id__name': order.partner_id.name,
+            'user_id__name': order.user_id.name,
+            'amount_untaxed': format_amount(env, order.amount_untaxed, order.currency_id),
+            'amount_total': format_amount(env, order.amount_total, order.currency_id),
+            'delivery_date': format_datetime(env, order.commitment_date, tz=tz),
+            'validity_date': format_date(env, order.validity_date, lang_code=lang_code),
+            'client_order_ref': order.client_order_ref or '',
+        }
+
+        # Adding fields from each line, prefixed by the line_id to avoid conflicts
+        lines_with_doc_ids = set(doc_line_id_mapping.values())
+        for line in order.order_line.filtered(lambda sol: sol.id in lines_with_doc_ids):
+            form_fields_mapping.update(self._get_sol_form_fields_mapping(line))
+
+        return form_fields_mapping
+
+    def _get_sol_form_fields_mapping(self, line):
+        line.ensure_one()
+        env = self.with_context(use_babel=True).env
+        return {
+            f'{line.id}_description': line.name,
+            f'{line.id}_quantity': line.product_uom_qty,
+            f'{line.id}_uom': line.product_uom.name,
+            f'{line.id}_price_unit': format_amount(env, line.price_unit, line.currency_id),
+            f'{line.id}_discount': line.discount,
+            f'{line.id}_product_sale_price': format_amount(
+                env, line.product_id.lst_price, line.product_id.currency_id
+            ),
+            f'{line.id}_taxes': ', '.join(tax.name for tax in line.tax_id),
+            f'{line.id}_tax_excl_price': format_amount(env, line.price_subtotal, line.currency_id),
+            f'{line.id}_tax_incl_price': format_amount(env, line.price_total, line.currency_id),
+        }
 
     def _render_qweb_pdf_prepare_streams(self, report_ref, data, res_ids=None):
         report_sudo = self._get_report(report_ref)
@@ -256,132 +297,74 @@ class IrActionsReport(models.Model):
                             initial_stream = collected_streams[order.id]['stream']
                             if initial_stream:
                                 order_template = order.sale_order_template_id
-                                header_record = order_template if order_template.sale_header else order.company_id
-                                footer_record = order_template if order_template.sale_footer else order.company_id
-                                has_header = bool(header_record.sale_header)
-                                has_footer = bool(footer_record.sale_footer)
-                                included_product_docs = self.env['product.document']
-                                doc_line_id_mapping = {}
-                                for line in order.order_line:
-                                    product_product_docs = line.product_id.product_document_ids
-                                    product_template_docs = line.product_template_id.product_document_ids
-                                    doc_to_include = (
-                                        product_product_docs.filtered(lambda d: d.attached_on == 'inside')
-                                        or product_template_docs.filtered(lambda d: d.attached_on == 'inside')
-                                    )
-                                    included_product_docs = included_product_docs | doc_to_include
-                                    doc_line_id_mapping.update({doc.id: line.id for doc in doc_to_include})
+                                footer_record = None
+                                header_record = None
+                                header_data = None
+                                footer_data = None
+                                if order_template and order_template.quotation_document_ids:
+                                    for doc in order_template.quotation_document_ids:
+                                        document_data = doc.datas
+                                        if doc.document_type == 'header':
+                                            if order_template and document_data:
+                                                # self._add_pages_to_writer(writer, base64.b64decode(document_data))
+                                                header_record = order_template
+                                                header_data = doc.datas
+                                            else:
+                                                header_record = order.company_id
+                                        elif order_template and doc.document_type == 'footer':
+                                            if document_data:
+                                                footer_record = order_template
+                                                footer_data = doc.datas
+                                            else:
+                                                footer_record = order.company_id
+                                        has_header = bool(header_record)
+                                        has_footer = bool(footer_record)
+                                        included_product_docs = self.env['product.document']
+                                        doc_line_id_mapping = {}
+                                        for line in order.order_line:
+                                            product_product_docs = line.product_id.product_document_ids
+                                            product_template_docs = line.product_template_id.product_document_ids
+                                            doc_to_include = (
+                                                product_product_docs.filtered(lambda d: d.attached_on_sale == 'inside')
+                                                or product_template_docs.filtered(lambda d: d.attached_on_sale == 'inside')
+                                            )
+                                            included_product_docs = included_product_docs | doc_to_include
+                                            doc_line_id_mapping.update({doc.id: line.id for doc in doc_to_include})
 
-                                if (not has_header and not included_product_docs and not has_footer):
-                                    continue
+                                        if (not has_header and not included_product_docs and not has_footer):
+                                            continue
 
-                                writer = PdfFileWriter()
-                                if has_header:
-                                    self._add_pages_to_writer(writer, base64.b64decode(header_record.sale_header))
-                                if included_product_docs:
-                                    for doc in included_product_docs:
-                                        self._add_pages_to_writer(
-                                            writer, base64.b64decode(doc.datas), doc_line_id_mapping[doc.id]
-                                        )
-                                self._add_pages_to_writer(writer, initial_stream.getvalue())
-                                if has_footer:
-                                    self._add_pages_to_writer(writer, base64.b64decode(footer_record.sale_footer))
-
-                                form_fields = self._get_form_fields_mapping(order, doc_line_id_mapping)
-                                pdf.fill_form_fields_pdf(writer, form_fields=form_fields)
-                                with io.BytesIO() as _buffer:
-                                    writer.write(_buffer)
-                                    stream = io.BytesIO(_buffer.getvalue())
-                                collected_streams[order.id].update({'stream': stream})
-                        return collected_streams
+                                        writer = PdfFileWriter()
+                                        if has_header:
+                                            self._add_pages_to_writer(writer, base64.b64decode(header_data))
+                                        if included_product_docs:
+                                            for doc in included_product_docs:
+                                                self._add_pages_to_writer(
+                                                    writer, base64.b64decode(doc.datas), TextStringObject(str(doc_line_id_mapping[doc.id]))
+                                                )
+                                        self._add_pages_to_writer(writer, initial_stream.getvalue())
+                                        if has_footer:
+                                            self._add_pages_to_writer(writer, base64.b64decode(footer_data))
+                                        # form_fields = self._get_form_fields_mapping(order, doc_line_id_mapping)
+                                        # form_fields_values_mapping = {}
+                                        # for document in included_product_docs:
+                                        #     print("\n document", document)
+                                        #     print("\n document", order.order_line.filtered(lambda l: l.id == doc_line_id_mapping.get(document.id)))
+                                        #     # print("\n document", document.datas)
+                                        #     form_fields = self._update_mapping_and_add_pages_to_writer(
+                                        #         writer=writer,
+                                        #         document=document,
+                                        #         form_fields_values_mapping=form_fields_values_mapping,
+                                        #         prefix=f"line_{doc_line_id_mapping.get(document.id, '')}_",
+                                        #         order=order,
+                                        #         order_line=order.order_line.filtered(lambda l: l.id == doc_line_id_mapping.get(document.id)),
+                                        #     )
+                                        #     print("\n form_fields", form_fields)
+                                        form_fields = self._get_form_fields_mapping(order, doc_line_id_mapping)
+                                        pdf.fill_form_fields_pdf(writer, form_fields=form_fields)
+                                        with io.BytesIO() as _buffer:
+                                            writer.write(_buffer)
+                                            stream = io.BytesIO(_buffer.getvalue())
+                                        collected_streams[order.id].update({'stream': stream})
+                                return collected_streams
                     return collected_streams
-
-                # Split the pdf for each record using the PDF outlines.
-
-                # Only one record: append the whole PDF.
-                if len(res_ids_wo_stream) == 1:
-                    # collected_streams[res_ids_wo_stream[0]]['stream'] = pdf_content_stream
-                    # return collected_streams
-                    pdf_content_stream = report_sudo.merge_extra_content_pdf(
-                        res_ids[0], pdf_content_stream)
-                    collected_streams[res_ids_wo_stream[0]
-                                      ]['stream'] = pdf_content_stream
-                    return collected_streams
-
-                # In case of multiple docs, we need to split the pdf according the records.
-                # To do so, we split the pdf based on top outlines computed by wkhtmltopdf.
-                # An outline is a <h?> html tag found on the document. To retrieve this table,
-                # we look on the pdf structure using pypdf to compute the outlines_pages from
-                # the top level heading in /Outlines.
-                html_ids_wo_none = [x for x in html_ids if x]
-                if len(res_ids_wo_stream) > 1 and set(res_ids_wo_stream) == set(html_ids_wo_none):
-                    reader = PdfFileReader(pdf_content_stream)
-                    root = reader.trailer['/Root']
-                    has_valid_outlines = '/Outlines' in root and '/First' in root['/Outlines']
-                    if not has_valid_outlines:
-                        return {False: {
-                            'report_action': self,
-                            'stream': pdf_content_stream,
-                            'attachment': None,
-                        }}
-                    outlines_pages = []
-                    node = root['/Outlines']['/First']
-                    while True:
-                        outlines_pages.append(root['/Dests'][node['/Dest']][0])
-                        if '/Next' not in node:
-                            break
-                        node = node['/Next']
-                    outlines_pages = sorted(set(outlines_pages))
-                    # The number of outlines must be equal to the number of records to be able to split the document.
-                    has_same_number_of_outlines = len(
-                        outlines_pages) == len(res_ids)
-
-                    # There should be a top-level heading on first page
-                    has_top_level_heading = outlines_pages[0] == 0
-                    if has_same_number_of_outlines and has_top_level_heading:
-                        # Split the PDF according to outlines.
-                        for i, num in enumerate(outlines_pages):
-                            to = outlines_pages[i + 1] if i + \
-                                1 < len(outlines_pages) else reader.numPages
-                            attachment_writer = PdfFileWriter()
-                            for j in range(num, to):
-                                attachment_writer.addPage(reader.getPage(j))
-
-                                # Append Extra content at last page of pdf report
-                                if model_id and res_ids[i]:
-                                    res_id = self.env[report_sudo.model].browse(
-                                        res_ids[i])
-                                    extra_content_id = content_obj.search(
-                                        [('model_id', '=', model_id.id), ('company_id', '=', res_id.company_id.id)])
-                                    custom_documents = []
-                                    if extra_content_id and extra_content_id.append_extra_content:
-                                        st = []
-                                        pdf_custom_fd, pdf_custom_path = tempfile.mkstemp(
-                                            suffix='.pdf', prefix='report.tmp.custom.')
-                                        custom_documents.append(
-                                            pdf_custom_path)
-                                        with open(pdf_custom_fd, 'wb') as pcd:
-                                            pcd.write(base64.decodebytes(
-                                                extra_content_id.append_extra_content))
-
-                                        ext_pdfreport = open(
-                                            pdf_custom_path, 'rb')
-                                        st.append(ext_pdfreport)
-                                        ext_reader = PdfFileReader(
-                                            ext_pdfreport)
-                                        for page in range(0, ext_reader.getNumPages()):
-                                            attachment_writer.addPage(
-                                                ext_reader.getPage(page))
-
-                            stream = io.BytesIO()
-                            attachment_writer.write(stream)
-                            collected_streams[res_ids[i]]['stream'] = stream
-
-                        return collected_streams
-
-                collected_streams[False] = {
-                    'stream': pdf_content_stream, 'attachment': None}
-
-            return collected_streams
-        else:
-            return super()._render_qweb_pdf_prepare_streams(report_ref, data, res_ids=res_ids)

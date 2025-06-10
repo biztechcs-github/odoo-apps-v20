@@ -343,7 +343,7 @@
             <span>Suggested Products</span>
         </h2>
         <table cellpadding="0" cellspacing="0" class="table" style="border:0.5px solid #ccc;  border-collapse: collapse; padding:15px; border-bottom:1px solid #ccc;" width="100%">
-            <thead>
+            <thead t-attf-style="display: table-header-group; page-break-after: always;">
                 <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
                     <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
@@ -388,7 +388,7 @@
                                 <t t-out="((option.discount % 1) and '%s' or '%d') % option.discount"/>% discount</strong>
                         </td>
                         <td align="center" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
-                            <div t-att-class="option.discount and 'text-danger' or ''" t-att-style="option.discount and 'text-decoration: line-through' or ''" t-field="option.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.pricelist_id.currency_id}"/>
+                            <!-- <div t-att-class="option.discount and 'text-danger' or ''" t-att-style="option.discount and 'text-decoration: line-through' or ''" t-field="option.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.pricelist_id.currency_id}"/> -->
                             <div t-if="option.discount">
                                 <t t-out="'%.2f' % ((1-option.discount / 100.0) * option.price_unit)"/>
                             </div>
