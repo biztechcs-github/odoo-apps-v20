@@ -5,7 +5,7 @@
     'name': 'Clever All In One Report Templates',
     'author': 'AppJetty',
     'license': 'OPL-1',
-    'version': '17.4',
+    'version': '18.0',
     'category': 'Accounting',
     'depends': [
         'account',
