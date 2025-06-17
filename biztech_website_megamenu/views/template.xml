@@ -1,0 +1,1348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_megamenu_submenu" inherit_id="website.submenu">
+        <xpath expr="//li[1]" position="attributes">
+            <attribute name="t-if">not submenu.is_megamenu and submenu.is_visible and not (submenu.child_id or submenu.is_mega_menu)</attribute>
+        </xpath>
+        <xpath expr="//li[2]" position="attributes">
+            <attribute name="t-elif">not submenu.is_megamenu and show_dropdown</attribute>
+        </xpath>
+        <xpath expr="//li" position="after">
+            <!-- Category megamenu -->
+            <li t-att-class="'li-mega-menu dropdown mm_icon apt_cat_megamenu' if submenu.menu_icon and submenu.menu_icon_image else 'li-mega-menu apt_cat_megamenu dropdown'" t-if="submenu.is_megamenu and submenu.megamenu_view_type in ['cat_megamenu', 'list_cat_megamenu']">
+                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" href="#">
+                    <t t-if="submenu.menu_icon and submenu.menu_icon_image">
+                        <img class="img-responsive icon" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'menu_icon_image', '30x30')" loading=""/>
+                    </t>
+                    <span t-field="submenu.name"/>
+                    <span class="fa fa-angle-down" t-ignore="true"/>
+                </a>
+                <!-- Use to set color when the image was not assign -->
+                <t t-set="mega_bg" t-value="'background: url(%s);' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
+                <!-- 2 Column -->
+                <t t-if="submenu.megamenu_type == '2_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="product_categories" t-value="submenu.category_ids"/>
+                        <t t-set='cat_sub_menu_list' t-value='website.get_category_list(submenu.category_ids)'/>
+                        <div class="row">
+                            <t t-if="not product_categories">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No category assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="product_categories and submenu.megamenu_view_type in ['cat_megamenu']">
+                                <t t-if="submenu.special_feature in ['category_slider']">
+                                    <div t-att-class="'col-lg-3 col-xs-12 cat_sub_menu_div_left' if submenu.special_feature in ['category_slider'] else ''" t-att-style="'order: %s' % submenu.category_slider_position if submenu.special_feature in ['category_slider'] and submenu.category_slider_position == '2' else ''">
+                                        <li>
+                                            <ul>
+                                                <li t-att-class="'dropdown-header slider_header add-seperator' if submenu.add_seperator_line else 'dropdown-header slider_header'" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                    <span>
+                                                        <t t-out="submenu.carousel_header_name"/>
+                                                    </span>
+                                                </li>
+                                                <li class="mm-carousel-slider">
+                                                    <div class="carousel slide" data-bs-ride="carousel" t-att-id="'myCarousel-%s' % submenu.id">
+                                                        <div class="carousel-inner">
+                                                            <t t-set="a" t-value="0"/>
+                                                            <t t-as="categ" t-foreach="product_categories">
+                                                                <div t-if='not categ.parent_id' t-att-class="'carousel-item active' if a == 0 else 'carousel-item'">
+                                                                    <t t-set="a" t-value="a+1"/>
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)">
+                                                                        <img class="img-responsive" t-att-alt="categ.name" t-att-src="website.image_url(categ, 'image_1920')" t-if="categ.image_1920" loading=""/>
+                                                                    </a>
+                                                                    <h4>
+                                                                        <small t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                            <t t-out="categ.name"/>
+                                                                        </small>
+                                                                    </h4>
+                                                                    <small id="category_desc" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-if="categ.description" t-out="categ.description" t-options="{'widget': 'html'}"/>
+                                                                    </small>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-control left" data-bs-slide="prev" t-att-data-bs-target="'#myCarousel-%s' % submenu.id">
+                                                        <i class="fa fa-chevron-left"/>
+                                                    </div>
+                                                    <div class="carousel-control right" data-bs-slide="next" t-att-data-bs-target="'#myCarousel-%s' % submenu.id">
+                                                        <i class="fa fa-chevron-right"/>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                </t>
+                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
+                                    <div class="col-lg-3 col-xs-12 cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
+                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                    </div>
+                                </t>
+                                <div t-att-class="'col-lg-9 col-xs-12 cat_sub_menu_div_right' if submenu.special_feature in ['category_slider'] or (submenu.special_feature in ['static_image'] and submenu.static_image) else 'col-md-12'">
+                                    <div class="row  letter-spacing">
+                                        <t t-as="category" t-foreach="product_categories">
+                                            <li class="col-sm-6 inline-block" t-if='not category.parent_id'>
+                                                <ul>
+                                                    <t t-if="submenu.display_category_image and category.image_1920 and submenu.category_image_position == 'top'">
+                                                        <a class="megamenu-list-image"  t-att-href="'/shop/category/%s' % slug(category)">
+                                                            <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/>
+                                                        </a>
+                                                    </t>
+                                                    <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'" t-if='not category.parent_id'>
+                                                        <a t-att-href="'/shop/category/%s' % slug(category)" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                            <t t-out="category.name"/>
+                                                        </a>
+                                                    </li>
+                                                    <t t-if="category.child_id">
+                                                        <t t-as="categ" t-foreach="category.child_id">
+                                                            <t t-if='categ.id in cat_sub_menu_list'>
+                                                                <t t-set="is_child_avail" t-value="0"/>
+                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                    <t t-if="c1.id in cat_sub_menu_list">
+                                                                        <t t-set="is_child_avail" t-value="1"/>
+                                                                    </t>
+                                                                </t>
+                                                                <li t-if="is_child_avail == 1" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                    <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                    <t t-if="categ.child_id">
+                                                                        <ul t-if="is_child_avail == 1">
+                                                                            <t t-as="c1" t-foreach="categ.child_id">
+                                                                                <t t-if="c1.id in cat_sub_menu_list">
+                                                                                    <li class="categories second-category">
+                                                                                        <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                            <t t-out="c1.name"/>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </t>
+                                                                            </t>
+                                                                        </ul>
+                                                                    </t>
+                                                                </li>
+                                                                <li t-if="is_child_avail == 0 and not(categ.parent_id.parent_id)" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                </li>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="submenu.display_category_image and category.image_1920 and submenu.category_image_position == 'bottom'">
+                                                        <a class="megamenu-list-image"  t-att-href="'/shop/category/%s' % slug(category)">
+                                                            <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/>
+                                                        </a>
+                                                    </t>
+                                                </ul>
+                                            </li>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-if="product_categories and submenu.megamenu_view_type in ['list_cat_megamenu']">
+                                <div class="col-lg-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
+                                    <ul>
+                                        <t t-set="incre" t-value="0"/>
+                                        <t t-as="category" t-foreach="product_categories">
+                                            <t t-set="is_active" t-value="'active' if incre == 0 else ''"/>
+                                            <li t-if='not category.parent_id' t-att-class="'dropdown-header %s' %(is_active)">
+                                                <a class="main_category" href="#" t-att-id="category.id" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                    <t t-out="category.name"/>
+                                                </a>
+                                            </li>
+                                            <li t-att-class="'category_container mobile' if incre == 0 else 'category_container mobile o_hidden'" t-att-name="category.id">
+                                                <t t-as="categ" t-foreach="category.child_id">
+                                                    <t t-if='categ.id in cat_sub_menu_list'>
+                                                        <div class="col-sm-4 inline-block">
+                                                            <ul>
+                                                                <t t-set="is_child_avail" t-value="0"/>
+                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                    <t t-if="c1.id in cat_sub_menu_list">
+                                                                        <t t-set="is_child_avail" t-value="1"/>
+                                                                    </t>
+                                                                </t>
+                                                                <li t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                    <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                    <t t-if="categ.child_id">
+                                                                        <ul t-if="is_child_avail == 1">
+                                                                            <t t-as="c1" t-foreach="categ.child_id">
+                                                                                <li class="categories second-category">
+                                                                                    <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                        <t t-out="c1.name"/>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </t>
+                                                                        </ul>
+                                                                    </t>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </li>
+                                            <t t-if='not category.parent_id'>
+                                                <t t-set="incre" t-value="incre + 1"/>
+                                            </t>
+                                        </t>
+                                    </ul>
+                                </div>
+                                <t t-set="counter" t-value="0"/>
+                                <t t-as="category" t-foreach="product_categories">
+                                    <div t-att-class="'col-ld-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-lg-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_right'" t-att-name="category.id">
+                                        <div class="row letter-spacing">
+                                            <t t-as="categ" t-foreach="category.child_id">
+                                                <t t-if='categ.id in cat_sub_menu_list'>
+                                                    <li class="col-sm-6 inline-block">
+                                                        <ul>
+                                                            <t t-set="is_child_avail" t-value="0"/>
+                                                            <t t-as="c1" t-foreach="categ.child_id" t-if="categ.child_id">
+                                                                <t t-if="c1.id in cat_sub_menu_list">
+                                                                    <t t-set="is_child_avail" t-value="1"/>
+                                                                </t>
+                                                            </t>
+                                                            <li t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                    <t t-out="categ.name"/>
+                                                                    <span class="ripple"/>
+                                                                    <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                </a>
+                                                                <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                <t t-if="categ.child_id">
+                                                                    <ul t-if="is_child_avail == 1">
+                                                                        <t t-as="c1" t-foreach="categ.child_id">
+                                                                            <t t-if="c1.id in cat_sub_menu_list">
+                                                                                <li class="categories second-category">
+                                                                                    <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                        <t t-out="c1.name"/>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </t>
+                                                                        </t>
+                                                                    </ul>
+                                                                </t>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </t>
+                                            </t>
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                            <!--  End List Category 2 column  -->
+                        </div>
+                        <div class="row" t-if="product_categories and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer" t-options="{'widget' : 'html'}"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+                <!-- 3 Column -->
+                <t t-if="submenu.megamenu_type == '3_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="product_categories" t-value="submenu.category_ids"/>
+                        <t t-set='cat_sub_menu_list_3_col' t-value='website.get_category_list(submenu.category_ids)'/>
+                        <div class="row">
+                            <t t-if="not product_categories">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No category assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="product_categories and submenu.megamenu_view_type in ['cat_megamenu']">
+                                <t t-if="submenu.special_feature in ['category_slider']">
+                                    <div class="col-lg-3 col-xs-12 cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.category_slider_position if submenu.special_feature in ['category_slider'] and submenu.category_slider_position == '2' else ''">
+                                        <li>
+                                            <ul>
+                                                <li t-att-class="'dropdown-header slider_header add-seperator' if submenu.add_seperator_line else 'dropdown-header slider_header'" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                    <span>
+                                                        <t t-out="submenu.carousel_header_name"/>
+                                                    </span>
+                                                </li>
+                                                <li class="mm-carousel-slider">
+                                                    <div class="carousel slide" data-bs-ride="carousel" t-att-id="'myCarousel-%s' % submenu.id">
+                                                        <div class="carousel-inner">
+                                                            <t t-set="a" t-value="0"/>
+                                                            <t t-as="categ" t-foreach="product_categories">
+                                                                <div t-if='not categ.parent_id' t-att-class="'carousel-item active' if a == 0 else 'carousel-item'">
+                                                                    <t t-set="a" t-value="a+1"/>
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)">
+                                                                        <img class="img-responsive" t-att-alt="categ.name" t-att-src="website.image_url(categ, 'image_1920')" t-if="categ.image_1920" loading=""/>
+                                                                    </a>
+                                                                    <h4>
+                                                                        <small t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                            <t t-out="categ.name"/>
+                                                                        </small>
+                                                                    </h4>
+                                                                    <small t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-if="categ.description" t-out="categ.description" t-options="{'widget': 'html'}"/>
+                                                                    </small>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-control left" data-bs-slide="prev" t-att-data-bs-target="'#myCarousel-%s' % submenu.id">
+                                                        <i class="fa fa-chevron-left"/>
+                                                    </div>
+                                                    <div class="carousel-control right" data-bs-slide="next" t-att-data-bs-target="'#myCarousel-%s' % submenu.id">
+                                                        <i class="fa fa-chevron-right"/>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                </t>
+                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
+                                    <div class="col-lg-3 col-xs-12 cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
+                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                    </div>
+                                </t>
+                                <div t-att-class="'col-lg-9 col-xs-12 cat_sub_menu_div_right' if submenu.special_feature in ['category_slider'] or (submenu.special_feature in ['static_image'] and submenu.static_image) else 'col-md-12'">
+                                    <div class="row  letter-spacing">
+                                        <t t-as="category" t-foreach="product_categories">
+                                            <li t-if='not category.parent_id' class="col-sm-4 inline-block">
+                                                <ul>
+                                                    <t t-if="submenu.display_category_image and category.image_1920 and submenu.category_image_position == 'top'">
+                                                        <li class="mm-cat-banner">
+                                                            <a class="megamenu-list-image"  t-att-href="'/shop/category/%s' % slug(category)">
+                                                                <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/>
+                                                            </a>
+                                                        </li>
+                                                    </t>
+                                                    <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'">
+                                                        <a t-att-href="'/shop/category/%s' % slug(category)" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                            <t t-out="category.name"/>
+                                                        </a>
+                                                    </li>
+                                                    <t t-if="category.child_id">
+                                                        <t t-as="categ" t-foreach="category.child_id">
+                                                            <t t-if='categ.id in cat_sub_menu_list_3_col'>
+                                                                <t t-set="is_child_avail" t-value="0"/>
+                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                    <t t-if="c1.id in cat_sub_menu_list_3_col">
+                                                                        <t t-set="is_child_avail" t-value="1"/>
+                                                                    </t>
+                                                                </t>
+                                                                <li t-if="is_child_avail == 1" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                    <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                    <t t-if="categ.child_id">
+                                                                        <ul t-if="is_child_avail == 1">
+                                                                            <t t-as="c1" t-foreach="categ.child_id">
+                                                                                <t t-if="c1.id in cat_sub_menu_list_3_col">
+                                                                                    <li class="categories second-category">
+                                                                                        <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                            <t t-out="c1.name"/>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </t>
+                                                                            </t>
+                                                                        </ul>
+                                                                    </t>
+                                                                </li>
+                                                                <li t-if="is_child_avail == 0 and not(categ.parent_id.parent_id)" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                </li>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="submenu.display_category_image and category.image_1920 and submenu.category_image_position == 'bottom'">
+                                                        <a class="megamenu-list-image"  t-att-href="'/shop/category/%s' % slug(category)">
+                                                            <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/>
+                                                        </a>
+                                                    </t>
+                                                </ul>
+                                            </li>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                            <!--  Start List Category 3 column  -->
+                            <t t-if="product_categories and submenu.megamenu_view_type in ['list_cat_megamenu']">
+                                <div class="col-md-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
+                                    <ul>
+                                        <t t-set="incre" t-value="0"/>
+                                        <t t-as="category" t-foreach="product_categories">
+                                            <t t-set="is_active" t-value="'active' if incre == 0 else ''"/>
+                                            <li t-if='not category.parent_id' t-att-class="'dropdown-header %s' %(is_active)">
+                                                <a class="main_category" href="#" t-att-id="category.id" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                    <t t-out="category.name"/>
+                                                </a>
+                                            </li>
+                                            <li t-att-class="'category_container mobile' if incre == 0 else 'category_container mobile o_hidden'" t-att-name="category.id">
+                                                <t t-as="categ" t-foreach="category.child_id">
+                                                    <t t-if='categ.id in cat_sub_menu_list_3_col'>
+                                                        <div class="col-sm-4 inline-block">
+                                                            <ul>
+                                                                <t t-set="is_child_avail" t-value="0"/>
+                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                    <t t-if="c1.id in cat_sub_menu_list_3_col">
+                                                                        <t t-set="is_child_avail" t-value="1"/>
+                                                                    </t>
+                                                                </t>
+                                                                <li t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                    <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                    <t t-if="categ.child_id">
+                                                                        <ul t-if="is_child_avail == 1">
+                                                                            <t t-as="c1" t-foreach="categ.child_id">
+                                                                                <t t-if="c1.id in cat_sub_menu_list_3_col">
+                                                                                    <li class="categories second-category">
+                                                                                        <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                            <t t-out="c1.name"/>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </t>
+                                                                            </t>
+                                                                        </ul>
+                                                                    </t>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </li>
+                                            <t t-if='not category.parent_id'>
+                                                <t t-set="incre" t-value="incre + 1"/>
+                                            </t>
+                                        </t>
+                                    </ul>
+                                </div>
+                                <t t-set="counter" t-value="0"/>
+                                <t t-as="category" t-foreach="product_categories">
+                                    <div t-att-class="'col-md-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-md-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_right'" t-att-name="category.id">
+                                        <div class="row letter-spacing">
+                                            <t t-as="categ" t-foreach="category.child_id">
+                                                <t t-if="categ.id in cat_sub_menu_list_3_col">
+                                                    <li class="col-sm-4 inline-block">
+                                                        <ul>
+                                                            <t t-set="is_child_avail" t-value="0"/>
+                                                            <t t-as="c1" t-foreach="categ.child_id" t-if="categ.child_id">
+                                                                <t t-if="c1.id in cat_sub_menu_list_3_col">
+                                                                    <t t-set="is_child_avail" t-value="1"/>
+                                                                </t>
+                                                            </t>
+                                                            <li t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                    <t t-out="categ.name"/>
+                                                                    <span class="ripple"/>
+                                                                    <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                </a>
+                                                                <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                <t t-if="categ.child_id">
+                                                                    <ul t-if="is_child_avail == 1">
+                                                                        <t t-as="c1" t-foreach="categ.child_id">
+                                                                            <t t-if="c1.id in cat_sub_menu_list_3_col">
+                                                                                <li class="categories second-category">
+                                                                                    <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                        <t t-out="c1.name"/>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </t>
+                                                                        </t>
+                                                                    </ul>
+                                                                </t>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </t>
+                                            </t>
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                            <!--  End List Category 3 column  -->
+                        </div>
+                        <div class="row" t-if="product_categories and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer" t-options="{'widget' : 'html'}"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+                <!-- 4 Column -->
+                <t t-if="submenu.megamenu_type == '4_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="product_categories" t-value="submenu.category_ids"/>
+                        <t t-set='cat_sub_menu_list_4_col' t-value='website.get_category_list(submenu.category_ids)'/>
+                        <div class="row">
+                            <t t-if="not product_categories">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No category assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="product_categories and submenu.megamenu_view_type in ['cat_megamenu']">
+                                <t t-if="submenu.special_feature in ['category_slider']">
+                                    <div class="col-lg-3 col-xs-12 submenu_div_pages cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.category_slider_position if submenu.special_feature in ['category_slider'] and submenu.category_slider_position == '2' else ''">
+                                        <li>
+                                            <ul>
+                                                <li t-att-class="'dropdown-header slider_header add-seperator' if submenu.add_seperator_line else 'dropdown-header slider_header'" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                    <span>
+                                                        <t t-out="submenu.carousel_header_name"/>
+                                                    </span>
+                                                </li>
+                                                <li class="mm-carousel-slider">
+                                                    <div class="carousel slide" data-bs-ride="carousel" t-att-id="'myCarousel-%s' % submenu.id">
+                                                        <div class="carousel-inner">
+                                                            <t t-set="a" t-value="0"/>
+                                                            <t t-as="categ" t-foreach="product_categories">
+                                                                <div t-if='not categ.parent_id' t-att-class="'carousel-item active' if a == 0 else 'carousel-item'">
+                                                                    <t t-set="a" t-value="a+1"/>
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)">
+                                                                        <img class="img-responsive" t-att-alt="categ.name" t-att-src="website.image_url(categ, 'image_1920')" t-if="categ.image_1920" loading=""/>
+                                                                    </a>
+                                                                    <h4>
+                                                                        <small t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                            <t t-out="categ.name"/>
+                                                                        </small>
+                                                                    </h4>
+                                                                    <small t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-if="categ.description" t-out="categ.description" t-options="{'widget': 'html'}"/>
+                                                                    </small>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-control left" data-bs-slide="prev" t-att-data-bs-target="'#myCarousel-%s' % submenu.id">
+                                                        <i class="fa fa-chevron-left"/>
+                                                    </div>
+                                                    <div class="carousel-control right" data-bs-slide="next" t-att-data-bs-target="'#myCarousel-%s' % submenu.id">
+                                                        <i class="fa fa-chevron-right"/>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </div>
+                                </t>
+                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
+                                    <div class="col-lg-3 col-xs-12 submenu_div_pages cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
+                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                    </div>
+                                </t>
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages cat_sub_menu_div_right' if submenu.special_feature in ['category_slider'] or (submenu.special_feature in ['static_image'] and submenu.static_image) else 'col-md-12 letter-spacing'">
+                                    <div class="row letter-spacing">
+                                        <t t-as="category" t-foreach="product_categories">
+                                            <li t-if='not category.parent_id' class="col-sm-3 inline-block">
+                                                <ul>
+                                                    <t t-if="submenu.display_category_image and category.image_1920 and submenu.category_image_position == 'top'">
+                                                        <li class="mm-cat-banner">
+                                                            <a class="megamenu-list-image"  t-att-href="'/shop/category/%s' % slug(category)">
+                                                                <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/>
+                                                            </a>
+                                                        </li>
+                                                    </t>
+                                                    <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'">
+                                                        <a t-att-href="'/shop/category/%s' % slug(category)" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                            <t t-out="category.name"/>
+                                                        </a>
+                                                    </li>
+                                                    <t t-if="category.child_id">
+                                                        <t t-as="categ" t-foreach="category.child_id">
+                                                            <t t-if="categ.id in cat_sub_menu_list_4_col">
+                                                                <t t-set="is_child_avail" t-value="0"/>
+                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                    <t t-if="c1.id in cat_sub_menu_list_4_col">
+                                                                        <t t-set="is_child_avail" t-value="1"/>
+                                                                    </t>
+                                                                </t>
+                                                                <li t-if="is_child_avail == 1" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                    <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                    <t t-if="categ.child_id">
+                                                                        <ul t-if="is_child_avail == 1">
+                                                                            <t t-as="c1" t-foreach="categ.child_id">
+                                                                                <t t-if="c1.id in cat_sub_menu_list_4_col">
+                                                                                    <li class="categories second-category">
+                                                                                        <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                            <t t-out="c1.name"/>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </t>
+                                                                            </t>
+                                                                        </ul>
+                                                                    </t>
+                                                                </li>
+                                                                 <li t-if="is_child_avail == 0 and not(categ.parent_id.parent_id)" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                </li>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="submenu.display_category_image and category.image_1920 and submenu.category_image_position == 'bottom'">
+                                                        <a class="megamenu-list-image" t-att-href="'/shop/category/%s' % slug(category)">
+                                                            <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/>
+                                                        </a>
+                                                    </t>
+                                                </ul>
+                                            </li>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+                            <!-- Start List Category 4 column  -->
+                            <t t-if="product_categories and submenu.megamenu_view_type in ['list_cat_megamenu']">
+                                <div class="col-md-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
+                                    <ul>
+                                        <t t-set="incre" t-value="0"/>
+                                        <t t-as="category" t-foreach="product_categories">
+                                            <t t-set="is_active" t-value="'active' if incre == 0 else ''"/>
+                                            <li t-if='not category.parent_id' t-att-class="'dropdown-header %s' %(is_active)">
+                                                <a class="main_category" href="#" t-att-id="category.id" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                    <t t-out="category.name"/>
+                                                </a>
+                                            </li>
+                                            <li t-att-class="'category_container mobile' if incre == 0 else 'category_container mobile o_hidden'" t-att-name="category.id">
+                                                <t t-as="categ" t-foreach="category.child_id">
+                                                    <t t-if="categ.id in cat_sub_menu_list_4_col">
+                                                        <div class="col-sm-4 inline-block">
+                                                            <ul>
+                                                                <t t-set="is_child_avail" t-value="0"/>
+                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                    <t t-if="c1.id in cat_sub_menu_list_4_col">
+                                                                        <t t-set="is_child_avail" t-value="1"/>
+                                                                    </t>
+                                                                </t>
+                                                                <li t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                    <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                        <t t-out="categ.name"/>
+                                                                        <span class="ripple"/>
+                                                                        <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                    </a>
+                                                                    <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                    <t t-if="categ.child_id">
+                                                                        <ul t-if="is_child_avail == 1">
+                                                                            <t t-as="c1" t-foreach="categ.child_id">
+                                                                                <t t-if="c1.id in cat_sub_menu_list_4_col">
+                                                                                    <li class="categories second-category">
+                                                                                        <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                            <t t-out="c1.name"/>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </t>
+                                                                            </t>
+                                                                        </ul>
+                                                                    </t>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                            </li>
+                                            <t t-if='not category.parent_id'>
+                                                <t t-set="incre" t-value="incre + 1"/>
+                                            </t>
+                                        </t>
+                                    </ul>
+                                </div>
+                                <t t-set="counter" t-value="0"/>
+                                <t t-as="category" t-foreach="product_categories">
+                                    <div t-att-class="'col-md-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-md-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_left'" t-att-name="category.id">
+                                        <div class="row letter-spacing">
+                                            <t t-as="categ" t-foreach="category.child_id">
+                                                <t t-if="categ.id in cat_sub_menu_list_4_col">
+                                                    <li class="col-sm-3 inline-block">
+                                                        <ul>
+                                                            <t t-set="is_child_avail" t-value="0"/>
+                                                            <t t-as="c1" t-foreach="categ.child_id" t-if="categ.child_id">
+                                                                <t t-if="c1.id in cat_sub_menu_list_4_col">
+                                                                    <t t-set="is_child_avail" t-value="1"/>
+                                                                </t>
+                                                            </t>
+                                                            <li t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                <a t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                    <t t-out="categ.name"/>
+                                                                    <span class="ripple"/>
+                                                                    <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                </a>
+                                                                <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                <t t-if="categ.child_id">
+                                                                    <ul t-if="is_child_avail == 1">
+                                                                        <t t-as="c1" t-foreach="categ.child_id">
+                                                                            <t t-if="c1.id in cat_sub_menu_list_4_col">
+                                                                                <li class="categories second-category">
+                                                                                    <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                        <t t-out="c1.name"/>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </t>
+                                                                        </t>
+                                                                    </ul>
+                                                                </t>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </t>
+                                            </t>
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                            <!--  End List Category 4 column  -->
+                        </div>
+                        <div class="row" t-if="product_categories and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer" t-options="{'widget' : 'html'}"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+            </li>
+            
+            <!-- Pages megamenu -->
+            <li t-att-class="'li-mega-menu mm_icon dropdown apt_pager_megamenu' if submenu.menu_icon and submenu.menu_icon_image else 'li-mega-menu apt_pager_megamenu dropdown'" t-if="submenu.is_megamenu and submenu.megamenu_view_type == 'pages_megamenu'">
+                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" t-att-href="'%s' % (submenu.url) if submenu.url else ''" t-att-target="'_blank' if submenu.new_window else ''">
+                    <t t-if="submenu.menu_icon and submenu.menu_icon_image">
+                        <img class="img-responsive icon" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'menu_icon_image', '30x30')"/>
+                    </t>
+                    <span t-field="submenu.name"/>
+                    <span class="fa fa-angle-down" t-ignore="true"/>
+                </a>
+                <!-- Use to set color when the image was not assign -->
+                <t t-set="mega_bg" t-value="'background: url(%s);' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
+                <!-- 2 Column -->
+                <t t-if="submenu.megamenu_type == '2_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="megamenu_pages" t-value="website.get_megamenu_pages(submenu)"/>
+                        <div class="row">
+                            <t t-if="not megamenu_pages">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="megamenu_pages">
+                                <div class="col-lg-3 col-xs-12 letter-spacing submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '1'">
+                                    <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
+                                </div>
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12'">
+                                    <div class="row  letter-spacing">
+                                        <t t-as="page" t-foreach="megamenu_pages">
+                                            <li class="col-sm-6 inline-block">
+                                                <ul>
+                                                    <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'">
+                                                        <a t-att-href="page.url" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                            <t t-out="page.name"/>
+                                                            
+                                                        </a>
+                                                    </li>
+                                                    <t t-as="child_page" t-foreach="website.get_megamenu_pages(page)">
+                                                        <t t-if="child_page">
+                                                            <t t-set="sub_child_pages" t-value="website.get_megamenu_pages(child_page)"/>
+                                                            <li t-att-class="'categories first-category has_child' if sub_child_pages else 'categories first-category'">
+                                                                <a t-att-href="child_page.url" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                    <t t-out="child_page.name"/>
+                                                                    <span class="ripple"/>
+                                                                    <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                </a>
+                                                                <span class="fa fa-chevron-right first-category-dd" t-if="sub_child_pages"/>
+                                                                <t t-if="sub_child_pages">
+                                                                    <ul>
+                                                                        <t t-as="sub_child_page" t-foreach="sub_child_pages">
+                                                                            <li class="categories second-category">
+                                                                                <a t-att-href="sub_child_page.url" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                    <t t-out="sub_child_page.name"/>
+                                                                                </a>
+                                                                            </li>
+                                                                        </t>
+                                                                    </ul>
+                                                                </t>
+                                                            </li>
+                                                        </t>
+                                                    </t>
+                                                </ul>
+                                            </li>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 letter-spacing submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '2'">
+                                    <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row" t-if="megamenu_pages and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+                <!-- 3 Column -->
+                <t t-if="submenu.megamenu_type == '3_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="megamenu_pages" t-value="website.get_megamenu_pages(submenu)"/>
+                        <div class="row">
+                            <t t-if="not megamenu_pages">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="megamenu_pages">
+                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '1'">
+                                    <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
+                                </div>
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12'">
+                                    <div class="row letter-spacing">
+                                        <t t-as="page" t-foreach="megamenu_pages">
+                                            <li class="col-sm-4 inline-block">
+                                                <ul>
+                                                    <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'">
+                                                        <a t-att-href="page.url" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                            <t t-out="page.name"/>
+                                                        </a>
+                                                    </li>
+                                                    <t t-as="child_page" t-foreach="website.get_megamenu_pages(page)">
+                                                        <t t-if="child_page">
+                                                            <t t-set="sub_child_pages" t-value="website.get_megamenu_pages(child_page)"/>
+                                                            <li t-att-class="'categories first-category has_child' if sub_child_pages else 'categories first-category'">
+                                                                <a t-att-href="child_page.url" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                    <t t-out="child_page.name"/>
+                                                                    <span class="ripple"/>
+                                                                    <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                </a>
+                                                                <span class="fa fa-chevron-right first-category-dd" t-if="sub_child_pages"/>
+                                                                <t t-if="sub_child_pages">
+                                                                    <ul>
+                                                                        <t t-as="sub_child_page" t-foreach="sub_child_pages">
+                                                                            <li class="categories second-category">
+                                                                                <a t-att-href="sub_child_page.url" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                    <t t-out="sub_child_page.name"/>
+                                                                                </a>
+                                                                            </li>
+                                                                        </t>
+                                                                    </ul>
+                                                                </t>
+                                                            </li>
+                                                        </t>
+                                                    </t>
+                                                </ul>
+                                            </li>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '2'">
+                                    <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row" t-if="megamenu_pages and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+                <!-- 4 Column -->
+                <t t-if="submenu.megamenu_type == '4_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="megamenu_pages" t-value="website.get_megamenu_pages(submenu)"/>
+                        <div class="row">
+                            <t t-if="not megamenu_pages">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="submenu and megamenu_pages">
+                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '1'">
+                                    <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
+                                </div>
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12'">
+                                    <div class="row letter-spacing">
+                                        <t t-as="page" t-foreach="megamenu_pages">
+                                            <li class="col-sm-3 inline-block">
+                                                <ul>
+                                                    <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'">
+                                                        <a t-att-href="page.url" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                            <t t-out="page.name"/>
+                                                        </a>
+                                                    </li>
+                                                    <t t-as="child_page" t-foreach="website.get_megamenu_pages(page)">
+                                                        <t t-if="child_page">
+                                                            <t t-set="sub_child_pages" t-value="website.get_megamenu_pages(child_page)"/>
+                                                            <li t-att-class="'categories first-category has_child' if sub_child_pages else 'categories first-category'">
+                                                                <a t-att-href="child_page.url" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                    <t t-out="child_page.name"/>
+                                                                    <span class="ripple"/>
+                                                                    <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                </a>
+                                                                <span class="fa fa-chevron-right first-category-dd" t-if="sub_child_pages"/>
+                                                                <t t-if="sub_child_pages">
+                                                                    <ul>
+                                                                        <t t-as="sub_child_page" t-foreach="sub_child_pages">
+                                                                            <li class="categories second-category">
+                                                                                <a t-att-href="sub_child_page.url" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                    <t t-out="sub_child_page.name"/>
+                                                                                </a>
+                                                                            </li>
+                                                                        </t>
+                                                                    </ul>
+                                                                </t>
+                                                            </li>
+                                                        </t>
+                                                    </t>
+                                                </ul>
+                                            </li>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '2'">
+                                    <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row" t-if="megamenu_pages and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+            </li>
+
+            <!-- Pages megamenu pro max -->
+            <li t-att-class="'li-mega-menu mm_icon dropdown apt_cat_megamenu' if submenu.menu_icon and submenu.menu_icon_image else 'li-mega-menu apt_cat_megamenu dropdown'" t-if="submenu.is_megamenu and submenu.megamenu_view_type == 'pages_megamenu_pro_max'">
+                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" href="#">
+                    <t t-if="submenu.menu_icon and submenu.menu_icon_image">
+                        <img class="img-responsive icon" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'menu_icon_image', '30x30')" loading=""/>
+                    </t>
+                    <span t-field="submenu.name"/>
+                    <span class="fa fa-angle-down" t-ignore="true"/>
+                </a>
+                <!-- Use to set color when the image was not assign -->
+                <t t-set="mega_bg" t-value="'background: url(%s);' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
+                <ul t-att-class="'dropdown-menu   p-0 mega-dropdown-menu %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                    <t t-set="product_categories" t-value="submenu.category_ids"/>
+                    <t t-set='cat_sub_menu_list' t-value='website.get_category_list(submenu.category_ids)'/>
+                    <!-- right-hidden add this class when add_static_image not ticked-->
+                    <!-- change-direction add this class to static image set to left-->
+                    <div class="menu-main-wrapper">
+                        <t t-if="not cat_sub_menu_list">
+                            <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                </div>
+                        </t>
+                        <!-- menu start here -->
+                        <t t-if="product_categories and submenu.megamenu_view_type in ['pages_megamenu_pro_max']">
+                            <div class="menu-wrapper-inner">
+                                <div class="menu-top">                                       
+                                    <div t-attf-class="row top-inner #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '1' else ''}">
+                                        <div class="col-lg-5 left-side" >
+                                            <div class="left-image">
+                                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
+                                                    <div t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
+                                                        <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                                        <h2 class="image-title">
+                                                        <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/></h2>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 right-side" >              
+                                            <div class="right-inner">
+                                                <t t-as="category" t-foreach="product_categories">
+                                                    <div t-if='not category.parent_id' class="col-md-4 menu-block inline-block">
+                                                        <ul>
+                                                            <li t-if='not category.parent_id'>
+                                                                <a t-att-href="'/shop/category/%s' % slug(category)">
+                                                                <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/></a>    
+                                                            </li>
+                                                            <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'" t-if='not category.parent_id'>
+                                                                <a t-att-href="'/shop/category/%s' % slug(category)" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                                    <t t-out="category.name"/>
+                                                                </a>
+                                                            </li>
+                                                            <t t-if="category.child_id">
+                                                                <t t-as="categ" t-foreach="category.child_id">
+                                                                    <t t-if='categ.id in cat_sub_menu_list'>
+                                                                        <t t-set="is_child_avail" t-value="0"/>
+                                                                        <t t-as="c1" t-foreach="categ.child_id">
+                                                                            <t t-if="c1.id in cat_sub_menu_list">
+                                                                                <t t-set="is_child_avail" t-value="1"/>
+                                                                            </t>
+                                                                        </t>
+                                                                        <li t-if="is_child_avail == 1" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                            <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                <t t-out="categ.name"/>
+                                                                                <span class="ripple"/>
+                                                                                <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                            </a>
+                                                                            <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                            <t t-if="categ.child_id">
+                                                                                <ul t-if="is_child_avail == 1">
+                                                                                    <t t-as="c1" t-foreach="categ.child_id">
+                                                                                        <t t-if="c1.id in cat_sub_menu_list">
+                                                                                            <li class="categories second-category">
+                                                                                                <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                                    <t t-out="c1.name"/>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        </t>
+                                                                                    </t>
+                                                                                </ul>
+                                                                            </t>
+                                                                        </li>
+                                                                        <li t-if="is_child_avail == 0 and not(categ.parent_id.parent_id)" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                            <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                <t t-out="categ.name"/>
+                                                                                <span class="ripple"/>
+                                                                                <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                            </a>
+                                                                        </li>
+                                                                    </t>
+                                                                </t>
+                                                            </t>
+                                                        </ul>          
+                                                    </div>
+                                                </t>   
+                                            </div>                                 
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="container-fluid menu-bottom footer">
+                                    <div class="bottom-disc">
+                                        <div class="footer">
+                                            <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
+                                            <a t-att-href="'/shop'" style="color:black;">shop all</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </ul>
+            </li>
+
+            <!-- Pages & Category megamenu pro -->
+            <li t-att-class="'li-mega-menu mm_icon dropdown apt_pager_megamenu apt_cat_megamenu' if submenu.menu_icon and submenu.menu_icon_image else 'li-mega-menu apt_pager_megamenu apt_cat_megamenu dropdown'" t-if="submenu.is_megamenu and submenu.megamenu_view_type == 'pages_category_megamenu'">
+                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" t-att-href="'%s' % (submenu.url) if submenu.url else ''" t-att-target="'_blank' if submenu.new_window else ''">
+                    <t t-if="submenu.menu_icon and submenu.menu_icon_image">
+                        <img class="img-responsive icon" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'menu_icon_image', '30x30')"/>
+                    </t>
+                    <span t-field="submenu.name"/>
+                    <span class="fa fa-angle-down" t-ignore="true"/>
+                </a>
+                <!-- Use to set color when the image was not assign -->
+                <t t-set="mega_bg" t-value="'background: url(%s);' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
+                <ul t-att-class="'dropdown-menu mega-dropdown-menu p-0 %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                    <t t-set="megamenu_pages" t-value="website.get_pages_megamenu_pro_pages(submenu)"/>
+                    <t t-set="product_categories" t-value="submenu.category_ids"/>
+                    <t t-set='cat_sub_menu_list' t-value='website.get_category_list(submenu.category_ids)'/>
+                    <!-- right-hidden add this class when add_static_image not ticked-->
+                    <!-- change-direction add this class to static image set to left-->
+                    <div t-attf-class="row menu-main-wrapper menu-style-3 #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '1' else ''}">
+                        <t t-if="not megamenu_pages">
+                            <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                </div>
+                        </t>
+                        <!-- menu-3 start here --> 
+                        <t t-if="product_categories and submenu.megamenu_view_type in ['pages_category_megamenu']">                      
+                            <div class="col-lg-3 left-menu">
+                                <h2 class="left-menu-title">Pages in Template</h2>
+                                <ul class="left-menu-list" >
+                                    <t t-as="page" t-foreach="megamenu_pages">
+                                        <li class="menu-block-wrapper">
+                                            <a t-att-href="page.url" class="main-block-link">
+                                                <div class="menu-block">
+                                                    <div class="d-flex top" t-if="page.display_icon">
+                                                        
+                                                        <img  t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
+                                                        <h2 class="title"><t t-out="page.name"/></h2>
+                                                    </div>
+                                                    <div class="bottom">
+                                                        <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
+                            <div class="col-lg-9 right-menu">
+                                <div class="right-inner row">                           
+                                    <div class="col-md-8 left">                                    
+                                        <ul class="menu-list-wrapper">          
+                                            <t t-as="category" t-foreach="product_categories">
+                                                <li class="col-12 col-sm-6 menu-list-block inline-block" t-if='not category.parent_id'>
+                                                    <a t-att-href="submenu.url" class="menu-title right-arrow">Shop Pages</a>                                                
+                                                    <ul class="menu-list">
+                                                        <li t-if='not category.parent_id'>
+                                                            <a t-att-href="'/shop/category/%s' % slug(category)">
+                                                            <img class="img-responsive" t-att-alt="category.name" t-att-src="website.image_url(category, 'image_1920')" loading=""/></a>    
+                                                        </li>
+                                                        <li t-att-class="'dropdown-header add-seperator' if submenu.add_seperator_line else 'dropdown-header'" t-if='not category.parent_id'>
+                                                            <a t-att-href="'/shop/category/%s' % slug(category)" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">
+                                                                <t t-out="category.name"/>
+                                                            </a>
+                                                        </li>
+                                                        <t t-if="category.child_id">
+                                                            <t t-as="categ" t-foreach="category.child_id">
+                                                                <t t-if='categ.id in cat_sub_menu_list'>
+                                                                    <t t-set="is_child_avail" t-value="0"/>
+                                                                    <t t-as="c1" t-foreach="categ.child_id">
+                                                                        <t t-if="c1.id in cat_sub_menu_list">
+                                                                            <t t-set="is_child_avail" t-value="1"/>
+                                                                        </t>
+                                                                    </t>
+                                                                    <li t-if="is_child_avail == 1" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                        <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                            <t t-out="categ.name"/>
+                                                                            <span class="ripple"/>
+                                                                            <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                        </a>
+                                                                        <span class="fa fa-chevron-right first-category-dd" t-if="is_child_avail == 1"/>
+                                                                        <t t-if="categ.child_id">
+                                                                            <ul t-if="is_child_avail == 1">
+                                                                                <t t-as="c1" t-foreach="categ.child_id">
+                                                                                    <t t-if="c1.id in cat_sub_menu_list">
+                                                                                        <li class="categories second-category">
+                                                                                            <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                                                <t t-out="c1.name"/>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </t>
+                                                                                </t>
+                                                                            </ul>
+                                                                        </t>
+                                                                    </li>
+                                                                    <li t-if="is_child_avail == 0 and not(categ.parent_id.parent_id)" t-att-class="'categories first-category has_child' if is_child_avail else 'categories first-category'">
+                                                                        <a  t-att-href="'/shop/category/%s' % slug(categ)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                                                                            <t t-out="categ.name"/>
+                                                                            <span class="ripple"/>
+                                                                            <span class='hover_effect' t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''"/>
+                                                                        </a>
+                                                                    </li>
+                                                                </t>
+                                                            </t>
+                                                        </t>         
+                                                    </ul>
+                                                </li>
+                                            </t>                                        
+                                        </ul>  
+                                    </div>
+                                    <div class="col-md-4 right">
+                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
+                                        <div t-if="submenu.static_image_content" >
+                                            <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>                                            
+                    </div>
+                    <div class=" footer-wrapper" t-if="megamenu_pages and submenu.display_menu_footer">
+                        <div class="footer">
+                            <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
+                            <a t-att-href="'/shop'" style="color:black;">shop all</a>
+                        </div>
+                    </div>
+                </ul>
+            </li>
+
+            <!-- Pages megamenu pro -->
+            <li t-att-class="'li-mega-menu mm_icon dropdown apt_pager_megamenu' if submenu.menu_icon and submenu.menu_icon_image else 'li-mega-menu apt_pager_megamenu dropdown'" t-if="submenu.is_megamenu and submenu.megamenu_view_type == 'pages_megamenu_pro'">
+                <a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" t-att-href="'%s' % (submenu.url) if submenu.url else ''" t-att-target="'_blank' if submenu.new_window else ''">
+                    <t t-if="submenu.menu_icon and submenu.menu_icon_image">
+                        <img class="img-responsive icon" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'menu_icon_image', '30x30')"/>
+                    </t>
+                    <span t-field="submenu.name"/>
+                    <span class="fa fa-angle-down" t-ignore="true"/>
+                </a>
+                <!-- Use to set color when the image was not assign -->
+                <t t-set="mega_bg" t-value="'background: url(%s);' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
+                <!-- 2 Column -->
+                <t t-if="submenu.megamenu_type == '2_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu p-0 %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="megamenu_pages" t-value="website.get_pages_megamenu_pro_pages(submenu)"/>
+                        <!-- right-hidden add this class when add_static_image not ticked-->
+                        <!-- change-direction add this class to static image set to left-->
+                        <div t-attf-class="row menu-main-wrapper #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '1' else ''}">
+                            <t t-if="not megamenu_pages">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="submenu and megamenu_pages">
+                                <div class="col-lg-9 left-menu" >
+                                    <div class="row main-row">
+                                        <t t-as="page" t-foreach="megamenu_pages">
+                                            <div class="col-sm-6 menu-block-wrapper">
+                                                <a t-att-href="page.url" class="main-block-link">
+                                                    <div class="d-flex menu-block">
+                                                        <div class="inner-menu-icon" t-if="page.display_icon">
+                                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
+                                                        </div>
+                                                        <div class="menu-disc">
+                                                            <h2 class="title"><t t-out="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 right-menu">
+                                    <div class="right-menu-inner">
+                                        <div class="right-image">
+                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
+                                            <!-- <img src="https://www.biztechcs.com/wp-content/uploads/2022/11/Salesforce-tab.svg"  alt="" title=""/> -->
+                                        </div>
+                                        <div t-if="submenu.static_image_content" class="right-content">
+                                            <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row" t-if="megamenu_pages and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+                <!-- 3 Column -->
+                <t t-if="submenu.megamenu_type == '3_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu p-0 %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="megamenu_pages" t-value="website.get_pages_megamenu_pro_pages(submenu)"/>
+                        <!-- right-hidden add this class when add_static_image not ticked-->
+                        <!-- change-direction add this class to static image set to left-->
+                        <div t-attf-class="row menu-main-wrapper #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '1' else ''}">
+                            <t t-if="not megamenu_pages">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="submenu and megamenu_pages">
+                                <div class="col-lg-9 left-menu" >
+                                    <div class="row main-row">
+                                        <t t-as="page" t-foreach="megamenu_pages">
+                                            <div class="col-sm-4 menu-block-wrapper">
+                                                <a t-att-href="page.url" class="main-block-link">
+                                                    <div class="d-flex menu-block">
+                                                        <div class="inner-menu-icon" t-if="page.display_icon">
+                                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
+                                                        </div>
+                                                        <div class="menu-disc">
+                                                            <h2 class="title"><t t-out="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 right-menu">
+                                    <div class="right-menu-inner">
+                                        <div class="right-image">
+                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
+                                            <!-- <img src="https://www.biztechcs.com/wp-content/uploads/2022/11/Salesforce-tab.svg"  alt="" title=""/> -->
+                                        </div>
+                                        <div t-if="submenu.static_image_content" class="right-content">
+                                            <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row" t-if="megamenu_pages and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+                <!-- 4 Column -->
+                <t t-if="submenu.megamenu_type == '4_col'">
+                    <ul t-att-class="'dropdown-menu mega-dropdown-menu p-0 %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
+                        <t t-set="megamenu_pages" t-value="website.get_pages_megamenu_pro_pages(submenu)"/>
+                        <!-- right-hidden add this class when add_static_image not ticked-->
+                        <!-- change-direction add this class to static image set to left-->
+                        <div t-attf-class="row menu-main-wrapper #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '1' else ''}">
+                            <t t-if="not megamenu_pages">
+                                <div class="dropdown-header mm-message" t-att-style="'color: %s' %(submenu.main_category_color) if submenu.customize_menu_colors and submenu.main_category_color else ''">Still, No pages assigned to this menu.!!!
+                                    </div>
+                            </t>
+                            <t t-if="submenu and megamenu_pages">
+                                <div class="col-lg-9 left-menu" >
+                                    <div class="row main-row">
+                                        <t t-as="page" t-foreach="megamenu_pages">
+                                            <div class="col-sm-3 menu-block-wrapper">
+                                                <a t-att-href="page.url" class="main-block-link">
+                                                    <div class="d-flex menu-block">
+                                                        <div class="inner-menu-icon" t-if="page.display_icon">
+                                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
+                                                        </div>
+                                                        <div class="menu-disc">
+                                                            <h2 class="title"><t t-out="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 right-menu">
+                                    <div class="right-menu-inner">
+                                        <div class="right-image">
+                                            <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
+                                            <!-- <img src="https://www.biztechcs.com/wp-content/uploads/2022/11/Salesforce-tab.svg"  alt="" title=""/> -->
+                                        </div>
+                                        <div t-if="submenu.static_image_content" class="right-content">
+                                            <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="row" t-if="megamenu_pages and submenu.display_menu_footer">
+                            <div class="footer">
+                                <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
+                            </div>
+                        </div>
+                    </ul>
+                </t>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="template_header_magazine_inherit" inherit_id="website.template_header_hamburger" name="Template Header Magazine Inherit">
+        <xpath expr="//t[@t-set='_navbar_classes']" position="replace">
+             <t t-set="_navbar_classes" t-valuef="d-none d-lg-block shadow-sm hamburger_navbar_expand"/>
+        </xpath>
+        <xpath expr="//div[@id='top_menu_collapse']" position="attributes">
+            <attribute name="class" add="magazine_megamenu_custom" separator=" "/>
+        </xpath>
+    </template>
+
+    <template id="template_header_hamburger_full_inherit" inherit_id="website.template_header_hamburger" name="Template Header Hambuger Full Inherit">
+        <xpath expr="//div[@id='top_menu_collapse']" position="attributes">
+            <attribute name="class" add="hamburger_megamenu_custom" separator=" "/>
+        </xpath>
+    </template>
+
+</odoo>
