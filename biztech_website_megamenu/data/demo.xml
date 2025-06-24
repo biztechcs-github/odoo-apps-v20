@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>        
+    <data noupdate="1">
         <!-- Menu-1 -->
-       <!--  <record model="website.menu" id="website_megamenu_submenu_first_category">
+       <record model="website.menu" id="website_megamenu_submenu_first_category">
             <field name="name">Menu 1</field>
             <field name="url">/</field>
-            <field name="website_id" ref="website.default_website"/>
             <field name="parent_id" ref="website.main_menu"/>
             <field name="sequence" type="int">21</field>
             <field name="is_megamenu">True</field>
@@ -19,18 +18,8 @@
             <field name="megamenu_bg_color">white</field>
             <field name="main_category_color">black</field>
             <field name="sub_category_color">black</field>
-            <field name="special_feature">category_slider</field>
             <field name="static_image" type="base64" file="biztech_website_megamenu/static/src/img/menu-image.jpg"/>
             <field name="category_ids" eval="[(6,0,[ref('website_sale.public_category_drawers'),ref('website_sale.public_category_desks'),ref('website_sale.public_category_desks_components'), ref('website_sale.public_category_furnitures'),ref('website_sale.public_category_furnitures_chairs'),ref('website_sale.public_category_furnitures_couches')])]"/>
-        </record> -->
-
-
-        <record model="website.menu" id="website_megamenu_submenu_first_category">
-            <field name="name">Menu 1</field>
-            <field name="url">/menu1</field>
-            <field name="parent_id" ref="website.main_menu"/>
-            <field name="sequence" type="int">201</field>
-            <field name="website_id" ref="website.default_website"/>
         </record>
 
         <!-- Menu-2 -->
