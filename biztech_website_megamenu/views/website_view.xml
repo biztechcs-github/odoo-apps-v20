@@ -62,8 +62,8 @@
                                 
                                 <field invisible="display_menu_footer == False" required="display_menu_footer == True" name="menu_footer" widget="html" options="{'style-inline': true, 'codeview': true, 'dynamic_placeholder': true}" class="oe-bordered-editor"/>
 
-                                <field invisible="megamenu_view_type not in ['pages_megamenu', 'pages_megamenu_pro','pages_megamenu_pro_max','pages_category_megamenu']" name="add_static_image"/>
-                                <field invisible="add_static_image == False or megamenu_view_type in ['list_cat_megamenu']" name="special_feature"/>
+                                <field invisible="megamenu_view_type not in ['pages_megamenu', 'pages_megamenu_pro','pages_megamenu_pro_max','pages_category_megamenu','cat_megamenu']" name="add_static_image"/>
+                                <field invisible="megamenu_view_type not in ['cat_megamenu']" name="special_feature"/>
 
                                 <field invisible="special_feature not in ['category_slider']" name="carousel_header_name"/>
 
@@ -89,7 +89,7 @@
                         <page string="Pages Configuration" invisible="is_megamenu == False or parent_id == False or megamenu_view_type not in ['pages_megamenu_pro', 'pages_category_megamenu']">
                           <group>
                             <group style="width:100%">
-                                <field name="page_ids" domain="[('id','!=',id),('parent_id','!=',False)]"/>
+                                <field name="page_ids"/>
                             </group>
                           </group>
                         </page>

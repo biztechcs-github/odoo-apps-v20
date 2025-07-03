@@ -32,13 +32,13 @@
                                                             <tr>
                                                                 <td align="left">
                                                                     <t t-if="o.company_id.invoice_logo">
-                                                                        <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;"/>
+                                                                         <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%; padding-right: 10px;"/>
                                                                     </t>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </td>
-                                                    <td align="right" style="width:80%;" valign="top">
+                                                    <td align="right" style="width:50%;" valign="top">
                                                         <p t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; text-align:center; text-transform:uppercase; width:50%;font-size:40px;padding:5px">
                                                             <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
                                                             <span t-attf-style="font-size:35px;" t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>

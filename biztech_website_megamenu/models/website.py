@@ -131,5 +131,7 @@ class Website(models.Model):
 
     # For pages megamenu pro
     def get_pages_megamenu_pro_pages(self, submenu):
+        # Re-fetch the submenu record to ensure fresh data
+        self.env.cr.execute("SELECT id FROM website_menu WHERE id = %s", (submenu.id,))
         menu = self.env['website.menu'].sudo().browse(submenu.id)
         return menu.page_ids

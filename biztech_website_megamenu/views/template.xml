@@ -72,9 +72,9 @@
                                         </li>
                                     </div>
                                 </t>
-                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
+                                <t t-if="submenu.static_image and submenu.add_static_image">
                                     <div class="col-lg-3 col-xs-12 cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
-                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image and submenu.add_static_image" loading=""/>
                                     </div>
                                 </t>
                                 <div t-att-class="'col-lg-9 col-xs-12 cat_sub_menu_div_right' if submenu.special_feature in ['category_slider'] or (submenu.special_feature in ['static_image'] and submenu.static_image) else 'col-md-12'">
@@ -197,7 +197,7 @@
                                 </div>
                                 <t t-set="counter" t-value="0"/>
                                 <t t-as="category" t-foreach="product_categories">
-                                    <div t-att-class="'col-ld-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-lg-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_right'" t-att-name="category.id">
+                                    <div t-att-class="'col-lg-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-lg-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_right'" t-att-name="category.id">
                                         <div class="row letter-spacing">
                                             <t t-as="categ" t-foreach="category.child_id">
                                                 <t t-if='categ.id in cat_sub_menu_list'>
@@ -301,9 +301,9 @@
                                         </li>
                                     </div>
                                 </t>
-                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
-                                    <div class="col-lg-3 col-xs-12 cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
-                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image and submenu.add_static_image">
+                                    <div class="col-lg-3 col-xs-12 cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2'  else ''">
+                                        <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image and submenu.add_static_image" loading=""/>
                                     </div>
                                 </t>
                                 <div t-att-class="'col-lg-9 col-xs-12 cat_sub_menu_div_right' if submenu.special_feature in ['category_slider'] or (submenu.special_feature in ['static_image'] and submenu.static_image) else 'col-md-12'">
@@ -535,7 +535,7 @@
                                         </li>
                                     </div>
                                 </t>
-                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
+                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image and submenu.add_static_image">
                                     <div class="col-lg-3 col-xs-12 submenu_div_pages cat_sub_menu_div_left" t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
                                         <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
                                     </div>
@@ -742,7 +742,7 @@
                                 <div class="col-lg-3 col-xs-12 letter-spacing submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '1'">
                                     <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
                                 </div>
-                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12'">
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12 submenu_div_pages'">
                                     <div class="row  letter-spacing">
                                         <t t-as="page" t-foreach="megamenu_pages">
                                             <li class="col-sm-6 inline-block">
@@ -782,7 +782,7 @@
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-xs-12 letter-spacing submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '2'">
+                                <div class="col-lg-3 col-xs-12 letter-spacing submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.add_static_image and submenu.static_image_position == '2'">
                                     <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
                                 </div>
                             </t>
@@ -807,7 +807,7 @@
                                 <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '1'">
                                     <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
                                 </div>
-                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12'">
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12 submenu_div_pages'">
                                     <div class="row letter-spacing">
                                         <t t-as="page" t-foreach="megamenu_pages">
                                             <li class="col-sm-4 inline-block">
@@ -846,7 +846,7 @@
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '2'">
+                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.add_static_image and submenu.static_image_position == '2'">
                                     <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
                                 </div>
                             </t>
@@ -871,7 +871,7 @@
                                 <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '1'">
                                     <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
                                 </div>
-                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12'">
+                                <div t-att-class="'col-lg-9 col-xs-12 submenu_div_pages' if submenu.add_static_image and submenu.static_image else 'col-md-12 col-xs-12 submenu_div_pages'">
                                     <div class="row letter-spacing">
                                         <t t-as="page" t-foreach="megamenu_pages">
                                             <li class="col-sm-3 inline-block">
@@ -910,7 +910,7 @@
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.static_image_position == '2'">
+                                <div class="col-lg-3 col-xs-12 submenu_div_pages" t-if="submenu.add_static_image and submenu.static_image and submenu.add_static_image and submenu.static_image_position == '2'">
                                     <img class="img-responsive" t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" loading=""/>
                                 </div>
                             </t>
@@ -949,19 +949,19 @@
                         <t t-if="product_categories and submenu.megamenu_view_type in ['pages_megamenu_pro_max']">
                             <div class="menu-wrapper-inner">
                                 <div class="menu-top">                                       
-                                    <div t-attf-class="row top-inner #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '1' else ''}">
-                                        <div class="col-lg-5 left-side" >
+                                    <div t-attf-class="row top-inner #{'right-hidden' if not submenu.add_static_image else ''} #{'change-direction' if submenu.add_static_image and submenu.static_image_position == '2' else ''}">
+                                        <div class="col-lg-5 left-side" t-if="submenu.static_image and submenu.add_static_image">
                                             <div class="left-image">
-                                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image">
-                                                    <div t-att-style="'order: %s' % submenu.static_image_position if submenu.static_image_position == '2' else ''">
-                                                        <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image" loading=""/>
+                                                <t t-if="submenu.special_feature in ['static_image'] and submenu.static_image and submenu.add_static_image">
+                                                    <div t-att-style="'order: %s' % submenu.static_image_position if submenu.add_static_image else ''">
+                                                        <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')" t-if="submenu.static_image and submenu.add_static_image" loading=""/>
                                                         <h2 class="image-title">
                                                         <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/></h2>
                                                     </div>
                                                 </t>
                                             </div>
                                         </div>
-                                        <div class="col-lg-7 right-side" >              
+                                        <div t-attf-class="#{'col-lg-7' if submenu.static_image and submenu.add_static_image else 'col-lg-12'} right-side" >
                                             <div class="right-inner">
                                                 <t t-as="category" t-foreach="product_categories">
                                                     <div t-if='not category.parent_id' class="col-md-4 menu-block inline-block">
@@ -1022,11 +1022,11 @@
                                         </div>
                                     </div> 
                                 </div>
-                                <div class="container-fluid menu-bottom footer">
+                                <div class="container-fluid menu-bottom footer" t-if="submenu.display_menu_footer">
                                     <div class="bottom-disc">
                                         <div class="footer">
                                             <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
-                                            <a t-att-href="'/shop'" style="color:black;">shop all</a>
+                                            <!-- <a t-att-href="'/shop'" style="color:black;">shop all</a> -->
                                         </div>
                                     </div>
                                 </div>
@@ -1046,7 +1046,7 @@
                     <span class="fa fa-angle-down" t-ignore="true"/>
                 </a>
                 <!-- Use to set color when the image was not assign -->
-                <t t-set="mega_bg" t-value="'background: url(%s);' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
+                <t t-set="mega_bg" t-value="'background: url(%s) !important;' % website.image_url(submenu, 'megamenu_bg_image') if submenu.megamenu_bg_image else 'background-color: #ffffff;'"/>
                 <ul t-att-class="'dropdown-menu mega-dropdown-menu p-0 %s' %(submenu.megamenu_view_type)" t-att-style="'%s background-size: cover;' % (mega_bg) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_img' else '' 'background: %s !important;' % (submenu.megamenu_bg_color) if submenu.megamenu_bg and submenu.megamenu_bg_img_color == 'bg_color' else ''">
                     <t t-set="megamenu_pages" t-value="website.get_pages_megamenu_pro_pages(submenu)"/>
                     <t t-set="product_categories" t-value="submenu.category_ids"/>
@@ -1065,18 +1065,19 @@
                                 <ul class="left-menu-list" >
                                     <t t-as="page" t-foreach="megamenu_pages">
                                         <li class="menu-block-wrapper">
-                                            <a t-att-href="page.url" class="main-block-link">
+                                            <!-- <t t-if="page.url != '/contactus' and page.url != '/shop'"> -->
+                                                <a t-att-href="page.url" class="main-block-link">
                                                 <div class="menu-block">
-                                                    <div class="d-flex top" t-if="page.display_icon">
-                                                        
-                                                        <img  t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
+                                                    <div class="d-flex top" >
+                                                        <img  t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading="" t-if="page.display_icon"/>
                                                         <h2 class="title"><t t-out="page.name"/></h2>
                                                     </div>
-                                                    <div class="bottom">
-                                                        <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                    <div class="bottom" t-if="page.megamenu_page_description">
+                                                        <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
                                                     </div>
                                                 </div>
                                             </a>
+                                            <!-- </t> -->
                                         </li>
                                     </t>
                                 </ul>
@@ -1143,7 +1144,7 @@
                                             </t>                                        
                                         </ul>  
                                     </div>
-                                    <div class="col-md-4 right">
+                                    <div class="col-md-4 right" t-if="submenu.static_image and submenu.add_static_image">
                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
                                         <div t-if="submenu.static_image_content" >
                                             <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
@@ -1156,7 +1157,7 @@
                     <div class=" footer-wrapper" t-if="megamenu_pages and submenu.display_menu_footer">
                         <div class="footer">
                             <t t-out="submenu.menu_footer" t-options="{'widget': 'html'}"/>
-                            <a t-att-href="'/shop'" style="color:black;">shop all</a>
+                            <!-- <a t-att-href="'/shop'" style="color:black;">shop all</a> -->
                         </div>
                     </div>
                 </ul>
@@ -1189,14 +1190,14 @@
                                     <div class="row main-row">
                                         <t t-as="page" t-foreach="megamenu_pages">
                                             <div class="col-sm-6 menu-block-wrapper">
-                                                <a t-att-href="page.url" class="main-block-link">
+                                                    <a t-att-href="page.url" class="main-block-link">
                                                     <div class="d-flex menu-block">
                                                         <div class="inner-menu-icon" t-if="page.display_icon">
                                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
                                                         </div>
                                                         <div class="menu-disc">
-                                                            <h2 class="title"><t t-out="page.name"/></h2>
-                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                             <h2 class="title"><t t-esc="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -1204,11 +1205,10 @@
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 right-menu">
+                                <div class="col-lg-3 right-menu" t-if="submenu.add_static_image and submenu.add_static_image">
                                     <div class="right-menu-inner">
-                                        <div class="right-image">
+                                        <div class="right-image" t-if="submenu.add_static_image and submenu.static_image">
                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
-                                            <!-- <img src="https://www.biztechcs.com/wp-content/uploads/2022/11/Salesforce-tab.svg"  alt="" title=""/> -->
                                         </div>
                                         <div t-if="submenu.static_image_content" class="right-content">
                                             <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
@@ -1246,8 +1246,8 @@
                                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
                                                         </div>
                                                         <div class="menu-disc">
-                                                            <h2 class="title"><t t-out="page.name"/></h2>
-                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                             <h2 class="title"><t t-esc="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -1255,9 +1255,9 @@
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 right-menu">
+                                <div class="col-lg-3 right-menu" t-if="submenu.add_static_image and submenu.add_static_image">
                                     <div class="right-menu-inner">
-                                        <div class="right-image">
+                                        <div class="right-image" t-if="submenu.add_static_image and submenu.static_image">
                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
                                             <!-- <img src="https://www.biztechcs.com/wp-content/uploads/2022/11/Salesforce-tab.svg"  alt="" title=""/> -->
                                         </div>
@@ -1297,8 +1297,8 @@
                                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
                                                         </div>
                                                         <div class="menu-disc">
-                                                            <h2 class="title"><t t-out="page.name"/></h2>
-                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
+                                                            <h2 class="title"><t t-esc="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -1306,9 +1306,9 @@
                                         </t>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 right-menu">
+                                <div class="col-lg-3 right-menu" t-if="submenu.add_static_image and submenu.add_static_image">
                                     <div class="right-menu-inner">
-                                        <div class="right-image">
+                                        <div class="right-image" t-if="submenu.add_static_image and submenu.add_static_image">
                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
                                             <!-- <img src="https://www.biztechcs.com/wp-content/uploads/2022/11/Salesforce-tab.svg"  alt="" title=""/> -->
                                         </div>

@@ -16,11 +16,11 @@
     </template>
 
     <template id="header_invoice_6">
-            <div class="header container" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+            <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="row">
                     <div class="col-9">
                         <t t-if="o.company_id.invoice_logo">
-                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;"/>
+                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;"/>
                         </t>
                     </div>
                     <div class="col-3">

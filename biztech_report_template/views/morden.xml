@@ -18,9 +18,9 @@
 
     <template id="report_header2">
         <div class="header clearfix" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
-            <div style="float:left">
+            <div style="float:left; width: 27%;">
                 <t t-if="o.company_id.invoice_logo">
-                     <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/>
+                     <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;"/>
                 </t>
             </div>
             <div style="float:right; width:60%;">
@@ -93,7 +93,10 @@
         </div>
     </template>
     <template id="report_main_h2">
-            <div class="container" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+            <div>
+                <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; width:100%;"/>
+            </div>
+            <div class="container-fluid" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="row">
                     <div class="col-5" style="margin-top:1.5%;margin-right:5px; margin-left:5px;">
                         <t t-call="biztech_report_template.invoice_templates_customer_details"/>

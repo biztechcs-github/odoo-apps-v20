@@ -16,12 +16,15 @@
     </template>
     <template id="purchase_template_header">
         <div class="header" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
-            <div style="float:left">
+            <div  style="float:left; width:25%;">
                 <t t-if="o.company_id.invoice_logo">
-                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/>
+                    <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
+                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
+                             alt="Company Logo"
+                             style="height: auto; max-width: 100%;"/>
                 </t>
             </div>
-            <div style="float:right; width:67%;">
+            <div  style="float:right; width:67%;">
                 <div t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; width:100%">
                     <table class="table table-borderless" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'};font-weight:bold;text-align:center;font-size:28px; position: relative; margin-bottom: 0;">
                             <tr>
@@ -79,14 +82,14 @@
                 <div width="100%">
                     <!-- <div width="100%"> -->
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-5">
+                            <div class="row" style="width: 100%;">
+                                <div class="col-4">
                                     <t t-call="general_template.templates_customer_details"/>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4" style="padding-left: 20px;">
                                     <t t-call="general_template.templates_warehouse_details"/>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4" style="padding-left: 20px;">
                                     <t t-call="general_template.templates_company_details"/>
                                 </div>
                             </div>

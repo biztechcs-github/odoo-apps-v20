@@ -16,9 +16,12 @@
     </template>
     <template id="sale_creative_header">
         <div class="header container-fluid" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
-            <div style="float:left">
+            <div style="float:left; width: 23%;">
                 <t t-if="o.company_id.invoice_logo">
-                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/>
+                    <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
+                     <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
+                             alt="Company Logo"
+                             style="height: auto; max-width: 100%;"/>
                 </t>
             </div>
             <div style="float:right; width:65%;">
@@ -89,7 +92,7 @@
                 
                 <div class="container-fluid" style="padding:10px">
                     <div>
-                        <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'};"/>
+                        <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; width:100%;"/>
                     </div>
                     <div class="row" style="margin-top:2%">
                         <div class="col-8">

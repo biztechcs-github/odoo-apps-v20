@@ -25,7 +25,7 @@ header .container { position: relative; }
 .li-mega-menu .inline-block > ul > li.first-category > ul > li > a { color: #000; padding: 5px 0; display: inline-block; vertical-align: top; width: 100%; }
 .li-mega-menu .inline-block > ul > li.first-category > ul > li:hover > a { color: #333; }
 .li-mega-menu .inline-block > ul > li.first-category.has_child > a { position: relative; padding-right: 5px;/* display: block;*/ }
-.li-mega-menu .inline-block > ul > li.first-category.has_child > span.fa-chevron-right { width: 30px; height: 25px; position: absolute; right: 0; top: 2px; cursor: pointer; }
+.li-mega-menu .inline-block > ul > li.first-category.has_child > span.fa-chevron-right { width: 30px; height: 21px; position: absolute; right: 0; top: 0px; cursor: pointer; }
 .li-mega-menu .inline-block > ul > li.first-category.has_child > span.fa-chevron-right:after, .li-mega-menu .inline-block > ul > li.first-category.has_child > span.fa-chevron-right:before { content: ""; display: block; position: absolute; top: 50%; left: 0; bottom: auto; right: auto; -ms-transform-origin: 50% 50% 0; -webkit-transform-origin: 50% 50% 0; -moz-transform-origin: 50% 50% 0; transform-origin: 50% 50% 0; -webkit-transition: all 300ms ease 0s; -moz-transition: all 300ms ease 0s; -o-transition: all 300ms ease 0s; transition: all 300ms ease 0s; width: 10px; height: 1px; background-color: #21313a; box-shadow: 0 1px 1px rgba(33, 49, 58, 0.1) }
 .li-mega-menu .inline-block > ul > li.first-category.has_child >  span.fa-chevron-right:before { transform: rotate(45deg); left: 0px; right: 7.75px; margin: auto; }
 .li-mega-menu .inline-block > ul > li.first-category.has_child >  span.fa-chevron-right:after { transform: rotate(-45deg); left: 0px; right: -6.75px; margin: auto; }
@@ -858,6 +858,7 @@ body .navbar .o_extra_menu_items.show > ul > li > a.dropdown-toggle {
       }
       @media(min-width:768px){
         border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
       }
       .carousel-item{
         h4{
@@ -1309,6 +1310,10 @@ body .navbar .o_extra_menu_items.show > ul > li > a.dropdown-toggle {
     .pages_megamenu{
       .submenu_div_pages{
          width: 100%;
+         &.col-lg-3{
+          border-right: 1px solid #ddd;
+          border-left: 1px solid #ddd;
+         }
          .letter-spacing{
           margin-top: 20px;
           .inline-block{
@@ -1594,6 +1599,11 @@ body .navbar .o_extra_menu_items.show > ul > li > a.dropdown-toggle {
                     width: 100%;
                     transition: 0.3s ease-in;
                   }
+                }
+              }
+              ul{
+                li.categories{
+                  margin-bottom: 0;
                 }
               }
             }
@@ -1908,3 +1918,173 @@ header{
   }
 }
 
+header{
+  .li-mega-menu{
+    .dropdown-menu{
+      &.cat_megamenu{
+        .cat_sub_menu_div_left{
+          ul{
+            .slider_header{
+              width: 75%;
+              white-space: normal;
+            }
+          }
+         }
+      }
+      &.apt_pager_megamenu{
+        .has_child{
+          .fa-chevron-right{
+            @media (max-width: 767px) {
+              top: 12px;
+            }
+          }
+        }
+      }
+      &.list_cat_megamenu{
+        .cat-description{
+          ul{
+            .categories{
+              .fa-chevron-right{
+                display: none;
+              }
+              ul{
+                height: auto;
+                border: 0 !important;
+
+                .categories{
+                  padding-left: 12px;
+                  opacity: 1;
+                  transform: none;
+                  a{
+                    display: flex;
+                    align-items: center;
+                    font-size: 14px;
+                    position: relative;
+                    &::before{
+                      content: '';
+                      width: 8px;
+                      height: 1px;
+                      background-color: #000;
+                      margin-right: 6px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &.pages_megamenu_pro{
+        .menu-main-wrapper{
+          .left-menu{
+            .main-row{
+              align-items: start;
+            }
+          }
+        }
+      }
+      &.pages_category_megamenu{
+        background-repeat: no-repeat !important;
+        .menu-main-wrapper{
+          .right-menu{
+            .menu-list-wrapper{
+              .menu-list-block{
+                .menu-list{
+                  li{
+                    img{
+                      margin-bottom: 5px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .nav-link{
+      .fa.fa-angle-down{
+        &::after{
+          @media (max-width: 767px) {
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.navbar{
+  .o_main_nav{
+    .navbar-nav{
+      .apt_pager_megamenu{
+        &.apt_cat_megamenu{
+          .dropdown-menu{
+            .menu-main-wrapper{
+              &.right-hidden{
+                .left-menu{
+                  @media (min-width: 992px){
+                    flex: 0 0 auto;
+                    max-width: 25%;
+                  }
+                }
+                .right-menu{
+                  .right-inner{
+                    .left{
+                      flex: 0 0 100%;
+                      max-width: 100%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// header {
+//   .navbar {
+//     .o_main_nav {
+//       > .container.o_grid_header_3_cols {
+//         padding-top: 0 !important;
+//         padding-bottom: 0 !important;
+//       }
+//       .navbar-nav {
+//         height: 100%;
+//         .nav-item, .li-mega-menu {
+//           .nav-link {
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             height: 100%;
+//           }
+//         }
+//         .li-mega-menu {
+//           .dropdown-menu {
+//             .cat_sub_menu_div_right {
+//               ul {
+//                 .categories {
+//                   .fa {
+//                     display: none;
+//                   }
+//                   > ul {
+//                     height: auto;
+//                     border-bottom: 1px solid #ddd;
+
+//                     .categories {
+//                       opacity: 1;
+//                       transform: translateY(0);
+//                     }
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

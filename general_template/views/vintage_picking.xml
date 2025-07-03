@@ -17,14 +17,14 @@
         </template>
         <template id="picking_creative_header">
             <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
-                <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 0;">
                     <tbody>
                         <tr>
-                            <td>
+                            <td style="padding-left: 0; padding-right: 0;">
                                 <center>
                                     <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" width="100%">
                                         <tr>
-                                            <td align="left" colspan="2" valign="top" style="width:30%;">
+                                            <td align="left" colspan="2" valign="top" style="width:30%; padding-left: 0; padding-right: 0;">
                                                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                     <tr>
                                                         <td align="left" valign="middle">
@@ -32,13 +32,13 @@
                                                                 <tr>
                                                                     <td align="left" valign="middle">
                                                                         <t t-if="o.company_id.invoice_logo">
-                                                                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/>
+                                                                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%; padding-right: 10px;"/>
                                                                         </t>
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
-                                                        <td align="right" rowspan="3" style="width:70%;" valign="top">
+                                                        <td align="right" rowspan="3" style="width:50%;" valign="top">
                                                             <p t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; text-align:center; text-transform:uppercase; padding-top:5px; font-size:35px;margin-bottom:0;">
                                                                 Picking Operations
                                                             </p>

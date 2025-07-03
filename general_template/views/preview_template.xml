@@ -56,7 +56,7 @@
                         <tr>
                             <td align="left" style="color:#4D4D4F; padding:0 0px; margin:0;" valign="middle">
                                 <!-- <img style="max-height:45px;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;" t-if="o.company_id.invoice_logo"/>
                             </td>
                         </tr>
                     </table>
