@@ -15,7 +15,7 @@
     'summary': 'Get Diverse Invoice Templates In One Go!',
     'data': [
         'security/ir.model.access.csv',
-        # 'data/template_data.xml',
+        'data/template_data.xml',
         'views/polished.xml',
         'views/morden.xml',
         'views/vintage.xml',
