@@ -28,7 +28,7 @@ export const mega_menu = PublicWidget.Widget.extend({
                 });
             },100)
         // close opened List catefory menus on loading if its mobile view
-        if ( $(window).width() < 768) {
+        if ( $(window).width() < 992) {
             $('.main_category').each(function() {
                 var $each_header = $(this).parent().parent().find('li')
 
