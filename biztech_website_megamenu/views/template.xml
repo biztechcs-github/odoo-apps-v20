@@ -157,7 +157,7 @@
                                             <li t-att-class="'category_container mobile' if incre == 0 else 'category_container mobile o_hidden'" t-att-name="category.id">
                                                 <t t-as="categ" t-foreach="category.child_id">
                                                     <t t-if='categ.id in cat_sub_menu_list'>
-                                                        <div class="col-sm-4 inline-block">
+                                                        <div class="col-lg-4 inline-block">
                                                             <ul>
                                                                 <t t-set="is_child_avail" t-value="0"/>
                                                                 <t t-as="c1" t-foreach="categ.child_id">
@@ -376,7 +376,7 @@
                             </t>
                             <!--  Start List Category 3 column  -->
                             <t t-if="product_categories and submenu.megamenu_view_type in ['list_cat_megamenu']">
-                                <div class="col-md-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
+                                <div class="col-lg-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
                                     <ul>
                                         <t t-set="incre" t-value="0"/>
                                         <t t-as="category" t-foreach="product_categories">
@@ -389,7 +389,7 @@
                                             <li t-att-class="'category_container mobile' if incre == 0 else 'category_container mobile o_hidden'" t-att-name="category.id">
                                                 <t t-as="categ" t-foreach="category.child_id">
                                                     <t t-if='categ.id in cat_sub_menu_list_3_col'>
-                                                        <div class="col-sm-4 inline-block">
+                                                        <div class="col-lg-4 inline-block">
                                                             <ul>
                                                                 <t t-set="is_child_avail" t-value="0"/>
                                                                 <t t-as="c1" t-foreach="categ.child_id">
@@ -431,7 +431,7 @@
                                 </div>
                                 <t t-set="counter" t-value="0"/>
                                 <t t-as="category" t-foreach="product_categories">
-                                    <div t-att-class="'col-md-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-md-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_right'" t-att-name="category.id">
+                                    <div t-att-class="'col-lg-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-md-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_right'" t-att-name="category.id">
                                         <div class="row letter-spacing">
                                             <t t-as="categ" t-foreach="category.child_id">
                                                 <t t-if="categ.id in cat_sub_menu_list_3_col">
@@ -610,7 +610,7 @@
                             </t>
                             <!-- Start List Category 4 column  -->
                             <t t-if="product_categories and submenu.megamenu_view_type in ['list_cat_megamenu']">
-                                <div class="col-md-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
+                                <div class="col-lg-3 col-xs-12 cat-tabs cat_sub_menu_div_left">
                                     <ul>
                                         <t t-set="incre" t-value="0"/>
                                         <t t-as="category" t-foreach="product_categories">
@@ -623,7 +623,7 @@
                                             <li t-att-class="'category_container mobile' if incre == 0 else 'category_container mobile o_hidden'" t-att-name="category.id">
                                                 <t t-as="categ" t-foreach="category.child_id">
                                                     <t t-if="categ.id in cat_sub_menu_list_4_col">
-                                                        <div class="col-sm-4 inline-block">
+                                                        <div class="col-lg-4 inline-block">
                                                             <ul>
                                                                 <t t-set="is_child_avail" t-value="0"/>
                                                                 <t t-as="c1" t-foreach="categ.child_id">
@@ -665,7 +665,7 @@
                                 </div>
                                 <t t-set="counter" t-value="0"/>
                                 <t t-as="category" t-foreach="product_categories">
-                                    <div t-att-class="'col-md-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-md-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_left'" t-att-name="category.id">
+                                    <div t-att-class="'col-lg-9 col-xs-12 cat-description category_container cat_sub_menu_div_right' if counter == 0 else 'col-md-9 col-xs-12 cat-description letter-spacing category_container o_hidden cat_sub_menu_div_left'" t-att-name="category.id">
                                         <div class="row letter-spacing">
                                             <t t-as="categ" t-foreach="category.child_id">
                                                 <t t-if="categ.id in cat_sub_menu_list_4_col">
@@ -964,7 +964,7 @@
                                         <div t-attf-class="#{'col-lg-7' if submenu.static_image and submenu.add_static_image else 'col-lg-12'} right-side" >
                                             <div class="right-inner">
                                                 <t t-as="category" t-foreach="product_categories">
-                                                    <div t-if='not category.parent_id' class="col-md-4 menu-block inline-block">
+                                                    <div t-if='not category.parent_id' class="col-lg-4 menu-block inline-block">
                                                         <ul>
                                                             <li t-if='not category.parent_id'>
                                                                 <a t-att-href="'/shop/category/%s' % slug(category)">
@@ -1083,8 +1083,8 @@
                                 </ul>
                             </div>
                             <div class="col-lg-9 right-menu">
-                                <div class="right-inner row">                           
-                                    <div class="col-md-8 left">                                    
+                                <div class="right-inner row">
+                                    <div class="col-lg-8 left">
                                         <ul class="menu-list-wrapper">          
                                             <t t-as="category" t-foreach="product_categories">
                                                 <li class="col-12 col-sm-6 menu-list-block inline-block" t-if='not category.parent_id'>
@@ -1144,7 +1144,7 @@
                                             </t>                                        
                                         </ul>  
                                     </div>
-                                    <div class="col-md-4 right" t-if="submenu.static_image and submenu.add_static_image">
+                                    <div class="col-lg-4 right" t-if="submenu.static_image and submenu.add_static_image">
                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(submenu, 'static_image')"/>
                                         <div t-if="submenu.static_image_content" >
                                             <t t-out="submenu.static_image_content" t-options="{'widget': 'html'}"/>
@@ -1239,7 +1239,7 @@
                                 <div class="col-lg-9 left-menu" >
                                     <div class="row main-row">
                                         <t t-as="page" t-foreach="megamenu_pages">
-                                            <div class="col-sm-4 menu-block-wrapper">
+                                            <div class="col-sm-6 col-lg-4 menu-block-wrapper">
                                                 <a t-att-href="page.url" class="main-block-link">
                                                     <div class="d-flex menu-block">
                                                         <div class="inner-menu-icon" t-if="page.display_icon">
@@ -1290,7 +1290,7 @@
                                 <div class="col-lg-9 left-menu" >
                                     <div class="row main-row">
                                         <t t-as="page" t-foreach="megamenu_pages">
-                                            <div class="col-sm-3 menu-block-wrapper">
+                                            <div class="col-sm-6 col-lg-3 menu-block-wrapper">
                                                 <a t-att-href="page.url" class="main-block-link">
                                                     <div class="d-flex menu-block">
                                                         <div class="inner-menu-icon" t-if="page.display_icon">

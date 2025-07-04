@@ -51,10 +51,12 @@
                                 <field invisible="megamenu_view_type in ['pages_megamenu_pro_max','pages_category_megamenu']" required="is_megamenu == True and parent_id != False" name="megamenu_type"/>
                                 <field name="megamenu_bg"/>
                                 <field invisible="megamenu_bg == False" name="megamenu_bg_img_color" widget="radio"/>
-                                <field invisible="megamenu_bg == False or megamenu_bg_img_color == 'bg_color'" required="megamenu_bg != False and megamenu_bg_img_color == 'bg_img'" class="oe_avatar oe_left" name="megamenu_bg_image" widget="image"/>
+                                <field invisible="megamenu_bg == False or megamenu_bg_img_color == 'bg_color'" required="megamenu_bg != False and megamenu_bg_img_color == 'bg_img'" name="megamenu_bg_image" widget="image" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"/>
                                 <field invisible="megamenu_bg == False or megamenu_bg_img_color == 'bg_img'" required="megamenu_bg != False and megamenu_bg_img_color == 'bg_color'" name="megamenu_bg_color" placeholder="#ccc" widget="color"/>
                                 <field name="menu_icon"/>
-                                <field invisible="menu_icon == False" required="menu_icon == True" class="oe_left oe_avatar" name="menu_icon_image" widget="image"/>
+                                <field invisible="menu_icon == False" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;" required="menu_icon == True"  name="menu_icon_image" widget="image"/>
                                 <field name="customize_menu_colors"/>
                                 <field invisible="customize_menu_colors == False" required="customize_menu_colors == True" name="main_category_color" widget="color"/>
                                 <field invisible="customize_menu_colors == False" required="customize_menu_colors == True" name="sub_category_color" widget="color"/>
@@ -71,7 +73,15 @@
 
                                 <field invisible="special_feature not in ['static_image'] or add_static_image == False or megamenu_view_type == 'list_cat_megamenu'" name="static_image_position" widget="radio" force_save="1"/>
 
-                                <field invisible="add_static_image == False or megamenu_view_type == 'list_cat_megamenu' or special_feature not in ['static_image']" required="megamenu_view_type == 'pages_megamenu_pro'" class="oe_avatar oe_left" name="static_image" widget="image"/>
+                                <field
+                                    name="static_image"
+                                    widget="image"
+                                    invisible="add_static_image == False or megamenu_view_type == 'list_cat_megamenu' or special_feature not in ['static_image']"
+                                    required="megamenu_view_type == 'pages_megamenu_pro'"
+                                    class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"
+                                />
+
 
                                 <field invisible="special_feature not in ['static_image'] or add_static_image == False or megamenu_view_type not in ['pages_megamenu_pro','pages_megamenu_pro_max','pages_category_megamenu']" name="static_image_content" widget="html" class="oe-bordered-editor" options="{'style-inline': true, 'codeview': true, 'dynamic_placeholder': true}"/>
 
