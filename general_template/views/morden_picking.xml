@@ -15,9 +15,12 @@
     </template>
     <template id="template_picking_header">
         <div class="header" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
-            <div style="float:left">
+            <div style="float:left; width:18%;">
                 <t t-if="o.company_id.invoice_logo">
-                   <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/>
+                   <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
+                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
+                             alt="Company Logo"
+                             style="height: auto; max-width: 100%;"/>
                 </t>
             </div>
             <div style="float:right; width:70%;">

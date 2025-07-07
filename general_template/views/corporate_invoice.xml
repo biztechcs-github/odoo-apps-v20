@@ -16,11 +16,14 @@
             <t t-call="general_template.template_footer"/>
         </template>
         <template id="exclusive_header">
-            <div class="header container" style="width:100%;height:10%" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+            <div class="header" style="width:100%;height:10%" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="row">
                     <div class="col-9">
                         <t t-if="o.company_id.invoice_logo">
-                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/>
+                            <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
+                             <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
+                             alt="Company Logo"
+                             style="height: auto; max-width: 100%;"/>
                         </t>
                     </div>
                     <div class="col-3">

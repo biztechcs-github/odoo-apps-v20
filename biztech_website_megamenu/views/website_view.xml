@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="custom_menu_tree" model="ir.ui.view">
+        <field name="name">website.menu.tree.add.ismegameu</field>
+        <field name="model">website.menu</field>
+        <field name="inherit_id" ref="website.menu_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="is_megamenu"/>
+            </field>
+            <xpath expr="//list" position="attributes">
+                <attribute name="editable"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Product Category -->
+    <record id="website.website_menus_form_view" model="ir.ui.view">
+        <field name="name">Website Menu Form View Inherited</field>
+        <field name="model">website.menu</field>
+        <!-- <field name="field_parent">child_id</field> -->
+        <field name="arch" type="xml">
+            <form string="Website menu">
+                <sheet>
+                    <group>
+                        <field name="website_id" options="{'no_create': True}"/>
+                        <field name="name"/>
+                        <field name="url"/>
+                        <field name="new_window"/>
+                        <field name="display_icon" widget="image"/>
+                        <field name="megamenu_page_description"/>
+                        <field name="id" invisible="1"/>
+                        <field name="parent_id"/>
+                    </group>
+                    <group invisible="parent_id == False or is_megamenu == True">
+                        <label for='is_mega_menu' string='Odoo Megamenu?'/>
+                        <field name="is_mega_menu" nolabel="1"/>
+                    </group>
+                    <group invisible="parent_id == False or is_mega_menu == True">
+                        <label for='is_megamenu' string='Appjetty Megamenu?'/>
+                        <field name="is_megamenu" nolabel="1"/>
+                    </group>
+                    
+                    <notebook>
+                        <page string="General Setting" invisible="is_megamenu == False or parent_id == False">
+                            <group invisible="is_megamenu == False or parent_id == False">
+                                <field required="is_megamenu == True and parent_id != False" name="megamenu_view_type"/>
+                            </group>
+                            <group invisible="is_megamenu == False or parent_id == False or megamenu_view_type == False" string="Configuration">
+                                <field invisible="megamenu_view_type in ['pages_megamenu_pro_max','pages_category_megamenu']" required="is_megamenu == True and parent_id != False" name="megamenu_type"/>
+                                <field name="megamenu_bg"/>
+                                <field invisible="megamenu_bg == False" name="megamenu_bg_img_color" widget="radio"/>
+                                <field invisible="megamenu_bg == False or megamenu_bg_img_color == 'bg_color'" required="megamenu_bg != False and megamenu_bg_img_color == 'bg_img'" name="megamenu_bg_image" widget="image" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"/>
+                                <field invisible="megamenu_bg == False or megamenu_bg_img_color == 'bg_img'" required="megamenu_bg != False and megamenu_bg_img_color == 'bg_color'" name="megamenu_bg_color" placeholder="#ccc" widget="color"/>
+                                <field name="menu_icon"/>
+                                <field invisible="menu_icon == False" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;" required="menu_icon == True"  name="menu_icon_image" widget="image"/>
+                                <field name="customize_menu_colors"/>
+                                <field invisible="customize_menu_colors == False" required="customize_menu_colors == True" name="main_category_color" widget="color"/>
+                                <field invisible="customize_menu_colors == False" required="customize_menu_colors == True" name="sub_category_color" widget="color"/>
+                                <field name="display_menu_footer"/>
+                                
+                                <field invisible="display_menu_footer == False" required="display_menu_footer == True" name="menu_footer" widget="html" options="{'style-inline': true, 'codeview': true, 'dynamic_placeholder': true}" class="oe-bordered-editor"/>
+
+                                <field invisible="megamenu_view_type not in ['pages_megamenu', 'pages_megamenu_pro','pages_megamenu_pro_max','pages_category_megamenu','cat_megamenu']" name="add_static_image"/>
+                                <field invisible="megamenu_view_type not in ['cat_megamenu']" name="special_feature"/>
+
+                                <field invisible="special_feature not in ['category_slider']" name="carousel_header_name"/>
+
+                                <field invisible="special_feature not in ['category_slider']" name="category_slider_position"/>
+
+                                <field invisible="special_feature not in ['static_image'] or add_static_image == False or megamenu_view_type == 'list_cat_megamenu'" name="static_image_position" widget="radio" force_save="1"/>
+
+                                <field
+                                    name="static_image"
+                                    widget="image"
+                                    invisible="add_static_image == False or megamenu_view_type == 'list_cat_megamenu' or special_feature not in ['static_image']"
+                                    required="megamenu_view_type == 'pages_megamenu_pro'"
+                                    class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"
+                                />
+
+
+                                <field invisible="special_feature not in ['static_image'] or add_static_image == False or megamenu_view_type not in ['pages_megamenu_pro','pages_megamenu_pro_max','pages_category_megamenu']" name="static_image_content" widget="html" class="oe-bordered-editor" options="{'style-inline': true, 'codeview': true, 'dynamic_placeholder': true}"/>
+
+                                <field invisible="megamenu_view_type not in ['cat_megamenu']" name="display_category_image"/>
+                                <field invisible="display_category_image == False" name="category_image_position" widget="radio"/>
+                            </group>
+                        </page>
+                        <page string="Category Configuration" invisible="is_megamenu == False or parent_id == False or megamenu_view_type not in ['cat_megamenu','list_cat_megamenu','pages_megamenu_pro_max','pages_category_megamenu']">
+                          <group>
+                            <group style="width:100%">
+                                <field name="category_ids"/>
+                            </group>
+                          </group>
+                        </page>
+                        <page string="Pages Configuration" invisible="is_megamenu == False or parent_id == False or megamenu_view_type not in ['pages_megamenu_pro', 'pages_category_megamenu']">
+                          <group>
+                            <group style="width:100%">
+                                <field name="page_ids"/>
+                            </group>
+                          </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="website.action_website_menu" model="ir.actions.act_window">
+        <field name="name">Website Menu</field>
+        <field name="res_model">website.menu</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_my_websites':1}</field>
+    </record>
+</odoo>
