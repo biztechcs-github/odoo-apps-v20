@@ -31,7 +31,7 @@
         ''',
     'summary': 'Get Smooth & Simple Site Navigation',
     'category': 'Website',
-    'version': '17.0',
+    'version': '18.0',
     'author': 'AppJetty',
     'license': 'OPL-1',
     'website': 'https://www.appjetty.com',
@@ -48,8 +48,8 @@
     'application': True,
     'images': ['static/description/splash-screen.png'],
     'application': True,
-    'price': 49.00,
-    'currency': 'EUR',
+    'price': 79.00,
+    'currency': 'USD',
     'assets': {
         'web.assets_frontend': [
             '/biztech_website_megamenu/static/src/scss/style.scss',
