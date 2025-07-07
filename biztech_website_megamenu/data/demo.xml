@@ -9,7 +9,7 @@
             <field name="sequence" type="int">21</field>
             <field name="is_megamenu">True</field>
             <field name="megamenu_bg">True</field>
-             <field name="megamenu_view_type">list_cat_megamenu</field>
+            <field name="megamenu_view_type">cat_megamenu</field>
             <field name="customize_menu_colors">True</field>
             <field name="special_feature">category_slider</field>
             <field name="display_menu_footer">True</field>

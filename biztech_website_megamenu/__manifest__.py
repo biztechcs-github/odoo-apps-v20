@@ -31,7 +31,7 @@
         ''',
     'summary': 'Get Smooth & Simple Site Navigation',
     'category': 'Website',
-    'version': '18.0',
+    'version': '1.0',
     'author': 'AppJetty',
     'license': 'OPL-1',
     'website': 'https://www.appjetty.com',
