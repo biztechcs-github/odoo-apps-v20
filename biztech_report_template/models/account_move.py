@@ -64,7 +64,7 @@ class AccountInvoice(models.Model):
         return report_id
 
     @api.depends('partner_id')
-    def _default_report_template1(self):
+    def _default_report_template1_customisation(self):
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search(
             [('model', '=', 'account.move'), ('report_name', '=', 'biztech_report_template.report_main_invoice_1')])
@@ -205,8 +205,8 @@ class AccountInvoice(models.Model):
             res = formatLang(self.env, amount_to_show, currency_obj=currency)
         return res
 
-    report_template_inv_id1 = fields.Many2one('ir.actions.report', string="Invoice Template1", compute='_default_report_template1', help="Please select Template report for Invoice", domain=[('model', '=', 'account.move')])
-    report_template_inv_id = fields.Many2one('ir.actions.report', string="Invoice Template", help="Please select Template report for Invoice", domain=[('model', '=', 'account.move')])
+    report_template_inv_id1 = fields.Many2one('ir.actions.report', string="Invoice Template1", compute='_default_report_template1_customisation', help="Please select Template report for Invoice", domain=[('model', '=', 'account.move')])
+    report_template_inv_id = fields.Many2one('ir.actions.report', string="Invoice Report Template", help="Please select Template report for Invoice", domain=[('model', '=', 'account.move')])
     amount_to_text = fields.Char(compute='_amount_in_words',
 
                                  string='In Words', help="The amount in words")

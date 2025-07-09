@@ -87,7 +87,6 @@ class IrActionsReport(models.Model):
         return pdf_content_stream
 
     def _render_qweb_pdf_prepare_streams(self, report_ref, data, res_ids=None):
-
         # access the report details with sudo() but evaluation context as current user
         report_sudo = self._get_report(report_ref)
         if report_sudo.report_name == 'account.report_invoice' or report_sudo.report_name == 'account.report_invoice_with_payments':

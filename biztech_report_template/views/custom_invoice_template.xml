@@ -2,24 +2,24 @@
 
 <odoo>
     <template id="invoice_templates_customer_details">
-        <t t-set="customer_color" t-value="o.company_id and o.company_id.customer_color"/>
-        <t t-set="customer_address_color" t-value="o.company_id and o.company_id.customer_address_color"/>
-        <p t-attf-style="text-transform:capitalize; color: #{o.company_id and o.company_id.theme_color or '#000000'}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px;">
+        <t t-set="customer_color_template" t-value="o.company_id and o.company_id.customer_color_template"/>
+        <t t-set="customer_address_color_template" t-value="o.company_id and o.company_id.customer_address_color_template"/>
+        <p t-attf-style="text-transform:capitalize; color: #{o.company_id and o.company_id.theme_color_template or '#000000'}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px;">
             <strong t-if="o.partner_shipping_id == o.partner_id">Invoicing and shipping address:</strong>
             <strong t-if="o.partner_shipping_id != o.partner_id">Invoicing address:</strong>
         </p>
         <t t-if="o.partner_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#000000'};">
-                <t t-if="o.company_id and o.company_id.is_customer_bold">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color_template or '#000000'};">
+                <t t-if="o.company_id and o.company_id.is_customer_bold_template">
                     <strong>
                         <span t-field="o.partner_id"/>
                     </strong>
                 </t>
-                <t t-if="not o.company_id.is_customer_bold">
+                <t t-if="not o.company_id.is_customer_bold_template">
                     <span t-field="o.partner_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color or '#000000'};">
+            <p t-attf-style="color: #{customer_address_color_template or '#000000'};">
                 <span t-out="o._get_street(o.partner_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.partner_id)"/>
@@ -42,21 +42,21 @@
         </t>
     </template>
     <template id="invoice_templates_customer_shipping_details">
-        <p t-attf-style="text-transform:capitalize; color: #{o.company_id and o.company_id.theme_color or '#000000'}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px; margin-top:3px;" t-if="o.partner_shipping_id != o.partner_id">
+        <p t-attf-style="text-transform:capitalize; color: #{o.company_id and o.company_id.theme_color_template or '#000000'}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px; margin-top:3px;" t-if="o.partner_shipping_id != o.partner_id">
             <strong t-if="o.partner_shipping_id  and o.partner_shipping_id != o.partner_id">Shipping address:</strong>
         </p>
         <t t-if="o.partner_shipping_id and o.partner_shipping_id != o.partner_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#000000'};">
-                <t t-if="o.company_id and o.company_id.is_customer_bold">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color_template or '#000000'};">
+                <t t-if="o.company_id and o.company_id.is_customer_bold_template">
                     <strong>
                         <span t-field="o.partner_shipping_id"/>
                     </strong>
                 </t>
-                <t t-if="not o.company_id.is_customer_bold">
+                <t t-if="not o.company_id.is_customer_bold_template">
                     <span t-field="o.partner_shipping_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color or '#000000'};">
+            <p t-attf-style="color: #{customer_address_color_template or '#000000'};">
                 <span t-out="o._get_street(o.partner_shipping_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.partner_shipping_id)"/>
@@ -79,19 +79,19 @@
         </t>
     </template>
     <template id="templates_company_details">
-        <t t-set="company_color" t-value="o.company_id and o.company_id.company_color"/>
-        <t t-set="company_address_color" t-value="o.company_id and o.company_id.company_address_color"/>
-        <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{company_color or '#000000'};">
-            <t t-if="o.company_id and o.company_id.is_company_bold">
+        <t t-set="company_color_template" t-value="o.company_id and o.company_id.company_color_template"/>
+        <t t-set="company_address_color_template" t-value="o.company_id and o.company_id.company_address_color_template"/>
+        <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{company_color_template or '#000000'};">
+            <t t-if="o.company_id and o.company_id.is_company_bold_template">
                 <strong>
                     <span t-field="o.company_id.partner_id"/>
                 </strong>
             </t>
-            <t t-if="not o.company_id.is_company_bold">
+            <t t-if="not o.company_id.is_company_bold_template">
                 <span t-field="o.company_id.partner_id"/>
             </t>
         </span>
-        <div t-attf-style="color: #{company_address_color or '#000000'};">
+        <div t-attf-style="color: #{company_address_color_template or '#000000'};">
             <span t-out="o._get_street(o.company_id.partner_id)"/>
             <br/>
             <span t-out="o._get_address_details(o.company_id.partner_id)"/>
@@ -109,17 +109,17 @@
         </div>
     </template>
        <template id="report_main_table">
-        <div class="main" style="margin-top:1%;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+        <div class="main" style="margin-top:1%;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
             
             <table class="table table-striped" style="margin-top:1%;border: 2px solid #ddd;border-radius: 8px;padding:8px;text-transform:capitalize;text-align:left" width="100%">
               <thead>
-                <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                     <th style="border-bottom:2px solid #ddd">Sr.</th>
-                    <t t-if="o.company_id.add_product_image">
+                    <t t-if="o.company_id.add_product_image_template">
                         <th style="border-bottom:2px solid #ddd">Image</th>
                     </t>
                     <th style="border-bottom:2px solid #ddd">Item</th>
-                    <t t-if="o.company_id.is_description">
+                    <t t-if="o.company_id.is_description_template">
                         <th style="border-bottom:2px solid #ddd">Description</th>
                     </t>
                     <th style="border-bottom:2px solid #ddd">Price</th>
@@ -129,17 +129,17 @@
                     <th style="border-bottom:2px solid #ddd">Total</th>
                 </tr>
               </thead>
-              <tbody t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">
+              <tbody t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};">
                 <t t-as="l" t-foreach="o.invoice_line_ids">
                     <tr>
                         <td><t t-out="l_index+1"/></td>
-                        <t t-if="o.company_id.add_product_image">
+                        <t t-if="o.company_id.add_product_image_template">
                             <td class="text-right" t-att-style="'height:10%;width:10%;padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
                                 <span t-field="l.product_id.image_1920" t-if="l.product_id and l.product_id.image_1920" t-options="{&quot;widget&quot;:&quot;image&quot;,&quot;class&quot;:&quot;img-rounded&quot;}"/>
                             </td>
                         </t>
                         <td><span t-field="l.product_id and l.product_id.name"/></td>
-                        <t t-if="o.company_id.is_description">
+                        <t t-if="o.company_id.is_description_template">
                             <td>
                                 <span t-field='l.name'/>
                             </td>
@@ -252,7 +252,7 @@
             </tr>
             
             <!--Total amount with all taxes-->
-            <tr class="tm_gray_bg" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+            <tr class="tm_gray_bg" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                 <td><strong>Total</strong></td>
                 <td class="text-end">
                     <strong t-out="tax_totals['total_amount_currency']"
@@ -286,7 +286,7 @@
         </t>
     </template>
     <template id="report_main_total">
-        <div class="fix" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+        <div class="fix" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
             <div id="total1" class="rows">
                 <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                     <table class="table table-striped" style="page-break-inside: avoid;">
@@ -326,7 +326,7 @@
                                         </tr>
                                 </t>
                                 <t t-if="len(payments_vals) > 0">
-                                    <tr class="border-black" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                    <tr class="border-black" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                         <td><strong>Amount Due</strong></td>
                                         <td class="text-end">
                                             <span t-field="o.amount_residual"/>
@@ -336,8 +336,8 @@
                             </t>
                         </tr>
                     </table>  
-                        <t t-if="o.company_id.add_amount_in_words == True">
-                            <span t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">Total in word:- 
+                        <t t-if="o.company_id.add_amount_in_words_template == True">
+                            <span t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};">Total in word:- 
                                 <t t-out="o.amount_to_text"/>
                             </span>
                         </t> 
@@ -345,22 +345,22 @@
                     </div>
                 </div>
                 <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; padding:0px 0px 10px 0px; width:100%;"/>
+                    <p t-attf-style="border-bottom:1px solid #{theme_color_template or '#ececec'}; padding:0px 0px 10px 0px; width:100%;"/>
                 </div>
             </div>
     </template>
 
     <template id="template_watermark">
-        <t t-if="o.company_id and o.company_id.is_show_watermark">
-            <div class="watermark text-center" style="position:absolute; opacity:0.25; width:100%; height:auto; z-index:1000; -webkit-transform: rotate(-45deg); -moz-transform:rotate(-45deg); bottom:-600px; left:-100px;">
-                <t t-if="o.company_id.watermark == 'logo'">
-                    <span style="max-height: 500px; height:auto;" t-field="o.company_id.watermark_logo" t-options="{'widget':'image'}"/>
+        <t t-if="o.company_id and o.company_id.is_show_watermark_template">
+            <div class="watermark_template text-center" style="position:absolute; opacity:0.25; width:100%; height:auto; z-index:1000; -webkit-transform: rotate(-45deg); -moz-transform:rotate(-45deg); bottom:-600px; left:-100px;">
+                <t t-if="o.company_id.watermark_template == 'logo'">
+                    <span style="max-height: 500px; height:auto;" t-field="o.company_id.watermark_logo_template" t-options="{'widget':'image'}"/>
                     <!-- <img style="max-height: 500px; height:auto;" t-att-src="'data:image/png;base64,%s' %  to_text(o.company_id.watermark_logo)" t-if="o.company_id"/> -->
                 </t>
-                <t t-if="o.company_id.watermark != 'logo'">
-                    <span t-att-style="'font-size:'+str(o.company_id.watermark_text_font_size)+'em; color:'+o.company_id.watermark_text_color">
-                        <span t-field="o.company_id.watermark_text" t-if="o.company_id.watermark == 'text'"/>
-                        <span t-field="o.state" t-if="o.company_id.watermark == 'status'"/>
+                <t t-if="o.company_id.watermark_template != 'logo'">
+                    <span t-att-style="'font-size:'+str(o.company_id.watermark_text_font_size_template)+'em; color:'+o.company_id.watermark_text_color_template">
+                        <span t-field="o.company_id.watermark_text_template" t-if="o.company_id.watermark_template == 'text'"/>
+                        <span t-field="o.state" t-if="o.company_id.watermark_template == 'status'"/>
                     </span>
                 </t>
             </div>
@@ -368,9 +368,9 @@
     </template>
     
     <template id="report_footer">
-        <div t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'" t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">
-           <p t-if="o.company_id.is_show_payment_notes"> Please use the following communication for your payment : <b><span t-field="o.payment_reference"/></b></p>
-            <p t-if="o.invoice_payment_term_id.note and o.company_id.is_show_payment_description == True">
+        <div t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};">
+           <p t-if="o.company_id.is_show_payment_notes_template"> Please use the following communication for your payment : <b><span t-field="o.payment_reference"/></b></p>
+            <p t-if="o.invoice_payment_term_id.note and o.company_id.is_show_payment_description_template == True">
             <strong><span t-field="o.invoice_payment_term_id.note"/></strong>
             </p>
             <t t-if="o.invoice_payment_term_id.display_on_invoice and payment_term_details">
@@ -412,20 +412,20 @@
         <div class="container-fluid">
             <div class="row" style="page-break-inside: avoid;">
                 <div class="col-10"></div>
-                <div class="col-3" style="text-align:center;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px; '">
-                    <t t-if="o.company_id.signature">
-                        <span t-field="o.company_id.signature" t-options="{'widget':'image',
+                <div class="col-3" style="text-align:center;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px; '">
+                    <t t-if="o.company_id.signature_template">
+                        <span t-field="o.company_id.signature_template" t-options="{'widget':'image',
                         'img_style':'width:80px;height:80px','height':'80px','width':'80px'}"/>
-                        <div t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};margin-top:5%;">Accounts Manager</div>
+                        <div t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};margin-top:5%;">Accounts Manager</div>
                     </t> 
                 </div>
             </div>
         </div>
     </template>
     <template id="template_footer">
-            <div class="footer" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'" t-if="o.company_id.report_footer_selection == 'standard'">
+            <div class="footer" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-if="o.company_id.report_footer_selection_template == 'standard'">
                 <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color}; padding:5px"/>
+                    <p t-attf-style="border-bottom:1px solid #{theme_color_template}; padding:5px"/>
                 </div>
                 <div class="text-center">
                     <ul class="list-inline mb4">
@@ -448,7 +448,7 @@
                         <span class="topage"/></div>
                 </div>
             </div>
-            <div class="footer" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;width:100%; text-align:center; border-top:1px solid #d9d9d9;'" t-if="o.company_id.report_footer_selection == 'multi_columns'">
+            <div class="footer" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;width:100%; text-align:center; border-top:1px solid #d9d9d9;'" t-if="o.company_id.report_footer_selection_template == 'multi_columns'">
                 <div class="col-md-4 text-center" style="width:33%; flex: 0 0 33%; max-width: 33%; display:inline-block; text-align:center; vertical-align: top;margin-top: 25px;height:auto;">
                     <span t-field="o.company_id.name"/>
                     <br/>
@@ -470,7 +470,7 @@
                 <div class="col-md-4 text-center" style="width:33%; flex: 0 0 33%; max-width: 33%; margin-top: 25px; margin-bottom:20px; display: inline-block; text-align:center; vertical-align: top;">
                     <!-- <img style='max-height: 110px;max-width:100%;' t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo_footer)"/> -->
                     <span t-options="{'widget':'image',
-                    'img_style':'width:80px;height:80px','height':'80px','width':'80px'}" t-field="o.company_id.logo_footer"/>
+                    'img_style':'width:80px;height:80px','height':'80px','width':'80px'}" t-field="o.company_id.logo_footer_template"/>
                 </div>
             </div>
         </template>
@@ -479,7 +479,7 @@
             <t t-as="o" t-foreach="docs">
                 <t t-set="lang" t-value="o.partner_id.lang"/>
                 <t t-set="r_name" t-value="o.report_template_inv_id and o.report_template_inv_id.report_name or o.partner_id and o.partner_id.report_template_inv_id and o.partner_id.report_template_inv_id.report_name or o.company_id and o.company_id.report_template_inv_id and o.company_id.report_template_inv_id.report_name"/>
-                <t t-set="real_name" t-value="r_name.split('.')"/>
+                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                 <t t-if="o.report_template_inv_id or o.partner_id and o.partner_id.report_template_inv_id or o.company_id and o.company_id.report_template_inv_id">
 
                     <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
@@ -499,7 +499,7 @@
 
                 <t t-set="print_with_payments" t-value="True"/>
                 <t t-set="r_name" t-value="o.report_template_inv_id and o.report_template_inv_id.report_name or o.partner_id and o.partner_id.report_template_inv_id and o.partner_id.report_template_inv_id.report_name or o.company_id and o.company_id.report_template_inv_id and o.company_id.report_template_inv_id.report_name"/>
-                <t t-set="real_name" t-value="r_name.split('.')"/>
+                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                 <t t-if="o.report_template_inv_id or o.partner_id and o.partner_id.report_template_inv_id or o.company_id and o.company_id.report_template_inv_id">
                     <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
                     <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>

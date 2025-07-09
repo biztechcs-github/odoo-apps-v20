@@ -156,7 +156,6 @@ class IrActionsReport(models.Model):
                     attachment = None
                     if report_sudo.attachment:
                         attachment = report_sudo.retrieve_attachment(record)
-
                         # Extract the stream from the attachment.
                         if attachment and report_sudo.attachment_use:
                             stream = io.BytesIO(attachment.raw)

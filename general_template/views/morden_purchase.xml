@@ -21,7 +21,7 @@
                     <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
                     <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
                              alt="Company Logo"
-                             style="height: auto; max-width: 100%;"/>
+                             style="height: auto; max-height: 100px; max-width: 100%;"/>
                 </t>
             </div>
             <div  style="float:right; width:67%;">
@@ -133,7 +133,7 @@
             <t t-as="o" t-foreach="docs">
                 <t t-set="lang" t-value="o.partner_id.lang"/>
                 <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_po_template_id and o.partner_id.report_po_template_id.report_name or o.company_id and o.company_id.report_po_template_id and o.company_id.report_po_template_id.report_name"/>
-                <t t-set="real_name" t-value="r_name.split('.')"/>
+                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                 <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_po_template_id or o.company_id and o.company_id.report_po_template_id">
                     <!-- <t t-call="#{report_name.get(real_name[1], 'general_template.report_purchase_advanced_main')}" t-lang="o.partner_id.lang"/>-->
                     <t t-call="general_template.report_purchase_main" t-if="r_name == 'general_template.report_purchase_custom'" t-lang="lang"/>

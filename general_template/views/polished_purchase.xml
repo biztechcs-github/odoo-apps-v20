@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-3">
                         <t t-if="o.company_id.invoice_logo">
-                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;"/>
+                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto;  max-height: 100px; max-width: 100%;"/>
                         </t>
                     </div>
                     <div class="col-3" style="padding-left:20px;">

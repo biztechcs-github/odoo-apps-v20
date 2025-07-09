@@ -37,7 +37,7 @@
             <field name="binding_type">report</field>
             <field name="binding_view_types">None</field>
         </record>
-        <record id="report_invoice_template_invoice_4" model="ir.actions.report">
+        <record id="report_invoice_template_invoice_4_template" model="ir.actions.report">
             <field name="name">Bold</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-html</field>

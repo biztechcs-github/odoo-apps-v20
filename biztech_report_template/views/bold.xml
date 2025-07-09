@@ -17,18 +17,18 @@
     </template>
 
     <template id="report_header4">
-        <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;' ">
+        <div class="header" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;' ">
             <div class="container">
                 <div class="row">
                     <div class="col-4">
-                        <t t-if="o.company_id.invoice_logo">
-                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
+                        <t t-if="o.company_id.invoice_logo_template">
+                            <img t-att-src="image_data_uri(o.company_id.invoice_logo_template)"
                              alt="Company Logo"
-                             style="height: auto; max-width: 100%;"/>
+                             style="height: auto; max-height: 100%; max-width: 100%;"/>
                         </t>
                     </div>
                     <div class="col-8">  
-                        <p t-attf-style="font-size:50px;color: #{o.company_id and o.company_id.theme_color or '#000000'};text-align:right;">
+                        <p t-attf-style="font-size:50px;color: #{o.company_id and o.company_id.theme_color_template or '#000000'};text-align:right;">
                             <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
                             <span t-attf-style="font-size: 35px;" t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
                             <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div >
-                <p t-attf-style="border-bottom:1px solid #{theme_color}; padding:5px"/>
+                <p t-attf-style="border-bottom:1px solid #{theme_color_template}; padding:5px"/>
             </div>
             <t t-call='biztech_report_template.template_watermark'/>
         </div>
@@ -50,13 +50,13 @@
             <div class="row">
                 <div class="col-6">
                     <t t-call="biztech_report_template.invoice_templates_customer_details"/>
-                    <div t-attf-style="border-top:1px solid #{theme_color or '#000000'};width:70%">
+                    <div t-attf-style="border-top:1px solid #{theme_color_template or '#000000'};width:70%">
                         <t t-call="biztech_report_template.invoice_templates_customer_shipping_details"/>
                     </div>
                 </div>
 
                 <div class="col-6">
-                  <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold;margin-top:2%; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};border-radius: 10px;">
+                  <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold;margin-top:2%; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};border-radius: 10px;">
                         <tr t-if="o._get_invoice_date()">
                             <td style="padding:5px 15px;">
                                 <b>Invoice Date:</b>
@@ -112,7 +112,7 @@
                     </table>
                     <div>
                         <t t-if="o.company_id.name">
-                            <strong t-attf-style="color: #{o.company_id and o.company_id.theme_color or '#000000'};">Pay to:</strong><br/>
+                            <strong t-attf-style="color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">Pay to:</strong><br/>
                             <t t-call="biztech_report_template.templates_company_details"/>
                         </t>
                     </div>
@@ -121,7 +121,7 @@
                 </div>
             </div>
             <div>
-                <p t-attf-style="border-bottom:1px solid #{theme_color or '#000000'}; padding:5px"/>
+                <p t-attf-style="border-bottom:1px solid #{theme_color_template or '#000000'}; padding:5px"/>
             </div>
         </div>
     </template>
