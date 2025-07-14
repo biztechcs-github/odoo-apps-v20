@@ -36,7 +36,7 @@
                                                             <tr>
                                                                 <td align="left" valign="middle">
                                                                     <t t-if="o.company_id.invoice_logo">
-                                                                        <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;"/>
+                                                                        <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-height: 100px; max-width: 100%;"/>
                                                                     </t>
                                                                 </td>
                                                             </tr>
@@ -195,7 +195,7 @@
             <t t-as="o" t-foreach="docs">
                 <t t-set="lang" t-value="o.partner_id.lang"/>
                 <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_template_id and o.partner_id.report_template_id.report_name or o.company_id and o.company_id.report_template_id and o.company_id.report_template_id.report_name"/>
-                <t t-set="real_name" t-value="r_name.split('.')"/>
+                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                 <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_template_id or o.company_id and o.company_id.report_template_id">
                     <t t-call="general_template.report_invoice_template_main" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
                     <t t-call="general_template.report_invoice_advanced_main" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
@@ -213,7 +213,7 @@
                 <t t-set="lang" t-value="o.partner_id.lang"/>
                 <t t-set="print_with_payments" t-value="True"/>
                 <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_template_id and o.partner_id.report_template_id.report_name or o.company_id and o.company_id.report_template_id and o.company_id.report_template_id.report_name"/>
-                <t t-set="real_name" t-value="r_name.split('.')"/>
+                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                 <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_template_id or o.company_id and o.company_id.report_template_id">
                     <t t-call="general_template.report_invoice_template_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
                     <t t-call="general_template.report_invoice_advanced_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>

@@ -17,15 +17,15 @@
     </template>
 
     <template id="report_header2">
-        <div class="header clearfix" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+        <div class="header clearfix" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
             <div style="float:left; width: 27%;">
-                <t t-if="o.company_id.invoice_logo">
-                     <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;"/>
+                <t t-if="o.company_id.invoice_logo_template">
+                     <img t-att-src="image_data_uri(o.company_id.invoice_logo_template)" style="height: auto; max-height: 100%; max-width: 100%;"/>
                 </t>
             </div>
             <div style="float:right; width:60%;">
-                <div t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold;width:100%;">
-                    <table class="table table-borderless" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'};font-weight:bold;text-align:center;font-size:35px; position: relative; margin-bottom: 0;">
+                <div t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold;width:100%;">
+                    <table class="table table-borderless" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};font-weight:bold;text-align:center;font-size:35px; position: relative; margin-bottom: 0;">
                             <tr>
                                 <td t-attf-style="width: 100%;position: relative;/* z-index: -1; */left: 0">
                                     <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">INVOICE</span>
@@ -35,14 +35,14 @@
                                     <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
                                     <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
                                 </td>
-                                <td class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};position: absolute;height: 100%;width: 100%; -webkit-transform: skewX(35deg); transform: skewX(35deg); top: 0px;right: -100px; overflow: hidden; left: -77px; z-index: -1;"></td>
+                                <td class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};position: absolute;height: 100%;width: 100%; -webkit-transform: skewX(35deg); transform: skewX(35deg); top: 0px;right: -100px; overflow: hidden; left: -77px; z-index: -1;"></td>
                             </tr>
                     </table>
                 </div>
-                <div class="row" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;width:100%; padding-top:20px;margin-left: 0;float:right;'">
+                <div class="row" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;width:100%; padding-top:20px;margin-left: 0;float:right;'">
                     <div class="col-12" style="padding:0;width:100%;">
                         <table class="table table-borderless" style="position: relative;">
-                            <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                            <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                 <td t-if="o.move_type == 'out_invoice'">
                                     <b>Invoice Date:</b>
                                     <span t-out="o._get_invoice_date()"/>
@@ -84,7 +84,7 @@
                                                             
                                 </td>
                             </tr>
-                            <tr class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};position: absolute;height: 100%;width: 89%;-webkit-transform: skewX(35deg);transform: skewX(35deg);top: 0px;right: -97px;overflow: hidden;left: -22px;z-index: -1;"></tr>
+                            <tr class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};position: absolute;height: 100%;width: 89%;-webkit-transform: skewX(35deg);transform: skewX(35deg);top: 0px;right: -97px;overflow: hidden;left: -22px;z-index: -1;"></tr>
                         </table>
                     </div>
                 </div>
@@ -94,9 +94,9 @@
     </template>
     <template id="report_main_h2">
             <div>
-                <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; width:100%;"/>
+                <p t-attf-style="border-bottom:1px solid #{theme_color_template or '#ececec'}; width:100%;"/>
             </div>
-            <div class="container-fluid" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+            <div class="container-fluid" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
                 <div class="row">
                     <div class="col-5" style="margin-top:1.5%;margin-right:5px; margin-left:5px;">
                         <t t-call="biztech_report_template.invoice_templates_customer_details"/>
@@ -105,12 +105,12 @@
                         <t t-call="biztech_report_template.invoice_templates_customer_shipping_details"/>
                     </div>
                     <div class="col-3" style="margin-top:1.5%;margin-right:5px; margin-left:5px;">
-                        <strong t-attf-style="color: #{o.company_id and o.company_id.theme_color or '#000000'};">Pay to:</strong><br/>
+                        <strong t-attf-style="color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">Pay to:</strong><br/>
                         <t t-call="biztech_report_template.templates_company_details"/>
                     </div>
                 </div>
                 <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color};width:100%; padding:5px;"/>
+                    <p t-attf-style="border-bottom:1px solid #{theme_color_template};width:100%; padding:5px;"/>
                 </div>
             </div>
     </template>

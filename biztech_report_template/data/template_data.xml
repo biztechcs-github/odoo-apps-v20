@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record model="report.fonts" id="report_fonts_helvetica">
-        <field name="name">Helvetica</field>
+    <record model="report.fonts" id="report_fonts_helvetica_report_t">
+        <field name="name">Helvetica F</field>
         <field name="family">Helvetica</field>
         <field name="path">/dev/null</field>
         <field name="mode">all</field>
     </record>
-    <record model="report.fonts" id="report_fonts_times">
-        <field name="name">Times</field>
+    <record model="report.fonts" id="report_fonts_times_report_t">
+        <field name="name">Times F</field>
         <field name="family">Times</field>
         <field name="path">/dev/null</field>
         <field name="mode">all</field>
     </record>
-    <record model="report.fonts" id="report_fonts_courier">
-        <field name="name">Courier</field>
+    <record model="report.fonts" id="report_fonts_courier_report_t">
+        <field name="name">Courier F</field>
         <field name="family">Courier</field>
         <field name="path">/dev/null</field>
         <field name="mode">all</field>
     </record>
 
     <record id="base.main_company" model="res.company">
-        <field name="font_id" ref="report_fonts_helvetica"/>
+        <field name="font_template_id" ref="report_fonts_helvetica_report_t"/>
     </record>
 
     <record model="report.extra.content" id="report_extra_content_invoice">

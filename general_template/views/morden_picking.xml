@@ -20,7 +20,7 @@
                    <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
                     <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
                              alt="Company Logo"
-                             style="height: auto; max-width: 100%;"/>
+                             style="height: auto; max-height: 100px; max-width: 100%;"/>
                 </t>
             </div>
             <div style="float:right; width:70%;">
@@ -171,7 +171,7 @@
                 <th name="td_sched_date_h"/>
                 <td name="td_sched_date"/>
                 <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_picking_template_id and o.partner_id.report_picking_template_id.report_name or o.company_id and o.company_id.report_picking_template_id and o.company_id.report_picking_template_id.report_name"/>
-                <t t-set="real_name" t-value="r_name.split('.')"/>
+                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                 <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_picking_template_id or o.company_id and o.company_id.report_picking_template_id">
                     <t t-call="general_template.report_picking_custom_main" t-if="r_name == 'general_template.report_delivery_custom'" t-lang="lang"/>
                     <t t-call="general_template.report_picking_creative_main" t-if="r_name == 'general_template.report_delivery_custom_creative'" t-lang="lang"/>

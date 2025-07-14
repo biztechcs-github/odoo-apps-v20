@@ -22,7 +22,7 @@
                                 <br/>
                             </group>
                             <group>
-                                <field required="True" domain="[('report_name', 'ilike', '%invoice_template%')]" name="report_template_id" options="{'no_create': True}"/>
+                                <field  domain="[('report_name', 'ilike', '%invoice_template%')]" name="report_template_id" options="{'no_create': True}"/>
                                 <field required="True" domain="[('report_name', 'ilike', '%delivery_c%')]" name="report_delivery_template_id" options="{'no_create': True}"/>
                                 <field required="True" domain="[('report_name', 'ilike', '%delivery_c%')]" name="report_picking_template_id" options="{'no_create': True}"/>
                                 <button class="oe_stat_button oe_edit_only" icon="fa-pencil-square-o" name="%(action_report_extracontent)d" type="action">
@@ -32,13 +32,15 @@
                         </group>
                         <group string="Default Report Settings">
                             <group>
-                                <field class="oe_avatar" name="invoice_logo" widget="image"/>
+                                <field name="invoice_logo" widget="image" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"/>
                                 <field name="standard_template"/>
                             </group>
                             <group name="watermark" string="Watermark">
                                 <field name="is_show_watermark"/>
                                 <field name="watermark" invisible="is_show_watermark == False"/>
-                                <field invisible="is_show_watermark == False or watermark != 'logo'" class="oe_avatar" name="watermark_logo" widget="image"/>
+                                <field invisible="is_show_watermark == False or watermark != 'logo'"  name="watermark_logo" widget="image" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"/>
                                 <field invisible="is_show_watermark == False or watermark != 'text'" required="watermark == 'text'" name="watermark_text"/>
                                 <field invisible="is_show_watermark == False or watermark != 'logo'" name="watermark_text_color" placeholder="like #2b4e99" widget="color"/>
                                 <field invisible="is_show_watermark == False or watermark == 'logo'" required="watermark != 'logo'" name="watermark_text_font_size"/>
@@ -89,9 +91,10 @@
                                 <field name="report_footer_selection"/>
                             </group>
                         </group>
-                        <group col="4" string="Signature">
+                        <group string="Signature">
                             <field name="is_show_signature"/>
-                            <field invisible="is_show_signature == False" required="is_show_signature == True" class="oe_avatar" name="signature" widget="image"/>
+                            <field invisible="is_show_signature == False" required="is_show_signature == True"  name="signature" widget="image" class="responsive-img"
+                                    style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"/>
                         </group>
                     </page>
                 </xpath>

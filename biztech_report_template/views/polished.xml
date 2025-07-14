@@ -21,43 +21,43 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-3">
-                        <t t-if="o.company_id.invoice_logo">
-                             <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;"/>
+                        <t t-if="o.company_id.invoice_logo_template">
+                             <img t-att-src="image_data_uri(o.company_id.invoice_logo_template)" style="height: auto; max-height: 100%; max-width: 100%;"/>
                         </t>
                     </div>
                     <div class="col-3" style="padding-left: 10px;">
                         <t t-if="o.company_id.partner_id.email">
                             <span><strong>Email:</strong></span><br/>
-                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.email"/><br/>
+                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.email"/><br/>
                         </t>
                     </div>
                     <div class="col-3">
                         <t t-if="o.company_id.phone">
                             <span><strong>Phone:</strong></span><br/>
-                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.phone"/><br/>
-                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};">Monday to Friday</span>
+                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.phone"/><br/>
+                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};">Monday to Friday</span>
                         </t>
                     </div>
                     <div class="col-3">
                         <t t-if="o.company_id.partner_id.name">
                             <span><strong>Address:</strong></span><br/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_color or '#000000'};" t-field="o.company_id.name"></section>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.street"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.city"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.country_id"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_color_template or '#000000'};" t-field="o.company_id.name"></section>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.street"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.city"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.country_id"/>
                         </t>
                     </div>
                 </div>
             </div>
             <div>
-                <p t-attf-style="border-bottom:1px solid #{theme_color}; padding:5px;margin-bottom:0;"/>
+                <p t-attf-style="border-bottom:1px solid #{theme_color_template}; padding:5px;margin-bottom:0;"/>
             </div>
             <t t-call="biztech_report_template.template_watermark"/>
         </div>
     </template>
 
     <template id="info_invoice">
-        <div class="container" style="width:100%;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+        <div class="container" style="width:100%;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
             
             <div class="row">
                 <div align="left" class="col-4">
@@ -70,7 +70,7 @@
                 <div align="right" class="col-8">
                 <!-- <div style="width:50%; "> -->
                     <table class="table table-borderless">
-                        <tr t-attf-style="color: #{o.company_id and o.company_id.theme_color or '#000000'};font-size:50px;">
+                        <tr t-attf-style="color: #{o.company_id and o.company_id.theme_color_template or '#000000'};font-size:50px;">
                             <td>
                                 <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
                                 <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
@@ -84,28 +84,28 @@
                             <td>
                                 <table class="table table-borderless">
                                     <tbody>
-                                        <tr class="tr-border-radius" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; };">
-                                            <td t-if="o.move_type == 'out_invoice'" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                        <tr class="tr-border-radius" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; };">
+                                            <td t-if="o.move_type == 'out_invoice'" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                                 <b>Invoice Date:</b><br/>
                                                 <span t-out="o._get_invoice_date()"/>
                                             </td>
-                                            <td t-if="o.name" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                            <td t-if="o.name" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                                 <b>Invoice No:</b><br/>
                                                 <span t-field="o.name"/>
                                             </td>
-                                            <td t-if="o.ref"  t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                            <td t-if="o.ref"  t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                                 <b>Reference:</b><br/>
                                                 <span t-field="o.ref"/>
                                             </td>
-                                            <td t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                            <td t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                                 <b>Due Date:</b><br/>
                                                 <span t-out="o._get_invoice_due_date()"/>
                                             </td>
-                                            <td t-if="o.source_id" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                            <td t-if="o.source_id" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                                 <b>Source:</b><br/>
                                                 <span t-out="o.source_id.name"/>
                                             </td>
-                                            <td t-if="o.partner_id.ref" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                            <td t-if="o.partner_id.ref" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                                                 <b>Customer code:</b><br/>
                                                 <span t-out="o.partner_id.ref"/>
                                             </td>
