@@ -36,7 +36,7 @@
         ],
     },
     'images': ['static/description/splash-screen.png'],
-    'price': 49.00,
+    'price': 59.00,
     'currency': 'USD',
     'installable': True,
     'auto_install': False,
