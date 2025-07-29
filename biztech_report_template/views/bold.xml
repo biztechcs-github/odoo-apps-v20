@@ -20,7 +20,7 @@
         <div class="header" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;' ">
             <div class="container">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-4" style="height: 90px;">
                         <t t-if="o.company_id.invoice_logo_template">
                             <img t-att-src="image_data_uri(o.company_id.invoice_logo_template)"
                              alt="Company Logo"

@@ -9,9 +9,7 @@
     'category': 'Accounting',
     'depends': ['account', 'sale_management', 'purchase', 'barcodes','sale_stock'],
     'website': 'https://www.appjetty.com',
-    'description': '''Professiona Templates ,
-    Professional Report Templates , Customizable Invoice Templates ,
-    Multiple Professional Invoice Templates  , Customized Invoice''',
+    'description': '''Professional Templates, Professional Report Templates, Customizable Invoice Templates, Multiple Professional Invoice Templates, Customized Invoice''',
     'summary': 'Get Diverse Invoice Templates In One Go!',
     'data': [
         'security/ir.model.access.csv',

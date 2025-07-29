@@ -49,13 +49,11 @@
             (0, 0, {'view_mode': 'list', 'view_id': ref('view_model_tree_extracontent')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_model_form_extracontent')})]"/>
             <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Click to create a Report append extra content.
-              </p>
+                <p class="oe_view_nocontent_create">Click to create a Report append extra content.</p>
                 <p>You can append extra content while print report based on model
-                for eg. if you want to add brochure, while print Quotation.
-              </p>
+                   for eg. if you want to add brochure, while print Quotation.
+                </p>
             </field>
         </record>
-        <!-- <menuitem action="action_report_extracontent" id="menu_action_report_extracontent" parent="" sequence="10"/>-->
     </data>
 </odoo>

@@ -3,8 +3,8 @@
 
 import base64
 from odoo import fields, models, api, _
-from odoo.modules import get_module_resource
 from odoo.exceptions import ValidationError
+from odoo.tools.misc import file_path
 
 standard_template = [
     ('bold', 'Bold'),
@@ -91,19 +91,18 @@ class ResCompany(models.Model):
 
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search([('model', '=', 'account.move'), (
-            'report_name', '=', 'biztech_report_template.report_main_invoice_1_template')])
+            'report_name', '=', 'biztech_report_template.report_main_invoice_2')])
         if report_id:
             report_id = report_id[0]
         else:
-            report_id = report_obj.search(
-                [('model', '=', 'account.move')])[0]
+            report_id = report_obj.search([('model', '=', 'account.move')])[0]
         return report_id
 
     @api.depends('partner_id')
     def _default_report_template1(self):
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search([('model', '=', 'account.move'), (
-            'report_name', '=', 'biztech_report_template.report_main_invoice_1_template')])
+            'report_name', '=', 'biztech_report_template.report_main_invoice_2')])
         if report_id:
             report_id = report_id[0]
         else:
@@ -116,8 +115,7 @@ class ResCompany(models.Model):
 
     @api.model
     def _get_default_image(self, is_company, colorize=False):
-        img_path = get_module_resource(
-            'report_template', 'static/src/img', 'avatar.png')
+        img_path = file_path("biztech_report_template/static/src/img/avatar.png")
         with open(img_path, 'rb') as f:
             image = f.read()
         return base64.b64encode(image)
@@ -243,7 +241,7 @@ class ResCompany(models.Model):
     @api.depends('partner_id', 'partner_id.image_1920')
     def _compute_logo_footer(self):
         for company in self:
-            company.logo_footer = company.partner_id.image_1920
+            company.logo_footer_template = company.partner_id.image_1920
 
     @api.constrains('font_size_template', 'watermark_text_font_size')
     def check_font_size(self):

@@ -17,7 +17,7 @@
 	<template id="report_header_i4">
 		<div class="header" style="width:100%;height:10%" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
 			<div class="row">
-				<div class="col-9">
+				<div class="col-9" style="height: 90px;">
 					<t t-if="o.company_id.invoice_logo_template or o.company_id.logo">
 						<img t-att-src="image_data_uri(o.company_id.invoice_logo_template)" style="height: auto; max-height: 100%; max-width: 100%;"/>
 					</t>
