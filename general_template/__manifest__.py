@@ -96,8 +96,8 @@ SO report template, Po Report Template
         'python': ['img2pdf', 'fpdf', 'num2words']
     },
     'images': ['static/description/splash-screen.png'],
-    'price': 99.00,
-    'currency': 'EUR',
+    'price': 129.00,
+    'currency': 'USD',
     'installable': True,
     'auto_install': False,
     'web_preload': True,

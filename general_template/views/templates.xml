@@ -80,7 +80,7 @@
     </template>
     <template id="template_total_amount_word">
         <t t-if="o.company_id.add_amount_in_words == True">
-            <span t-attf-style="color: #{text_color or '#000000'};padding-bottom: 5px;">Total in word:- 
+            <span t-attf-style="color: #{text_color or '#000000'};padding-bottom: 5px; padding-top: 10px; display: block;">Total in words : 
                 <t t-out="o.amount_to_text"/>
             </span>
         </t>

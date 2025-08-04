@@ -156,7 +156,7 @@
                         <div>
                             <t t-call="general_template.invoice_subtotal_tem" />
                         </div>
-                        <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px">
+                        <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
                             <t t-call="general_template.template_total_amount_word"/>
                         </div>
                         <div t-if="not o._compute_payments_widget_reconciled_info()">
@@ -204,6 +204,11 @@
                     <t t-call="general_template.report_invoice_creative_main" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
                     <t t-call="general_template.report_invoice_incredible_main" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
                 </t>
+                <t t-else=''>
+                    <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                       t-call="account.report_invoice_document"
+                       t-lang="lang"/>
+                </t>
             </t>
         </t>
     </template>
@@ -221,6 +226,11 @@
                     <t t-call="general_template.report_invoice_exclusive_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
                     <t t-call="general_template.report_invoice_creative_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
                     <t t-call="general_template.report_invoice_incredible_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
+                </t>
+                <t t-else=''>
+                     <t t-call="account.report_invoice">
+                        <t t-set="print_with_payments" t-value="True"/>
+                    </t>
                 </t>
             </t>
         </t>

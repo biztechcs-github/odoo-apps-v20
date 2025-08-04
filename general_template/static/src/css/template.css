@@ -19,10 +19,10 @@ th {
 div > #info {
     padding-left: 0px;
 }
-div > #total {
+/*div > #total {
     font-size: 15px;
     background-color: #e0eeee;
-}
+}*/
 div > #count {
     font-size: 15px;
     background-color: #e0eeee;

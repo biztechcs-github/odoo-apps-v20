@@ -122,7 +122,7 @@
                                 <div style="overflow:auto;">
                                     <t t-call="general_template.purchase_template_order_subtotal"/>
                                 </div>
-                                <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px">
+                                <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
                                     <t t-call="general_template.template_total_amount_word"/>
                                 </div>
                                 <div t-attf-style="color: #{text_color or '#000000'}; padding-top:5px; width:100%;" t-if="o.notes and o.company_id.is_show_notes == True">

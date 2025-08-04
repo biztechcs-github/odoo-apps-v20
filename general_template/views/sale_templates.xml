@@ -231,90 +231,33 @@
     </template>
 
     <template id="sale_order_lines_subtotal_tem">
-        <!-- <div class="clearfix">
-            <div class="row" name="total" t-att-style="'background-color: %s;float:right; color: %s; '%(ol_color, text_color)">
-                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-7 col-5'} ml-auto">
-                    <table class="table table-borderless">
-                        <tr class="border-black" style="border-bottom:1px solid #dddddd;">
-                            <td><strong>Subtotal</strong></td>
-                            <td class="text-right">
-                                <span t-field="o.amount_untaxed"/>
-                            </td>
+        <div class="clearfix" name="so_total_summary">
+            <div id="total" class="row">
+                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-7 col-5'} ms-auto">
+                    <table class="table table-sm text-end">
+                        <!-- Untaxed Amount -->
+                        <tr>
+                            <td><strong>Untaxed Amount:</strong></td>
+                            <td t-esc="o.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
                         </tr>
-                        <t t-set="tax_totals" t-value="o.tax_totals"/>
-                        <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
-                            <t t-set="subtotal_to_show" t-value="subtotal['name']"/>
-                            <t t-foreach="tax_totals['groups_by_subtotal'][subtotal_to_show]" t-as="amount_by_group">
-                                <tr>
-                                    <t t-if="len(tax_totals['groups_by_subtotal'][subtotal_to_show]) > 1">
-                                        <td class="left">
-                                            <span t-out="amount_by_group['tax_group_name']"/>
-                                            <span class="text-right"> on
-                                                <t t-out="amount_by_group['formatted_tax_group_base_amount']"/>
-                                            </span>
-                                        </td>
-                                        <td >
-                                            <span class="text-nowrap" t-out="amount_by_group['formatted_tax_group_amount']"/>
-                                        </td>
-                                    </t>
-                                    <t t-else="">
-                                        <td class="left"><span class="text-right" t-out="amount_by_group['tax_group_name']"/></td>
-                                        <td class="text-right o_price_total">
-                                            <span class="text-right" t-out="amount_by_group['formatted_tax_group_amount']" />
-                                        </td>
-                                    </t>
-                                </tr>
-                            </t>
-                        </t>
-                        <tr class="border-black">
-                            <td><strong>Total</strong></td>
-                            <td class="text-right">
-                                <span t-field="o.amount_total"/>
-                            </td>
+
+                        <!-- Taxes -->
+                        <tr>
+                            <td><strong>Tax:</strong></td>
+                            <td t-esc="o.amount_tax" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
+                        </tr>
+
+                        <!-- Total -->
+                        <tr>
+                            <td><strong>Total:</strong></td>
+                            <td t-esc="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
                         </tr>
                     </table>
                 </div>
             </div>
-        </div> -->
-<!--         <div class="clearfix" name="so_total_summary">
-                <div id="total" class="row mt-n3" name="total" t-att-style="'background-color: %s;float:right; color: %s; '%(ol_color, text_color)">
-                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
-                        <table class="o_total_table table table-borderless">
-                            <t t-call="sale.document_tax_totals">
-                                <t t-set="tax_totals" t-value="o.tax_totals"/>
-                                <t t-set="currency" t-value="o.currency_id"/>
-                            </t>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
-
-        <div class="clearfix" name="so_total_summary">
-        <div id="total" class="row">
-        <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-7 col-5'} ms-auto">
-            <table class="table table-sm text-end">
-                <!-- Untaxed Amount -->
-                <tr>
-                    <td><strong>Untaxed Amount:</strong></td>
-                    <td t-esc="o.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
-                </tr>
-
-                <!-- Taxes -->
-                <tr>
-                    <td><strong>Tax:</strong></td>
-                    <td t-esc="o.amount_tax" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
-                </tr>
-
-                <!-- Total -->
-                <tr>
-                    <td><strong>Total:</strong></td>
-                    <td t-esc="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"></td>
-                </tr>
-            </table>
         </div>
-    </div>
-    </div>
     </template>
+
     <template id="sale_templates_notes">
         <ul t-attf-style="padding-left:0px; margin:0; color: #{text_color or '#000000'};">
             <p t-field="o.note" t-if="o.company_id.is_show_notes == True"/>
