@@ -31,19 +31,19 @@
         ''',
     'summary': 'Get Smooth & Simple Site Navigation',
     'category': 'Website',
-    'version': '1.0',
+    'version': '19.0.0.0',
     'author': 'AppJetty',
     'license': 'OPL-1',
     'website': 'https://www.appjetty.com',
     'depends': ['website_sale','website'],
     'data': [
-        'data/demo.xml',
         'views/product_category_view.xml',
         'views/website_view.xml',
         'views/template.xml',
     ],
-    # 'demo': [
-    # ],
+    'demo': [
+        'data/demo.xml',
+    ],
     'installable': True,
     'application': True,
     'images': ['static/description/splash-screen.png'],
