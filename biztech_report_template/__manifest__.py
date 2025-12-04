@@ -3,7 +3,7 @@
 
 {
     'name': 'Clever Multiple Invoice Template',
-    'version': '18.0',
+    'version': '19.0.0.0',
     'author': 'Appjetty',
     'license': 'OPL-1',
     'category': 'Accounting',
