@@ -135,7 +135,7 @@
                         <td><t t-out="l_index+1"/></td>
                         <t t-if="o.company_id.add_product_image_template">
                             <td class="text-right" t-att-style="'height:10%;width:10%;padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
-                                <span t-field="l.product_id.image_1920" t-if="l.product_id and l.product_id.image_1920" t-options="{&quot;widget&quot;:&quot;image&quot;,&quot;class&quot;:&quot;img-rounded&quot;}"/>
+                                <img t-if="l.product_id and l.product_id.image_1920" t-att-src="image_data_uri(l.product_id.image_1920)" style="max-height: 4rem; max-width: 100%;"/>
                             </td>
                         </t>
                         <td><span t-field="l.product_id and l.product_id.name"/></td>
