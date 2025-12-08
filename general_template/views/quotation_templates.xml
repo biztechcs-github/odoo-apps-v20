@@ -20,9 +20,9 @@
                 <br/>
                 <span t-out="o._get_address_details(o.dest_address_id)"/>
                 <br/>
-                <t t-if="o.dest_address_id.mobile">
+                <t t-if="o.dest_address_id.phone">
                     <strong>Mobile: </strong>
-                    <span t-field="o.dest_address_id.mobile"/>
+                    <span t-field="o.dest_address_id.phone"/>
                     <br/>
                 </t>
                 <t t-if="o.dest_address_id.email">
@@ -47,9 +47,9 @@
                 <br/>
                 <span t-out="o._get_address_details(o.picking_type_id.warehouse_id.partner_id)"/>
                 <br/>
-                <t t-if="o.picking_type_id.warehouse_id.partner_id.mobile">
+                <t t-if="o.picking_type_id.warehouse_id.partner_id.phone">
                     <strong>Mobile: </strong>
-                    <span t-field="o.picking_type_id.warehouse_id.partner_id.mobile"/>
+                    <span t-field="o.picking_type_id.warehouse_id.partner_id.phone"/>
                     <br/>
                 </t>
                 <t t-if="o.picking_type_id.warehouse_id.partner_id.email">

@@ -3,7 +3,7 @@
 
 import base64
 from odoo import fields, models, api, _
-from odoo.modules import get_module_resource
+from odoo.modules.module import get_module_path
 from odoo.exceptions import ValidationError
 
 standard_template = [
