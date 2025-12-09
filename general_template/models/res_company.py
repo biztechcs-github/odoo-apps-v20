@@ -2,8 +2,9 @@
 # Part of AppJetty. See LICENSE file for full copyright and licensing details.
 
 import base64
+import os
 from odoo import fields, models, api, _
-from odoo.modules import get_module_resource
+from odoo.modules.module import get_module_path
 from odoo.exceptions import ValidationError
 
 standard_template = [
@@ -212,8 +213,8 @@ class ResCompany(models.Model):
 
     @api.model
     def _get_default_image(self, is_company, colorize=False):
-        img_path = get_module_resource(
-            'general_template', 'static/src/img', 'avatar.png')
+        mod_path = get_module_path('general_template')
+        img_path = os.path.join(mod_path, 'static', 'src', 'img', 'avatar.png')
         with open(img_path, 'rb') as f:
             image = f.read()
         return base64.b64encode(image)

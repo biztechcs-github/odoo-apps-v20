@@ -141,7 +141,7 @@
                 <div class="left" style="color: #{text_color or '#000000'}; padding-top:10px; ">
                     <t t-call="general_template.sale_templates_notes"/>
                 </div>
-                <div t-if="o.sale_order_option_ids and o.state in ['draft', 'sent']">
+                <div t-if="o.order_line and o.state in ['draft', 'sent']">
                     <t t-call="general_template.sale_templates_suggested_order_line"/>
                 </div>
                 <div class="container-fluid">

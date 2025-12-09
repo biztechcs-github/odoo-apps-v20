@@ -44,7 +44,7 @@
                                 </t>
                             </td>
                             <td align="center" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
-                                <span t-out="', '.join(map(lambda x: x.name, l.taxes_id))"/>
+                                <span t-out="', '.join(map(lambda x: x.name, l.tax_ids))"/>
                             </td>
                             <td align="center" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-field="l.date_planned"/>

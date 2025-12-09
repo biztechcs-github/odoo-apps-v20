@@ -18,9 +18,9 @@
             <br/>
         </div>
         <div t-attf-style="color: #{company_address_color or '#ffffff'};">
-            <t t-if="o.company_id.partner_id.mobile">
+            <t t-if="o.company_id.partner_id.phone">
                 <strong>Mobile:</strong>
-                <span t-field="o.company_id.partner_id.mobile"/>
+                <span t-field="o.company_id.partner_id.phone"/>
                 <br/>
             </t>
             <t t-if="o.company_id.partner_id.email">
@@ -47,9 +47,9 @@
             <br/>
             <span t-out="o._get_address_details(o.partner_id)"/>
             <br/>
-            <t t-if="o.partner_id.mobile">
+            <t t-if="o.partner_id.phone">
                 <strong>Mobile:</strong>
-                <span t-field="o.partner_id.mobile"/>
+                <span t-field="o.partner_id.phone"/>
                 <br/>
             </t>
             <t t-if="o.partner_id.email">
