@@ -414,8 +414,7 @@
                 <div class="col-10"></div>
                 <div class="col-3" style="text-align:center;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px; '">
                     <t t-if="o.company_id.signature_template">
-                        <span t-field="o.company_id.signature_template" t-options="{'widget':'image',
-                        'img_style':'width:80px;height:80px','height':'80px','width':'80px'}"/>
+                        <img t-att-src="image_data_uri(o.company_id.signature_template)" style="max-height: 80px; max-width: 80px;"/>
                         <div t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};margin-top:5%;">Accounts Manager</div>
                     </t> 
                 </div>
