@@ -125,9 +125,9 @@
                                 <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
                                     <t t-call="general_template.template_total_amount_word"/>
                                 </div>
-                                <div t-attf-style="color: #{text_color or '#000000'}; padding-top:5px; width:100%;" t-if="o.notes and o.company_id.is_show_notes == True">
+                                <!-- <div t-attf-style="color: #{text_color or '#000000'}; padding-top:5px; width:100%;" t-if="o.notes and o.company_id.is_show_notes == True">
                                     <p t-field="o.notes"/>
-                                </div>
+                                </div> -->
                                 <div align="right" t-attf-style="color: #{text_color or '#000000'};">
                                     <t t-call="general_template.report_signature"/>
                                 </div>
