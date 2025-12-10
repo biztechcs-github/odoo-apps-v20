@@ -22,8 +22,7 @@ class ReportExtraContent(models.Model):
     model_id = fields.Many2one('ir.model', string="Report Type",
                                required=True, domain=[('model', 'in', ['account.move', 'sale.order', 'stock.picking', 'purchase.order'])], ondelete='cascade')
     company_id = fields.Many2one('res.company', string='Company', change_default=True,
-                                 required=True, default=lambda self: self.env['res.company']._company_default_get('report.extra.content'))
-
+                             required=True, default=lambda self: self.env.company)
     _sql_constraints = [
         ('unique_model_company', 'unique (model_id, company_id)',
          'Model and Company must be unique.')

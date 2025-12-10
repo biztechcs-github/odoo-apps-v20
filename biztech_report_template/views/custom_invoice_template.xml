@@ -24,9 +24,9 @@
                 <br/>
                 <span t-out="o._get_address_details(o.partner_id)"/>
                 <br/>
-                <t t-if="o.partner_id.mobile">
+                <t t-if="o.partner_id.phone">
                     <strong>Mobile: </strong>
-                    <span t-field="o.partner_id.mobile"/>
+                    <span t-field="o.partner_id.phone"/>
                     <br/>
                 </t>
                 <t t-if="o.partner_id.email">
@@ -61,9 +61,9 @@
                 <br/>
                 <span t-out="o._get_address_details(o.partner_shipping_id)"/>
                 <br/>
-                <t t-if="o.partner_shipping_id.mobile">
+                <t t-if="o.partner_shipping_id.phone">
                     <strong>Mobile: </strong>
-                    <span t-field="o.partner_shipping_id.mobile"/>
+                    <span t-field="o.partner_shipping_id.phone"/>
                     <br/>
                 </t>
                 <t t-if="o.partner_shipping_id.email">
@@ -96,9 +96,9 @@
             <br/>
             <span t-out="o._get_address_details(o.company_id.partner_id)"/>
             <br/>
-            <t t-if="o.company_id.partner_id.mobile">
+            <t t-if="o.company_id.partner_id.phone">
                 <strong>Mobile: </strong>
-                <span t-field="o.company_id.partner_id.mobile"/>
+                <span t-field="o.company_id.partner_id.phone"/>
                 <br/>
             </t>
             <t t-if="o.company_id.partner_id.email">
@@ -135,7 +135,7 @@
                         <td><t t-out="l_index+1"/></td>
                         <t t-if="o.company_id.add_product_image_template">
                             <td class="text-right" t-att-style="'height:10%;width:10%;padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
-                                <span t-field="l.product_id.image_1920" t-if="l.product_id and l.product_id.image_1920" t-options="{&quot;widget&quot;:&quot;image&quot;,&quot;class&quot;:&quot;img-rounded&quot;}"/>
+                                <img t-if="l.product_id and l.product_id.image_1920" t-att-src="image_data_uri(l.product_id.image_1920)" style="max-height: 4rem; max-width: 100%;"/>
                             </td>
                         </t>
                         <td><span t-field="l.product_id and l.product_id.name"/></td>
@@ -414,8 +414,7 @@
                 <div class="col-10"></div>
                 <div class="col-3" style="text-align:center;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px; '">
                     <t t-if="o.company_id.signature_template">
-                        <span t-field="o.company_id.signature_template" t-options="{'widget':'image',
-                        'img_style':'width:80px;height:80px','height':'80px','width':'80px'}"/>
+                        <img t-att-src="image_data_uri(o.company_id.signature_template)" style="max-height: 80px; max-width: 80px;"/>
                         <div t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};margin-top:5%;">Accounts Manager</div>
                     </t> 
                 </div>
