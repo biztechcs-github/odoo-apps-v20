@@ -32,7 +32,7 @@
                                                                 <tr>
                                                                     <td align="left" valign="middle">
                                                                         <t t-if="o.company_id.invoice_logo">
-                                                                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%; padding-right: 10px;"/>
+                                                                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-height: 100px; max-width: 100%;"/>
                                                                         </t>
                                                                     </td>
                                                                 </tr>
@@ -91,10 +91,6 @@
                                             <td t-if="o.state">
                                                 <b>State:</b><br/>
                                                 <span t-field="o.state"/>
-                                            </td>
-                                            <td t-if="o.date">
-                                                <b>Commitment Date:</b><br/>
-                                                <span t-field="o.date"/>
                                             </td>
                                             <td t-if="o.scheduled_date">
                                                 <b>Scheduled Date:</b><br/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="templates_warehouse_details">
-        <p t-attf-style="text-transform:capitalize; color: #{theme_color or '#000000'}; margin:0;">
+        <p t-attf-style="text-transform:capitalize; color: #{theme_color or '#000000'}; margin:0; padding-top:10px;">
             <strong>Shipping address:</strong>
         </p>
         <t t-if="o.dest_address_id">
@@ -69,7 +69,7 @@
                     </t>
                     <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
                     <td align="center" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Expected Date</td>
-                    <td align="right" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Qty</td>
+                    <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Qty</td>
                 </tr>
             </thead>
             <tbody>
@@ -102,7 +102,7 @@
                         <td align="center" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <span t-field="l.date_planned"/>
                         </td>
-                        <td align="center" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
+                        <td align="left" class="text-left" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <span t-field="l.product_qty"/>
                             <span groups="product.group_uom" t-field="l.product_uom.name"/>
                         </td>

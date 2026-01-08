@@ -11,8 +11,8 @@
                     <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
                     <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Taxes</td>
                     <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Date Req.</td>
-                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Qty</td>
-                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Unit Price</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Qty</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Unit Price</td>
                     <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Net Price</td>
                 </tr>
             </thead>
@@ -85,35 +85,33 @@
     </template>
 
     <template id="purchase_template_order_subtotal">
-        <div t-attf-style="float:right">
-            <table class="table-borderless" style="font-weight:bold;width:40%; text-transform:capitalize;" t-att-style="'color: '+ text_color">
+        <div class="fix" t-attf-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
+        <div id="total1" class="rows">
+                <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+            <table class="table table-striped" style="font-weight:bold;width:40%; text-transform:capitalize; page-break-inside: avoid;" t-att-style="'color: '+ text_color">
                 <tr>
-                    <td colspan="2" t-att-style="'padding:9px 10px 7px 0px;'">SubTotal</td>
-                    <td align="right" tyle="padding:9px 0px 7px 10px;">
+                    <td colspan="2" t-att-style="'padding:9px 10px 7px 10px;'">SubTotal</td>
+                    <td align="right" tyle="padding:9px 10px 7px 10px;">
                         <span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="3" style="border-bottom:1px solid #959595"/>
-                </tr>
-                <tr t-att-style="'padding:9px 10px 7px 0px;'">
-                    <td colspan="2" t-att-style="'padding:9px 10px 7px 0px;'">
+                <tr t-att-style="'padding:9px 10px 7px 10px;'">
+                    <td colspan="2" t-att-style="'padding:9px 10px 7px 10px;'">
                         <span>Taxes</span>
                     </td>
-                    <td align="right" t-att-style="'padding:9px 0px 7px 10px;'">
+                    <td align="right" t-att-style="'padding:9px 10px 7px 10px;'">
                         <span t-field="o.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="border-bottom:1px solid #959595"/>
-                </tr>
-                <tr>
-                    <td colspan="2" t-att-style="'padding:9px 10px 7px 0px; text-transform:uppercase;'">total</td>
-                    <td align="right" style="padding:9px 0px 7px 10px; text-transform:uppercase; ">
+                    <td colspan="2" t-att-style="'padding:9px 10px 7px 10px; text-transform:uppercase;'">total</td>
+                    <td align="right" style="padding:9px 10px 7px 10px; text-transform:uppercase; ">
                         <span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                     </td>
                 </tr>
             </table>
+            </div>
+            </div>
         </div>
     </template>
 </odoo>

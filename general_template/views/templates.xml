@@ -103,8 +103,8 @@
     </template>
     <template id="templates_footer">
         <div class="footer" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'" t-if="o.company_id.report_footer_selection == 'standard'">
-            <div class="text-center" style="border-top: 1px solid black;">
-                <ul class="list-inline mb4">
+            <div class="text-center" style="border-top: 1px solid black; padding-top: 10px;">
+                <ul class="list-inline mb4 mt4">
                     <li t-if="company.phone">Phone: 
                         <span t-field="company.phone"/></li>
                     <li t-if="company.email">Email: 

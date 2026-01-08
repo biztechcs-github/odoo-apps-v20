@@ -17,7 +17,7 @@
     <template id="sale_elegant_header">
         <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;' ">
             <div class="row">
-                <div class="col-8">
+                <div class="col-6">
                     <t t-if="o.company_id.invoice_logo">
                         <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
                         <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
@@ -25,8 +25,8 @@
                          style="height: auto; max-height: 100px; max-width: 100%;"/>
                     </t>
                 </div>
-                <div class="col-4">
-                    <p t-attf-style="font-size:34px;color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                <div class="col-6">
+                    <p t-attf-style="font-size:34px;color: #{o.company_id and o.company_id.theme_color or '#000000'}; text-align: right;">
                         <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
                             <span t-if="o.state not in ['draft','sent']">Order # </span>
                             <span t-if="o.state in ['draft','sent']">Quotation # </span>
