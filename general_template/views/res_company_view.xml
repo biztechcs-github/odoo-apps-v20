@@ -25,7 +25,7 @@
                                 <field  domain="[('report_name', 'ilike', '%invoice_template%')]" name="report_template_id" options="{'no_create': True}"/>
                                 <field required="True" domain="[('report_name', 'ilike', '%delivery_c%')]" name="report_delivery_template_id" options="{'no_create': True}"/>
                                 <field required="True" domain="[('report_name', 'ilike', '%delivery_c%')]" name="report_picking_template_id" options="{'no_create': True}"/>
-                                <button class="oe_stat_button oe_edit_only" icon="fa-pencil-square-o" name="%(action_report_extracontent)d" type="action">
+                                <button class="oe_stat_button oe_edit_only text-start p-0 text-nowrap " icon="fa-pencil-square-o" name="%(action_report_extracontent)d" type="action">
                                     <span>Report Extra Content</span>
                                 </button>
                             </group>
