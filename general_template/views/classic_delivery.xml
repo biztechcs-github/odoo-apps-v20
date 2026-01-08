@@ -22,7 +22,7 @@
                         <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
                         <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
                              alt="Company Logo"
-                             style="height: auto; max-height: 100%; max-width: 100%;"/>
+                             style="height: auto; max-height: 100px; max-width: 100%;"/>
                     </t>
                 </div>
                 <div class="col-3" >

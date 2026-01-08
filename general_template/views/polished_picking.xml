@@ -39,10 +39,22 @@
                     <div class="col-3">
                         <t t-if="o.company_id.partner_id.name">
                             <span><strong>Address:</strong></span><br/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_color or '#000000'};" t-field="o.company_id.name"></section>
                             <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.street"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.city"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.country_id"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.street2" t-field="o.company_id.street2"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};">
+                                <t t-if="o.company_id.city and o.company_id.state_id">
+                                    <span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/>
+                                </t>
+                                <t t-elif="o.company_id.city">
+                                    <span t-field="o.company_id.city"/>
+                                </t>
+                                <t t-elif="o.company_id.state_id">
+                                    <span t-field="o.company_id.state_id"/>
+                                </t>
+                            </section>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.zip" t-field="o.company_id.zip"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.country_id" t-field="o.company_id.country_id"/>
+                        
                         </t>
                     </div>
                 </div>
@@ -121,10 +133,6 @@
                                                 <td t-if="o.state" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
                                                     <b>State:</b><br/>
                                                     <span t-field="o.state"/>
-                                                </td>
-                                                <td t-if="o.date"  t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                                    <b>Commitment Date:</b><br/>
-                                                    <span t-field="o.date"/>
                                                 </td>
                                                 <td t-if="o.scheduled_date"  t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
                                                     <b>Scheduled Date:</b><br/>

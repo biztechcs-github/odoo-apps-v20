@@ -115,14 +115,6 @@
                                                 <span t-field="o.state"/>
                                             </td>
                                         </tr>
-                                        <tr t-if="o.date">
-                                            <td style="padding:5px 15px;" >
-                                                <b>Commitment Date:</b>
-                                            </td>
-                                            <td style="text-align:right; padding:5px 15px;">
-                                                <span t-field="o.date"/>
-                                            </td>
-                                        </tr>
                                         <tr t-if="o.scheduled_date">
                                             <td style="padding:5px 15px;">
                                                 <b>Scheduled Date:</b>

@@ -18,7 +18,7 @@
         <div class="header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <t t-if="o.company_id.invoice_logo">
                             <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%; max-height: 100px;"/>
                         </t>
@@ -36,19 +36,30 @@
                             <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};">Monday to Friday</span>
                         </t>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <t t-if="o.company_id.partner_id.name">
                             <span><strong>Address:</strong></span><br/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_color or '#000000'};" t-field="o.company_id.name"></section>
                             <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.street"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.city"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.country_id"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.street2" t-field="o.company_id.street2"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};">
+                                <t t-if="o.company_id.city and o.company_id.state_id">
+                                    <span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/>
+                                </t>
+                                <t t-elif="o.company_id.city">
+                                    <span t-field="o.company_id.city"/>
+                                </t>
+                                <t t-elif="o.company_id.state_id">
+                                    <span t-field="o.company_id.state_id"/>
+                                </t>
+                            </section>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.zip" t-field="o.company_id.zip"/>
+                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.country_id" t-field="o.company_id.country_id"/>
                         </t>
                     </div>
                 </div>
             </div>
             <div>
-                <p t-attf-style="border-bottom:1px solid #{theme_color}; padding:5px"/>
+                <p t-attf-style="border-bottom:1px solid #{theme_color}; padding:5px;"/>
             </div>
             <t t-call="general_template.template_watermark"/>
         </div>
@@ -83,7 +94,7 @@
                         <!-- <div style="width:50%; "> -->
                             <table class="table table-borderless">
                                 <tr t-attf-style="color: #{o.company_id and o.company_id.theme_color or '#000000'};font-size:35px;">
-                                    <td>
+                                    <td style="padding-top: 0;">
                                        <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
                                            <span t-if="o.state not in ['draft','sent']">Order # </span>
                                            <span t-if="o.state in ['draft','sent']">Quotation # </span>

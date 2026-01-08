@@ -147,11 +147,11 @@
                         </td>
                     </t>
                     <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
-                    <td align="right" t-attf-style="padding:5px 10px;border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Quantity</td>
-                    <td align="right" t-attf-style="padding:5px 10px;border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Unit Price</td>
-                    <td align="center" groups="product.group_discount_per_so_line" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="display_discount" width="12%"><t t-set="colspan" t-value="colspan+1"/>Disc.(%)</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Taxes</td>
-                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%">Price</td>
+                    <td align="left" t-attf-style="padding:5px 10px;border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Quantity</td>
+                    <td align="left" t-attf-style="padding:5px 10px;border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Unit Price</td>
+                    <td align="left" groups="product.group_discount_per_so_line" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="display_discount" width="12%"><t t-set="colspan" t-value="colspan+1"/>Disc.(%)</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Taxes</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%">Price</td>
                 </tr>
             </thead>
             <tbody class="sale_tbody">
@@ -312,7 +312,7 @@
                         </td>
                         <t t-if="o.company_id.add_product_image == True">
                             <td class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
-                                <span t-field="option.product_id.image_256" t-options="{&quot;widget&quot;:&quot;image&quot;,&quot;class&quot;:&quot;img-rounded&quot;}"/>
+                                <img t-if="option.product_id and option.product_id.image_1920" t-att-src="image_data_uri(option.product_id.image_1920)" style="max-height: 4rem; max-width: 100%;"/>
                             </td>
                         </t>
                         <td align="left" class="text-left" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
@@ -331,9 +331,11 @@
                                 <t t-out="((option.discount % 1) and '%s' or '%d') % option.discount"/>% discount</strong>
                         </td>
                         <td align="center" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
-                            <!-- <div t-att-class="option.discount and 'text-danger' or ''" t-att-style="option.discount and 'text-decoration: line-through' or ''" t-field="option.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.pricelist_id.currency_id}"/> -->
                             <div t-if="option.discount">
                                 <t t-out="'%.2f' % ((1-option.discount / 100.0) * option.price_unit)"/>
+                            </div>
+                            <div t-if="not option.discount">
+                                <span t-field="option.price_unit"/>
                             </div>
                         </td>
                     </tr>

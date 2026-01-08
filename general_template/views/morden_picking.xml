@@ -50,10 +50,6 @@
                                     <b>State:</b><br/>
                                     <span t-field="o.state"/>
                                 </td>
-                                <td t-if="o.date">
-                                    <b>Commitment Date:</b><br/>
-                                    <span t-field="o.date"/>
-                                </td>
                                 <td t-if="o.scheduled_date">
                                     <b>Scheduled Date:</b><br/>
                                     <span t-field="o.scheduled_date"/>

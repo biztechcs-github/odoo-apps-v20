@@ -243,9 +243,9 @@ class ResCompany(models.Model):
         for company in self:
             company.logo_footer_template = company.partner_id.image_1920
 
-    @api.constrains('font_size_template', 'watermark_text_font_size')
+    @api.constrains('font_size_template', 'watermark_text_font_size_template')
     def check_font_size(self):
-        if self.watermark_text_font_size <= 0 or self.watermark_text_font_size > 10:
+        if self.watermark_text_font_size_template <= 0 or self.watermark_text_font_size_template > 10:
             raise ValidationError(
                 _('Please input watermark text font size is greater than 0 and lower than 10, otherwise your report will very massive.'))
         if self.font_size_template <= 10 or self.font_size_template >= 25:

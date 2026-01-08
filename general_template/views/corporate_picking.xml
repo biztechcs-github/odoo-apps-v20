@@ -26,18 +26,7 @@
                     </t>
                 </div>
                 <div class="col-4">
-                    <t t-if="o.company_id.street">
-                        <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.street"/><br/>
-                    </t>
-                    <t t-if="o.company_id.phone">
-                        <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.phone"/><br/>
-                    </t>
-                    <t t-if="o.company_id.email">
-                        <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.email"/><br/>
-                    </t>
-                    <t t-if="o.company_id.website">
-                        <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.website"/>
-                    </t>
+                   <t t-call="general_template.templates_company_details"/>
                 </div>
             </div>
             <div>
@@ -88,12 +77,6 @@
                                     
                                         <span>State:</span>
                                         <span t-field="o.state"/><br/>
-                                    
-                                </t>
-                                <t t-if="o.date">
-                                    
-                                        <span>Commitment Date:</span>
-                                        <span t-field="o.date"/><br/>
                                     
                                 </t>
                                  <t t-if="o.scheduled_date">
