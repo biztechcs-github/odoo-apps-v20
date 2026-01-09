@@ -273,6 +273,12 @@ header .container { position: relative; }
         }
         &.apt_cat_megamenu {
           .mega-dropdown-menu {
+            li{
+              .megamenu-list-image{
+                height: auto;
+                max-height: 250px;
+              }
+            }
             .col-xs-12 {
               flex: 0 0 100%;
               max-width: 100%;
@@ -1559,6 +1565,25 @@ body .navbar .o_extra_menu_items.show > ul > li > a.dropdown-toggle {
             }
           }
         }
+        .cat_megamenu{
+          li{
+            ul{
+              li{
+                &.categories{
+                  @media (max-width: 767px) {
+                    margin-bottom: 5px;
+                  }
+                  a{
+                    @media (max-width: 767px) {
+                      padding-top: 5px;
+                      padding-bottom: 5px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
       .s_mega_menu_big_icons_subtitles{
         padding: 10px 0 !important;
@@ -1942,6 +1967,11 @@ header{
               @media (max-width: 767px) {
                 border-top: 1px solid #ddd;
               }
+              &:first-child{
+                @media (max-width: 767px) {
+                  border-top: 0;
+                }
+              }
 
               .categories{
                 a{
@@ -2039,6 +2069,12 @@ header{
                 .main-block-link{
                   border-bottom: 1px solid #ddd;
                   border-radius: 0;
+
+                  @media (max-width: 767px) {
+                    &:last-child{
+                      border-bottom: 0;
+                    }
+                  }
 
                   .menu-block{
                     padding: 0;
