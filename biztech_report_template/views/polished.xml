@@ -41,15 +41,18 @@
                     <div class="col-3">
                         <t t-if="o.company_id.partner_id.name">
                             <span><strong>Address:</strong></span><br/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_color_template or '#000000'};" t-field="o.company_id.name"></section>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.street"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.city"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};" t-field="o.company_id.country_id"/>
+                            <div t-attf-style="color: #{o.company_id and o.company_id.company_color_template or '#000000'};">
+                                <span t-field="o.company_id.name"/>
+                            </div>
+                            <div t-attf-style="color: #{o.company_id and o.company_id.company_address_color_template or '#000000'};">
+                                <div t-field="o.company_id.partner_id"
+                                    t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            </div>
                         </t>
                     </div>
                 </div>
             </div>
-            <div>
+            <div style="margin-bottom: 0;">
                 <p t-attf-style="border-bottom:1px solid #{theme_color_template}; padding:5px;margin-bottom:0;"/>
             </div>
             <t t-call="biztech_report_template.template_watermark"/>
