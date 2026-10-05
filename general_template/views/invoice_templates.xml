@@ -464,7 +464,7 @@
 <!--                     <tr>
                         <td class="left" colspan="2" t-att-style="'padding:9px 10px 7px 0px;'">SubTotal</td>
                         <td align="right" style="padding:9px 0px 7px 10px;">
-                            <span t-field="o.amount_untaxed" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            <span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                         </td>
                     </tr>
                     <tr>
@@ -476,7 +476,7 @@
                                 <span>Untaxed Amount</span>
                             </td>
                             <td align="right" style="padding:9px 0px 7px 0px;text-transform:capitalize; ">
-                                <span t-out="subtotal['formatted_amount']" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                                <span t-out="subtotal['formatted_amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                             </td>
                         </tr>
 
@@ -539,7 +539,7 @@
                     <!-- <tr id="total">
                         <td class="left" colspan="2" t-att-style="'padding:9px 10px 7px 0px;  text-transform:uppercase;'">Total</td>
                         <td align="right" style="padding:9px 0px 7px 10px;text-transform:uppercase; ">
-                            <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            <span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                         </td>
                     </tr> -->
 

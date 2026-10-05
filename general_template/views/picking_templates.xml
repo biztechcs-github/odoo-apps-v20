@@ -52,7 +52,7 @@
                                 <td align="left" class="text-left" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                     <span t-if="o.state != 'done'" t-field="ml.quantity"/>
                                     <span t-if="o.state == 'done'" t-field="ml.quantity"/>
-                                    <span t-field="ml.product_uom_id" groups="uom.group_uom"/>
+                                    <span t-field="ml.uom_id" groups="uom.group_uom"/>
                                 </td>
                                 <td align="left" class="text-left" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'" t-if="has_barcode">
                                     <t t-if="has_barcode">
@@ -169,11 +169,11 @@
                         </td>
                         <td align="right" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <span t-field="move.product_uom_qty"/>
-                            <span t-field="move.product_uom"/>
+                            <span t-field="move.uom_id"/>
                         </td>
                         <td align="right" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <span t-field="move.quantity"/>
-                            <span t-field="move.product_uom"/>
+                            <span t-field="move.uom_id"/>
                         </td>
                     </tr>
                 </t>
@@ -232,14 +232,14 @@
                                         </thead>
                                         <tr t-foreach="pack_operation.lot_ids" t-as='lot_id'>
                                             <td>
-                                                <span t-esc="lot_id.name"/>
+                                                <span t-out="lot_id.name"/>
                                                 <t t-if="not lot_id">
                                                     <span t-field="lot_id.name"/>
                                                 </t>
                                             </td>
                                             <td>
                                                 <t t-if="lot_id.product_qty">
-                                                    <span t-esc="lot_id.product_qty"/>
+                                                    <span t-out="lot_id.product_qty"/>
                                                 </t>
                                             </td>
                                         </tr>
@@ -262,11 +262,11 @@
                             </td>                                                        
                             <td align="right" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">                            
                                 <span t-field="pack_operation.product_uom_qty"/>
-                                <span t-field="pack_operation.product_uom"/>
+                                <span t-field="pack_operation.uom_id"/>
                             </td>                           
                             <td align="right" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-field="pack_operation.quantity"/>
-                                <span t-field="pack_operation.product_uom"/>
+                                <span t-field="pack_operation.uom_id"/>
                             </td>                            
                         </tr>
                     </t>

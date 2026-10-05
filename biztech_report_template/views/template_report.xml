@@ -6,7 +6,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">biztech_report_template.report_main_invoice_1</field>
-            <field name="report_file">biztech_report_template.report_main_invoice_1</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
@@ -18,7 +17,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">biztech_report_template.report_main_invoice_2</field>
-            <field name="report_file">biztech_report_template.report_main_invoice_2</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
@@ -30,7 +28,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">biztech_report_template.report_main_invoice_3</field>
-            <field name="report_file">biztech_report_template.report_main_invoice_3</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
@@ -42,7 +39,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-html</field>
             <field name="report_name">biztech_report_template.report_main_invoice_4</field>
-            <field name="report_file">biztech_report_template.report_main_invoice_4</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
@@ -54,7 +50,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">biztech_report_template.report_main_invoice_5</field>
-            <field name="report_file">biztech_report_template.report_main_invoice_5</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
@@ -66,7 +61,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">biztech_report_template.report_main_invoice_6</field>
-            <field name="report_file">biztech_report_template.report_main_invoice_6</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="account.model_account_move"/>

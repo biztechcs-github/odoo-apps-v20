@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- <delete model="ir.rule" search="[('id', '=', ref('base.res_partner_portal_public_rule'))]"/> -->
-        <record id="res_partner_portal_public_rule" model="ir.rule">
-            <field name="name">res_partner: portal/public: read access on my commercial partner</field>
+        <!-- Odoo 20 merged ir.rule into ir.access: a group-scoped record rule is now
+             a permission (group_id + domain), one record per group. -->
+        <record id="res_partner_portal_public_rule" model="ir.access">
+            <field name="name">res_partner: portal: read access on my commercial partner</field>
             <field name="model_id" ref="base.model_res_partner"/>
-            <field name="domain_force">['|', ('id', '!=', False), ('id', 'child_of', user.commercial_partner_id.id)]</field>
-            <field eval="[(4, ref('base.group_portal')), (4, ref('base.group_public'))]" name="groups"/>
-            <field eval="False" name="perm_create"/>
-            <field eval="False" name="perm_unlink"/>
-            <field eval="False" name="perm_write"/>
+            <field name="group_id" ref="base.group_portal"/>
+            <field name="operation">r</field>
+            <field name="domain">['|', ('id', '!=', False), ('id', 'child_of', user.commercial_partner_id.id)]</field>
+        </record>
+        <record id="res_partner_public_rule" model="ir.access">
+            <field name="name">res_partner: public: read access on my commercial partner</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="group_id" ref="base.group_public"/>
+            <field name="operation">r</field>
+            <field name="domain">['|', ('id', '!=', False), ('id', 'child_of', user.commercial_partner_id.id)]</field>
         </record>
     </data>
 </odoo>

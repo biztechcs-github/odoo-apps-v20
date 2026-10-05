@@ -25,15 +25,28 @@ class ReportExtraContent(models.Model):
     company_id = fields.Many2one('res.company', string='Company', change_default=True,
                                  required=True, default=lambda self: self.env.company)
 
-    _sql_constraints = [
-        ('unique_model_company', 'unique (model_id, company_id)',
-         'Model and Company must be unique.')
-    ]
+    _unique_model_company = models.Constraint(
+        'unique (model_id, company_id)',
+        'Model and Company must be unique.',
+    )
 
     @api.constrains('file_name', 'append_extra_content')
     def check_upload_file(self):
         if self.append_extra_content and self.file_name and not self.file_name.endswith('.pdf'):
             raise UserError(_('Please upload pdf file only'))
+
+    def _get_upload_bytes(self, values):
+        """Return the uploaded file of ``values`` as raw bytes.
+
+        The web client sends a Binary field as {'filename', 'content'} since
+        Odoo 20, while server-side callers still pass the base64 string.
+        """
+        fdata = values.get('append_extra_content')
+        if isinstance(fdata, dict):
+            fdata = fdata.get('content')
+        if isinstance(fdata, str):
+            return base64.b64decode(fdata)
+        return fdata or b''
 
     def convert_img2pdf(self, values):
         fname = values.get('file_name')
@@ -47,7 +60,7 @@ class ReportExtraContent(models.Model):
             fname = '.'.join([fname + '.pdf'])
 
             with closing(os.fdopen(img_file_fd, 'wb')) as img:
-                img.write(base64.decodebytes(fdata.encode('ascii')))
+                img.write(self._get_upload_bytes(values))
 
             content = img2pdf.convert(img_file_path)
 
@@ -61,7 +74,19 @@ class ReportExtraContent(models.Model):
                 fdata = fd.read()
         for transfer in transfer_file_list:
             os.unlink(transfer)
-        return {'file_name': fname, 'append_extra_content': base64.encodebytes(fdata)}
+        return {'file_name': fname, 'append_extra_content': base64.b64encode(fdata).decode()}
+
+    def _get_mono_font_path(self):
+        """Return the UbuntuMono font path, which moved in newer distributions."""
+        candidates = [
+            '/usr/share/fonts/truetype/ubuntu/UbuntuMono-BI.ttf',
+            '/usr/share/fonts/truetype/ubuntu-font-family/UbuntuMono-BI.ttf',
+        ]
+        for candidate in candidates:
+            if os.path.exists(candidate):
+                return candidate
+        raise UserError(
+            _('The UbuntuMono font is required to convert text files to PDF.'))
 
     def convert_txt2pdf(self, values):
         fname = values.get('file_name')
@@ -75,12 +100,11 @@ class ReportExtraContent(models.Model):
             fname = '.'.join([fname + '.pdf'])
 
             with closing(os.fdopen(txt_file_fd, 'wb')) as txt:
-                txt.write(base64.decodebytes(fdata.encode('utf-8')))
+                txt.write(self._get_upload_bytes(values))
 
             pdf = FPDF()
             pdf.add_page()
-            pdf.add_font('UbuntuMono', '',
-                         '/usr/share/fonts/truetype/ubuntu-font-family/UbuntuMono-BI.ttf', uni=True)
+            pdf.add_font('UbuntuMono', '', self._get_mono_font_path(), uni=True)
             pdf.set_font('UbuntuMono', '', 12)
             for line in open(txt_file_path, 'rb').readlines():
                 pdf.write(10, txt=line.decode('utf-8'))
@@ -95,7 +119,7 @@ class ReportExtraContent(models.Model):
 
         for transfer in transfer_file_list:
             os.unlink(transfer)
-        return {'file_name': fname, 'append_extra_content': base64.encodebytes(fdata)}
+        return {'file_name': fname, 'append_extra_content': base64.b64encode(fdata).decode()}
 
     def convert_dxp2pdf(self, values):
         fname = values.get('file_name')
@@ -109,7 +133,7 @@ class ReportExtraContent(models.Model):
             fname = '.'.join([fname + '.pdf'])
 
             with closing(os.fdopen(dxp_file_fd, 'wb')) as dxp:
-                dxp.write(base64.decodebytes(fdata.encode('utf-8')))
+                dxp.write(self._get_upload_bytes(values))
             output = subprocess.check_output(
                 ['libreoffice', '--convert-to', 'pdf', dxp_file_path])
             dxp_file_path = output.split()[3]
@@ -118,7 +142,7 @@ class ReportExtraContent(models.Model):
                 fdata = fd.read()
         for transfer in transfer_file_list:
             os.unlink(transfer)
-        return {'file_name': fname, 'append_extra_content': base64.encodebytes(fdata)}
+        return {'file_name': fname, 'append_extra_content': base64.b64encode(fdata).decode()}
 
     def write(self, values):
         file_name = values.get('file_name', False)

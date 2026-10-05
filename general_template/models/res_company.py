@@ -97,21 +97,25 @@ class ResCompany(models.Model):
 
     @api.model
     def _default_report_template(self):
+        # Odoo 20 evaluates column defaults during _auto_init, while the
+        # registry is still being built.
         # code is inser for ir.rule (issue in upgrade module)
-        ir_rule_id = self.env['ir.rule'].search(
-            [('name', '=', 'res_partner: portal/public: read access on my commercial partner')])
-        if ir_rule_id:
-            ir_rule_id.unlink()
+        if 'ir.rule' in self.env.registry.models:
+            ir_rule_id = self.env['ir.rule'].search(
+                [('name', '=', 'res_partner: portal/public: read access on my commercial partner')])
+            if ir_rule_id:
+                ir_rule_id.unlink()
+
+        if 'ir.actions.report' not in self.env.registry.models:
+            return False
 
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search([('model', '=', 'account.move'), (
             'report_name', '=', 'general_template.report_invoice_template_custom')])
-        if report_id:
-            report_id = report_id[0]
-        else:
+        if not report_id:
             report_id = report_obj.search(
-                [('model', '=', 'account.move')])[0]
-        return report_id
+                [('model', '=', 'account.move')])
+        return report_id[:1]
 
     @api.depends('partner_id')
     def _default_report_template1(self):
@@ -130,15 +134,18 @@ class ResCompany(models.Model):
 
     @api.model
     def _default_report_po_template(self):
+        # Odoo 20 evaluates column defaults during _auto_init, while the
+        # registry is still being built.
+        if 'ir.actions.report' not in self.env.registry.models:
+            return False
+
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search(
             [('model', '=', 'purchase.order'), ('report_name', '=', 'general_template.report_purchase_custom')])
-        if report_id:
-            report_id = report_id[0]
-        else:
+        if not report_id:
             report_id = report_obj.search(
-                [('model', '=', 'purchase.order')])[0]
-        return report_id
+                [('model', '=', 'purchase.order')])
+        return report_id[:1]
 
     @api.depends('partner_id')
     def _default_report_po_template1(self):
@@ -160,14 +167,16 @@ class ResCompany(models.Model):
 
     @api.model
     def _default_report_delivery_template(self):
+        # Odoo 20 evaluates column defaults during _auto_init, while the
+        # registry is still being built.
+        if 'ir.actions.report' not in self.env.registry.models:
+            return False
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search(
             [('model', '=', 'stock.picking'), ('report_name', '=', 'general_template.report_delivery_custom')])
-        if report_id:
-            report_id = report_id[0]
-        else:
-            report_id = report_obj.search([('model', '=', 'stock.picking')])[0]
-        return report_id
+        if not report_id:
+            report_id = report_obj.search([('model', '=', 'stock.picking')])
+        return report_id[:1]
 
     @api.depends('partner_id')
     def _default_report_delivery_template1(self):
@@ -188,14 +197,16 @@ class ResCompany(models.Model):
 
     @api.model
     def _default_report_sale_template(self):
+        # Odoo 20 evaluates column defaults during _auto_init, while the
+        # registry is still being built.
+        if 'ir.actions.report' not in self.env.registry.models:
+            return False
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search(
             [('model', '=', 'sale.order'), ('report_name', '=', 'general_template.report_sale_order_custom')])
-        if report_id:
-            report_id = report_id[0]
-        else:
-            report_id = report_obj.search([('model', '=', 'sale.order')])[0]
-        return report_id
+        if not report_id:
+            report_id = report_obj.search([('model', '=', 'sale.order')])
+        return report_id[:1]
 
     @api.depends('partner_id')
     def _default_report_sale_template1(self):
@@ -217,7 +228,7 @@ class ResCompany(models.Model):
         img_path = os.path.join(mod_path, 'static', 'src', 'img', 'avatar.png')
         with open(img_path, 'rb') as f:
             image = f.read()
-        return base64.b64encode(image)
+        return base64.b64encode(image).decode()
 
     def template_print1(self):
         """ Print the invoice and mark it as sent, so that we can see more

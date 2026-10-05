@@ -1,0 +1,28 @@
+# Python dependencies for every addon in this repository (Odoo 20).
+# Install with:  python3.12 -m pip install --user -r requirements.txt
+#
+# Required by biztech_report_template and general_template; these match the
+# 'external_dependencies' in both __manifest__.py files.
+# biztech_website_megamenu needs no Python packages.
+#
+# num2words is also declared there, but Odoo 20 core already pins it in its own
+# requirements.txt, so it is intentionally not repeated here.
+
+img2pdf==0.6.3
+
+# PyFPDF, NOT fpdf2. models/report_extra_content.py uses the 1.x API
+# (pdf.write(..., txt=...) and pdf.output(path, 'F')), which fpdf2 removed.
+fpdf==1.7.2
+
+# ---------------------------------------------------------------------------
+# NOT pip packages - do not add them here.
+#
+# PDF rendering needs the wkhtmltox binaries (wkhtmltopdf + wkhtmltoimage)
+# installed at OS level from the vendor package; 0.12.5 with patched Qt is the
+# recommended build. Odoo 20 still defaults to this engine
+# (ir_actions_report._get_pdf_engine, default_engine='wkhtmltopdf') and ships
+# the detection logic in the auto-installed 'base_report_wkhtmltox' addon.
+#
+# Odoo must also run with at least two workers (--workers 2), otherwise the
+# engine reports state 'workers' and no PDF is produced even with a valid binary.
+# ---------------------------------------------------------------------------

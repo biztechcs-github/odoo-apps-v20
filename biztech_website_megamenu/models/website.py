@@ -96,6 +96,35 @@ class WebsiteMenu(models.Model):
         "website.menu", "website_menu_rel", "menu_id", "page_id", string="Pages")
     static_image_content = fields.Html(string='Static Image Description')
 
+    def _megamenu_branch_root(self):
+        """The nearest menu in this one's ancestry, itself included, that is
+        flagged as a megamenu.
+
+        A megamenu is rendered by this module's own templates, which nest the
+        pages under it several levels deep, so the whole branch has to be left
+        out of the two-level limit core puts on ordinary website menus.
+        """
+        self.ensure_one()
+        menu = self.sudo()
+        seen = set()
+        while menu and menu.id not in seen:
+            if menu.is_megamenu:
+                return menu
+            seen.add(menu.id)
+            menu = menu.parent_id
+        return self.browse()
+
+    @api.constrains("parent_id", "child_id", "is_mega_menu", "mega_menu_content")
+    def _validate_parent_menu(self):
+        """Apply core's hierarchy rules to ordinary menus only.
+
+        Core forbids a third menu level and forbids a menu that has children
+        from being a submenu; both are exactly what a pages megamenu is made
+        of. Menus outside any megamenu branch stay bound by the core rules.
+        """
+        regular_menus = self.filtered(lambda menu: not menu._megamenu_branch_root())
+        return super(WebsiteMenu, regular_menus)._validate_parent_menu()
+
     @api.onchange('megamenu_view_type')
     def _view_type_change(self):
         if self.megamenu_view_type and self.megamenu_view_type in ['pages_megamenu', 'pages_megamenu_pro', 'pages_megamenu_pro_max', 'pages_category_megamenu']:
@@ -104,7 +133,7 @@ class WebsiteMenu(models.Model):
             self.add_static_image = False
 
         elif self.megamenu_view_type and self.megamenu_view_type not in ['pages_megamenu', 'pages_megamenu_pro', 'pages_megamenu_pro_max', 'pages_category_megamenu']:
-            self.special_feature = ''
+            self.special_feature = False
             self.add_static_image = True
             self.display_category_image = False
 

@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate="1">
         <record id="base.main_company" model="res.company">
-            <field file="general_template/static/src/img/company_image.png" name="invoice_logo" type="base64"/>
+            <field file="general_template/static/src/img/company_image.png" name="invoice_logo" type="bytes"/>
         </record>
     </data>
     <data>

@@ -5,7 +5,7 @@
     'name': 'Clever All In One Report Templates',
     'author': 'AppJetty',
     'license': 'OPL-1',
-    'version': '19.0.0.0',
+    'version': '20.0.0.0',
     'category': 'Accounting',
     'depends': [
         'account',
@@ -27,7 +27,7 @@ SO report template, Po Report Template
     'data': [
         'data/template_data.xml',
         'security/base_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.access.csv',
         'views/report_extra_content_view.xml',
         'views/templates.xml',
         'views/sale_templates.xml',

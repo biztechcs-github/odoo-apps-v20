@@ -72,7 +72,7 @@
                         <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold;background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
                             <td t-if="o.move_type == 'out_invoice'">
                                 <b>Invoice Date:</b>
-                                <span t-esc="o._get_invoice_date()"/>
+                                <span t-out="o._get_invoice_date()"/>
                             </td>
                             <td t-if="o.name">
                                 <b>Invoice No:</b>
@@ -84,17 +84,17 @@
                             </td>
                             <td t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'">
                                 <b>Due Date:</b>
-                                <span t-esc="o._get_invoice_due_date()"/>
+                                <span t-out="o._get_invoice_due_date()"/>
                             </td>
                             
                             <td t-if="o.source_id">
                                 <b>Source:</b>
-                                <span t-esc="o.source_id.name"/>
+                                <span t-out="o.source_id.name"/>
                             </td>
                            
                             <td t-if="o.partner_id.ref">
                                 <b>Customer code:</b>
-                                <span t-esc="o.partner_id.ref"/>
+                                <span t-out="o.partner_id.ref"/>
                             </td>
                         </tr>
                     </table>

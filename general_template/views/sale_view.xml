@@ -7,10 +7,10 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='customer_signature']/group/field[@name='signed_by']" position="before">
-                    <field name="sale_is_show_signature"/>
-                </xpath>
                 <xpath expr="//field[@name='validity_date']" position="after">
+                    <!-- Odoo 20 removed the 'customer_signature' page this field used to sit in.
+                         It was hidden there (invisible page, base.group_no_one), so keep it hidden. -->
+                    <field invisible="1" name="sale_is_show_signature"/>
                     <field invisible="1" name="report_template_id1"/>
                     <field domain="[('report_name', 'ilike', '%sale_order%')]" name="report_template_id" options="{'no_create': True}"/>
                 </xpath>

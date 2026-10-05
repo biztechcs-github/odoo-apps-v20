@@ -1073,7 +1073,7 @@
                                                         <h2 class="title"><t t-out="page.name"/></h2>
                                                     </div>
                                                     <div class="bottom" t-if="page.megamenu_page_description">
-                                                        <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
+                                                        <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
                                                     </div>
                                                 </div>
                                             </a>
@@ -1196,8 +1196,8 @@
                                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
                                                         </div>
                                                         <div class="menu-disc">
-                                                             <h2 class="title"><t t-esc="page.name"/></h2>
-                                                            <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
+                                                             <h2 class="title"><t t-out="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -1246,8 +1246,8 @@
                                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
                                                         </div>
                                                         <div class="menu-disc">
-                                                             <h2 class="title"><t t-esc="page.name"/></h2>
-                                                            <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
+                                                             <h2 class="title"><t t-out="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -1297,8 +1297,8 @@
                                                             <img t-att-alt="submenu.name" t-att-src="website.image_url(page, 'display_icon')" loading=""/>
                                                         </div>
                                                         <div class="menu-disc">
-                                                            <h2 class="title"><t t-esc="page.name"/></h2>
-                                                            <p t-if="page.megamenu_page_description"><t t-esc="page.megamenu_page_description"/></p>
+                                                            <h2 class="title"><t t-out="page.name"/></h2>
+                                                            <p t-if="page.megamenu_page_description"><t t-out="page.megamenu_page_description"/></p>
                                                         </div>
                                                     </div>
                                                 </a>

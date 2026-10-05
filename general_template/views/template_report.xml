@@ -7,7 +7,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_invoice_template_custom</field>
-            <field name="report_file">general_template.report_invoice_template_custom</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="model_account_move"/>
@@ -19,7 +18,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_invoice_template_custom_elegant</field>
-            <field name="report_file">general_template.report_invoice_template_custom_elegant</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="model_account_move"/>
@@ -31,7 +29,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_invoice_template_custom_creative</field>
-            <field name="report_file">general_template.report_invoice_template_custom_creative</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="model_account_move"/>
@@ -43,7 +40,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_invoice_template_custom_advanced</field>
-            <field name="report_file">general_template.report_invoice_template_custom_advanced</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="model_account_move"/>
@@ -55,7 +51,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_invoice_template_custom_exclusive</field>
-            <field name="report_file">general_template.report_invoice_template_custom_exclusive</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="model_account_move"/>
@@ -67,7 +62,6 @@
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_invoice_template_custom_incredible</field>
-            <field name="report_file">general_template.report_invoice_template_custom_incredible</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
             <field name="binding_model_id" ref="model_account_move"/>
@@ -82,7 +76,6 @@
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_sale_order_custom</field>
-            <field name="report_file">general_template.report_sale_order_custom</field>
             <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
@@ -93,7 +86,6 @@
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_sale_order_custom_elegant</field>
-            <field name="report_file">general_template.report_sale_order_custom_elegant</field>
             <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
@@ -104,7 +96,6 @@
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_sale_order_custom_creative</field>
-            <field name="report_file">general_template.report_sale_order_custom_creative</field>
             <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
@@ -115,7 +106,6 @@
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_sale_order_custom_advanced</field>
-            <field name="report_file">general_template.report_sale_order_custom_advanced</field>
             <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
@@ -126,7 +116,6 @@
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_sale_order_custom_exclusive</field>
-            <field name="report_file">general_template.report_sale_order_custom_exclusive</field>
             <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
@@ -137,7 +126,6 @@
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_sale_order_custom_incredible</field>
-            <field name="report_file">general_template.report_sale_order_custom_incredible</field>
             <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>
             <field name="binding_model_id" ref="model_sale_order"/>
             <field name="binding_type">report</field>
@@ -150,7 +138,6 @@
             <field name="model">stock.picking</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_delivery_custom</field>
-            <field name="report_file">general_template.report_delivery_custom</field>
             <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
             <field name="binding_model_id" ref="model_stock_picking"/>
             <field name="binding_type">report</field>
@@ -161,7 +148,6 @@
             <field name="model">stock.picking</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_delivery_custom_elegant</field>
-            <field name="report_file">general_template.report_delivery_custom_elegant</field>
             <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
             <field name="binding_model_id" ref="model_stock_picking"/>
             <field name="binding_type">report</field>
@@ -172,7 +158,6 @@
             <field name="model">stock.picking</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_delivery_custom_creative</field>
-            <field name="report_file">general_template.report_delivery_custom_creative</field>
             <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
             <field name="binding_model_id" ref="model_stock_picking"/>
             <field name="binding_type">report</field>
@@ -183,7 +168,6 @@
             <field name="model">stock.picking</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_delivery_custom_advanced</field>
-            <field name="report_file">general_template.report_delivery_custom_advanced</field>
             <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
             <field name="binding_model_id" ref="model_stock_picking"/>
             <field name="binding_type">report</field>
@@ -194,7 +178,6 @@
             <field name="model">stock.picking</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_delivery_custom_exclusive</field>
-            <field name="report_file">general_template.report_delivery_custom_exclusive</field>
             <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
             <field name="binding_model_id" ref="model_stock_picking"/>
             <field name="binding_type">report</field>
@@ -205,7 +188,6 @@
             <field name="model">stock.picking</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_delivery_custom_incredible</field>
-            <field name="report_file">general_template.report_delivery_custom_incredible</field>
             <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
             <field name="binding_model_id" ref="model_stock_picking"/>
             <field name="binding_type">report</field>
@@ -217,7 +199,6 @@
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_purchase_custom</field>
-            <field name="report_file">general_template.report_purchase_custom</field>
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
@@ -230,7 +211,6 @@
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_purchase_custom_elegant</field>
-            <field name="report_file">general_template.report_purchase_custom_elegant</field>
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
@@ -243,7 +223,6 @@
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_purchase_custom_creative</field>
-            <field name="report_file">general_template.report_purchase_custom_creative</field>
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
@@ -256,7 +235,6 @@
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_purchase_custom_advanced</field>
-            <field name="report_file">general_template.report_purchase_custom_advanced</field>
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
@@ -269,7 +247,6 @@
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_purchase_custom_exclusive</field>
-            <field name="report_file">general_template.report_purchase_custom_exclusive</field>
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
@@ -282,7 +259,6 @@
             <field name="model">purchase.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_purchase_custom_incredible</field>
-            <field name="report_file">general_template.report_purchase_custom_incredible</field>
             <field name="print_report_name">
                 (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
                 'Purchase Order - %s' % (object.name))</field>
@@ -297,7 +273,6 @@
             <field name="model">res.company</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">general_template.report_demo_template_main</field>
-            <field name="report_file">general_template.report_demo_template_main</field>
             <field name="binding_model_id" ref="model_res_company"/>
             <field name="binding_type">report</field>
             <field name="binding_view_types">None</field>

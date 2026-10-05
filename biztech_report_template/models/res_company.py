@@ -84,19 +84,23 @@ class ResCompany(models.Model):
 
     @api.model
     def _default_report_template_cust(self):
-        ir_rule_id = self.env['ir.rule'].search(
-            [('name', '=', 'res_partner: portal/public: read access on my commercial partner')])
-        if ir_rule_id:
-            ir_rule_id.unlink()
+        # Odoo 20 evaluates column defaults during _auto_init, while the registry
+        # is still being built, so 'ir.rule' is not necessarily available yet.
+        if 'ir.rule' in self.env.registry.models:
+            ir_rule_id = self.env['ir.rule'].search(
+                [('name', '=', 'res_partner: portal/public: read access on my commercial partner')])
+            if ir_rule_id:
+                ir_rule_id.unlink()
+
+        if 'ir.actions.report' not in self.env.registry.models:
+            return False
 
         report_obj = self.env['ir.actions.report']
         report_id = report_obj.search([('model', '=', 'account.move'), (
             'report_name', '=', 'biztech_report_template.report_main_invoice_2')])
-        if report_id:
-            report_id = report_id[0]
-        else:
-            report_id = report_obj.search([('model', '=', 'account.move')])[0]
-        return report_id
+        if not report_id:
+            report_id = report_obj.search([('model', '=', 'account.move')])
+        return report_id[:1]
 
     @api.depends('partner_id')
     def _default_report_template1(self):
@@ -118,7 +122,7 @@ class ResCompany(models.Model):
         img_path = file_path("biztech_report_template/static/src/img/avatar.png")
         with open(img_path, 'rb') as f:
             image = f.read()
-        return base64.b64encode(image)
+        return base64.b64encode(image).decode()
 
     @api.onchange('standard_template_report')
     def _onchange_invoice_template(self):
@@ -172,8 +176,9 @@ class ResCompany(models.Model):
                                   help="Please set Hex color for Table Odd Parity.", default="#FFFFFF")
     even_party_color_template = fields.Char(string="Table Even Parity Color", required=True,
                                    help="Please set Hex color for Table Even Parity.", default="#e6e8ed")
+    # Label distinguished from is_company_bold_t to avoid a duplicate-label warning.
     is_company_bold_template = fields.Boolean(
-        string="Display Company Name in Bold", default=False, help="Please check it if you want to show Company Name in Bold.")
+        string="Display Company Name in Bold (Template)", default=False, help="Please check it if you want to show Company Name in Bold.")
     is_customer_bold_template = fields.Boolean(
         string="Display Customer Name in Bold", default=False, help="Please check it if you want to show Customer Name in Bold.")
     standard_template_report = fields.Selection(standard_template, string="Standard Template Configuration", required=True,

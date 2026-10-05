@@ -7,5 +7,6 @@ from odoo import fields, models
 class ProductCategory(models.Model):
     _inherit = 'product.public.category'
 
-    description = fields.Text(string="Description", translate=True,
+    # Label differs from website_sale's website_description to avoid a duplicate-label warning.
+    description = fields.Text(string="Mega Menu Description", translate=True,
                               help="Short description will be visible in mega menu below category slider.")

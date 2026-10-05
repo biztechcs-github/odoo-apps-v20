@@ -3,7 +3,7 @@
 
 {
     'name': 'Clever Multiple Invoice Template',
-    'version': '19.0.0.0',
+    'version': '20.0.0.0',
     'author': 'Appjetty',
     'license': 'OPL-1',
     'category': 'Accounting',
@@ -12,7 +12,7 @@
     'description': '''Professional Templates, Professional Report Templates, Customizable Invoice Templates, Multiple Professional Invoice Templates, Customized Invoice''',
     'summary': 'Get Diverse Invoice Templates In One Go!',
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.access.csv',
         'data/template_data.xml',
         'views/polished.xml',
         'views/morden.xml',

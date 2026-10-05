@@ -8,15 +8,14 @@ import tempfile
 import logging
 from contextlib import closing
 from odoo.exceptions import UserError
-from PyPDF2 import PdfFileWriter, PdfFileReader
 from odoo.tools.misc import find_in_path
 from odoo import models, _
 from collections import OrderedDict
 from odoo.tools import config, pdf
 from PIL import Image
 _logger = logging.getLogger(__name__)
-from PyPDF2.generic import TextStringObject
 from odoo.tools import format_amount, format_date, format_datetime, pdf
+from odoo.tools.pdf import PdfFileReader, PdfFileWriter, TextStringObject
 
 def _get_wkhtmltopdf_bin():
     return find_in_path('wkhtmltopdf')
@@ -47,7 +46,7 @@ class IrActionsReport(models.Model):
                 suffix='.pdf', prefix='report.tmp.custom.')
             custom_documents.append(pdf_custom_path)
             with open(pdf_custom_fd, 'wb') as pcd:
-                pcd.write(base64.decodebytes(
+                pcd.write(bytes(
                     extra_content_id.append_extra_content))
 
         if custom_documents:
@@ -60,8 +59,8 @@ class IrActionsReport(models.Model):
                     pdfreport = open(document, 'rb')
                     streams.append(pdfreport)
                     reader = PdfFileReader(pdfreport)
-                    for page in range(0, reader.getNumPages()):
-                        writer.addPage(reader.getPage(page))
+                    for page in reader.pages:
+                        writer.add_page(page)
 
                 with closing(os.fdopen(merged_file_fd, 'wb')) as merged_file:
                     writer.write(merged_file)
@@ -115,7 +114,7 @@ class IrActionsReport(models.Model):
         return {
             f'{line.id}_description': line.name,
             f'{line.id}_quantity': line.product_uom_qty,
-            f'{line.id}_uom': line.product_uom.name,
+            f'{line.id}_uom': line.product_uom_id.name,
             f'{line.id}_price_unit': format_amount(env, line.price_unit, line.currency_id),
             f'{line.id}_discount': line.discount,
             f'{line.id}_product_sale_price': format_amount(
@@ -198,42 +197,51 @@ class IrActionsReport(models.Model):
                         'attachment': attachment,
                     }
 
-        # Determine which res_ids still need wkhtmltopdf rendering
+        # Determine which res_ids still need PDF engine rendering
         res_ids_wo_stream = [rid for rid, s in collected_streams.items() if not s['stream']]
-        is_wk_needed = (not res_ids) or bool(res_ids_wo_stream)
 
-        # If wkhtmltopdf rendering needed, render HTML -> PDF
-        if is_wk_needed:
-            # wkhtmltopdf presence check
-            if self.get_wkhtmltopdf_state() == 'install':
-                raise UserError(_("Unable to find Wkhtmltopdf on this system. The PDF can not be created."))
+        engine_name = self._get_pdf_engine(report_sudo)
+        if engine_name == 'html':
+            # PDF generation is not setup
+            data.setdefault('debug', False)
+            return self.with_context(debug=False) \
+                ._render_qweb_html(report_ref, res_ids_wo_stream, data=data)[0]
+
+        is_pdf_engine_required = (not res_ids) or bool(res_ids_wo_stream)
+
+        # If PDF engine rendering needed, render HTML -> PDF
+        if is_pdf_engine_required:
+            # pdf engine availability check
+            engine_state = self.get_pdf_engine_state(engine_name)
+            if engine_state == 'install':
+                raise UserError(_("Unable to find the pdf engine on this system. The PDF can not be created."))
+            elif engine_state == 'broken':
+                raise UserError(_("The pdf engine on this system is not working."))
+            elif engine_state == 'workers':
+                raise UserError(_("Not enough workers to generate the PDF. Please try another engine or upgrade your setup."))
 
             # Render HTML with debug disabled and possibly commit_assetsbundle
             additional_context = {'debug': False}
             if not config['test_enable']:
                 additional_context['commit_assetsbundle'] = True
+            data.setdefault('debug', False)
 
             html = self.with_context(**additional_context)._render_qweb_html(report_ref, res_ids_wo_stream, data=data)[0]
-            bodies, html_ids, header, footer, specific_paperformat_args = self.with_context(**additional_context)._prepare_html(html, report_model=report_sudo.model)
+
+            # Generate PDF bytes
+            pdf_content, html_ids = self._run_pdf_engine(
+                engine_name, html, report_ref=report_ref,
+                landscape=self.env.context.get('landscape'),
+            )
 
             # If attachment splitting logic is enabled but html_ids don't match expected res ids, raise
             if report_sudo.attachment and set(res_ids_wo_stream) != set(html_ids):
                 raise UserError(_(
-                    "The report's template %r is wrong, please contact your administrator. \n\n"
-                    "Cannot separate file to save as attachment because the report's template does not contain the attributes 'data-oe-model' and 'data-oe-id' on the div with 'article' classname.",
-                    self.name,
+                    "Report template “%s” has an issue, please contact your administrator. \n\n"
+                    "Cannot separate file to save as attachment because the report's template does not contain the attributes 'data-oe-model' and 'data-oe-id' as part of the div with 'article' classname.",
+                    report_sudo.name,
                 ))
 
-            # Generate PDF bytes
-            pdf_content = self._run_wkhtmltopdf(
-                bodies,
-                report_ref=report_ref,
-                header=header,
-                footer=footer,
-                landscape=self._context.get('landscape'),
-                specific_paperformat_args=specific_paperformat_args,
-                set_viewport_size=self._context.get('set_viewport_size'),
-            )
             pdf_content_stream = io.BytesIO(pdf_content)
 
             # Case: printing a PDF report without any records (global report)
@@ -265,7 +273,7 @@ class IrActionsReport(models.Model):
                     extra_content_id = content_obj.search([('model_id', '=', model_rec.id), ('company_id', '=', res.company_id.id)], limit=1)
                     if extra_content_id and extra_content_id.append_extra_content:
                         try:
-                            decoded = base64.b64decode(extra_content_id.append_extra_content)
+                            decoded = bytes(extra_content_id.append_extra_content)
                             extra_fd, extra_path = tempfile.mkstemp(suffix='.pdf', prefix='report.tmp.custom.')
                             with os.fdopen(extra_fd, 'wb') as ef:
                                 ef.write(decoded)
@@ -285,8 +293,8 @@ class IrActionsReport(models.Model):
                             f = open(doc_path, 'rb')
                             opened_files.append(f)
                             reader = PdfFileReader(f)
-                            for p in range(0, reader.getNumPages()):
-                                writer.addPage(reader.getPage(p))
+                            for page in reader.pages:
+                                writer.add_page(page)
 
                         with os.fdopen(merged_fd, 'wb') as merged_f:
                             writer.write(merged_f)
@@ -330,7 +338,7 @@ class IrActionsReport(models.Model):
 
                         if order_template and order_template.quotation_document_ids:
                             for doc in order_template.quotation_document_ids:
-                                document_data = doc.datas
+                                document_data = doc.raw
                                 if doc.document_type == 'header':
                                     if document_data:
                                         header_record = order_template
@@ -360,11 +368,11 @@ class IrActionsReport(models.Model):
                             writer = PdfFileWriter()
                             # add header pages if present
                             if header_record and header_data:
-                                self._add_pages_to_writer(writer, base64.b64decode(header_data))
+                                self._add_pages_to_writer(writer, header_data)
                             # add product docs pages (with optional line id injection)
                             if included_product_docs:
                                 for doc in included_product_docs:
-                                    self._add_pages_to_writer(writer, base64.b64decode(doc.datas), TextStringObject(str(doc_line_id_mapping.get(doc.id, ''))))
+                                    self._add_pages_to_writer(writer, doc.raw, TextStringObject(str(doc_line_id_mapping.get(doc.id, ''))))
                             # add the initial main document content
                             # if initial_stream is BytesIO, use reader on its bytes
                             try:
@@ -374,7 +382,7 @@ class IrActionsReport(models.Model):
                                 pass
                             # add footer if present
                             if footer_record and footer_data:
-                                self._add_pages_to_writer(writer, base64.b64decode(footer_data))
+                                self._add_pages_to_writer(writer, footer_data)
 
                             # Fill forms if necessary (uses your existing helper pdf.fill_form_fields_pdf)
                             form_fields = self._get_form_fields_mapping(order, doc_line_id_mapping)

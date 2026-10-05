@@ -80,10 +80,10 @@ class ReportFonts(models.Model):
     path = fields.Char(required=True)
     mode = fields.Char(required=True)
 
-    _sql_constraints = [
-        ('name_font_uniq', 'unique(family, name)',
-         'You can not register two fonts with the same name'),
-    ]
+    _name_font_uniq = models.Constraint(
+        'unique(family, name)',
+        'You can not register two fonts with the same name',
+    )
 
     @api.model
     def font_scan(self, lazy=False):

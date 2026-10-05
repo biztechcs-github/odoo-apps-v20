@@ -8,11 +8,11 @@ import tempfile
 import logging
 from contextlib import closing
 from odoo.exceptions import UserError
-from PyPDF2 import PdfFileWriter, PdfFileReader
 from odoo.tools.misc import find_in_path
 from odoo import models, _
 from collections import OrderedDict
 from odoo.tools import config
+from odoo.tools.pdf import PdfFileReader, PdfFileWriter
 from PIL import Image
 _logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ class IrActionsReport(models.Model):
                 suffix='.pdf', prefix='report.tmp.custom.')
             custom_documents.append(pdf_custom_path)
             with open(pdf_custom_fd, 'wb') as pcd:
-                pcd.write(base64.decodebytes(
+                pcd.write(bytes(
                     extra_content_id.append_extra_content))
 
         if custom_documents:
@@ -60,8 +60,8 @@ class IrActionsReport(models.Model):
                     pdfreport = open(document, 'rb')
                     streams.append(pdfreport)
                     reader = PdfFileReader(pdfreport)
-                    for page in range(0, reader.getNumPages()):
-                        writer.addPage(reader.getPage(page))
+                    for page in range(0, len(reader.pages)):
+                        writer.add_page(reader.pages[page])
 
                 with closing(os.fdopen(merged_file_fd, 'wb')) as merged_file:
                     writer.write(merged_file)
@@ -122,18 +122,31 @@ class IrActionsReport(models.Model):
                         'attachment': attachment,
                     }
 
-            # Call 'wkhtmltopdf' to generate the missing streams.
+            # Call the defined PDF engine to generate the missing streams.
             res_ids_wo_stream = [res_id for res_id, stream_data in collected_streams.items() if not stream_data['stream']]
-            is_whtmltopdf_needed = not res_ids or res_ids_wo_stream
 
-            if is_whtmltopdf_needed:
+            engine_name = self._get_pdf_engine(report_sudo)
+            if engine_name == 'html':
+                # PDF generation is not setup
+                data.setdefault('debug', False)
+                return self.with_context(debug=False) \
+                    ._render_qweb_html(report_ref, res_ids_wo_stream, data=data)[0]
 
-                if self.get_wkhtmltopdf_state() == 'install':
-                    # wkhtmltopdf is not installed
-                    # the call should be catched before (cf /report/check_wkhtmltopdf) but
+            is_pdf_engine_required = not res_ids or res_ids_wo_stream
+
+            if is_pdf_engine_required:
+
+                engine_state = self.get_pdf_engine_state(engine_name)
+                if engine_state == 'install':
+                    # pdf engine is not installed
+                    # the call should be catched before (cf /report/get_pdf_engine_state) but
                     # if get_pdf is called manually (email template), the check could be
                     # bypassed
-                    raise UserError(_("Unable to find Wkhtmltopdf on this system. The PDF can not be created."))
+                    raise UserError(_("Unable to find the pdf engine on this system. The PDF can not be created."))
+                elif engine_state == 'broken':
+                    raise UserError(_("The pdf engine on this system is not working."))
+                elif engine_state == 'workers':
+                    raise UserError(_("Not enough workers to generate the PDF. Please try another engine or upgrade your setup."))
 
                 # Disable the debug mode in the PDF rendering in order to not split the assets bundle
                 # into separated files to load. This is done because of an issue in wkhtmltopdf
@@ -154,26 +167,22 @@ class IrActionsReport(models.Model):
                 if not config['test_enable']:
                     additional_context['commit_assetsbundle'] = True
 
+                data.setdefault('debug', False)
+
                 html = self.with_context(**additional_context)._render_qweb_html(report_ref, res_ids_wo_stream, data=data)[0]
 
-                bodies, html_ids, header, footer, specific_paperformat_args = self.with_context(**additional_context)._prepare_html(html, report_model=report_sudo.model)
+                pdf_content, html_ids = self._run_pdf_engine(
+                    engine_name, html, report_ref=report_ref,
+                    landscape=self.env.context.get('landscape'),
+                )
 
                 if report_sudo.attachment and set(res_ids_wo_stream) != set(html_ids):
                     raise UserError(_(
-                        "The report's template %r is wrong, please contact your administrator. \n\n"
-                        "Can not separate file to save as attachment because the report's template does not contains the"
-                        " attributes 'data-oe-model' and 'data-oe-id' on the div with 'article' classname.",
-                        self.name,
+                        "Report template “%s” has an issue, please contact your administrator. \n\n"
+                        "Cannot separate file to save as attachment because the report's template does not contain the"
+                        " attributes 'data-oe-model' and 'data-oe-id' as part of the div with 'article' classname.",
+                        report_sudo.name,
                     ))
-                pdf_content = self._run_wkhtmltopdf(
-                    bodies,
-                    report_ref=report_ref,
-                    header=header,
-                    footer=footer,
-                    landscape=self._context.get('landscape'),
-                    specific_paperformat_args=specific_paperformat_args,
-                    set_viewport_size=self._context.get('set_viewport_size'),
-                )
                 pdf_content_stream = io.BytesIO(pdf_content)
 
                 # Printing a PDF report without any records. The content could be returned directly.
@@ -202,7 +211,7 @@ class IrActionsReport(models.Model):
                                 pdf_custom_fd, pdf_custom_path = tempfile.mkstemp(suffix='.pdf', prefix='report.tmp.custom.')
                                 custom_documents.append(pdf_custom_path)
                                 with open(pdf_custom_fd, 'wb') as pcd:
-                                    pcd.write(base64.decodebytes(
+                                    pcd.write(bytes(
                                         extra_content_id.append_extra_content))
                         if custom_documents:
                             writer = PdfFileWriter()
@@ -214,8 +223,8 @@ class IrActionsReport(models.Model):
                                     pdfreport = open(document, 'rb')
                                     st.append(pdfreport)
                                     reader = PdfFileReader(pdfreport)
-                                    for page in range(0, reader.getNumPages()):
-                                        writer.addPage(reader.getPage(page))
+                                    for page in range(0, len(reader.pages)):
+                                        writer.add_page(reader.pages[page])
 
                                 with closing(os.fdopen(merged_file_fd, 'wb')) as merged_file:
                                     writer.write(merged_file)
@@ -274,10 +283,10 @@ class IrActionsReport(models.Model):
                     if has_same_number_of_outlines and has_top_level_heading:
                         # Split the PDF according to outlines.
                         for i, num in enumerate(outlines_pages):
-                            to = outlines_pages[i + 1] if i + 1 < len(outlines_pages) else reader.numPages
+                            to = outlines_pages[i + 1] if i + 1 < len(outlines_pages) else len(reader.pages)
                             attachment_writer = PdfFileWriter()
                             for j in range(num, to):
-                                attachment_writer.addPage(reader.getPage(j))
+                                attachment_writer.add_page(reader.pages[j])
 
                                 # Append Extra content at last page of pdf report
                                 if model_id and res_ids[i]:
@@ -292,15 +301,15 @@ class IrActionsReport(models.Model):
                                             suffix='.pdf', prefix='report.tmp.custom.')
                                         custom_documents.append(pdf_custom_path)
                                         with open(pdf_custom_fd, 'wb') as pcd:
-                                            pcd.write(base64.decodebytes(
+                                            pcd.write(bytes(
                                                 extra_content_id.append_extra_content))
 
                                         ext_pdfreport = open(pdf_custom_path, 'rb')
                                         st.append(ext_pdfreport)
                                         ext_reader = PdfFileReader(ext_pdfreport)
-                                        for page in range(0, ext_reader.getNumPages()):
-                                            attachment_writer.addPage(
-                                                ext_reader.getPage(page))
+                                        for page in range(0, ext_len(reader.pages)):
+                                            attachment_writer.add_page(
+                                                ext_reader.pages[page])
 
                             stream = io.BytesIO()
                             attachment_writer.write(stream)

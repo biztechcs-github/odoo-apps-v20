@@ -51,7 +51,7 @@
                             </td>
                             <td align="center" class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-field="l.product_qty"/>
-                                <span groups="product.group_uom" t-field="l.product_uom.name"/>
+                                <span groups="uom.group_uom" t-field="l.uom_id.name"/>
                             </td>
                             <td class="text-right" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-field="l.price_unit"/>
