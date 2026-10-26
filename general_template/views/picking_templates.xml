@@ -2,27 +2,28 @@
 <odoo>
     
     <template id="picking_templates_order_lines">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <table cellpadding="0" cellspacing="0" class="table" style="border:0.5px solid #ccc;  border-collapse: collapse; padding:15px; border-bottom:1px solid #ccc;" t-if="o.move_line_ids" width="100%">
             <t t-set="has_barcode" t-value="any([ml.product_id and ml.product_id.sudo().barcode or ml.package_id for ml in o.move_line_ids])"/>
             <t t-set="has_serial_number" t-value="o.move_line_ids.filtered(lambda ml: ml.lot_id or ml.lot_name)" groups="stock.group_production_lot"/>
             <thead>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
-                        <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Image</td>
+                        <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Image</td>
                     </t>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Product</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Quantity</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="has_barcode" width="15%">
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Product</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Quantity</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" t-if="has_barcode" width="15%">
                         <t t-if="has_barcode">Barcode</t>
                     </td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="o.picking_type_id.code != 'incoming'" width="15%">
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" t-if="o.picking_type_id.code != 'incoming'" width="15%">
                         <t align="left"  t-if="o.picking_type_id.code != 'incoming'">From</t>
                     </td>
-                    <!-- <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="has_serial_number" width="20%">
+                    <!-- <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" t-if="has_serial_number" width="20%">
                         <t t-if="has_serial_number">Lot/Serial Number</t>
                     </td> -->
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%" t-if="o.picking_type_id.code != 'outgoing'">To</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%" t-if="o.picking_type_id.code != 'outgoing'">To</td>
                 </tr>
             </thead>
             <tbody>
@@ -30,12 +31,12 @@
                     <t t-foreach="o.move_ids.sorted(key=lambda m: m.product_id.id)" t-as="move"> 
                         <t t-foreach="move.move_line_ids.sorted(key=lambda ml: ml.location_id.id)" t-as="ml">
                             <t t-if="ml_odd">
-                                <t t-set="po_color" t-value="o.company_id.even_party_color"/>
+                                <t t-set="po_color" t-value="colors['even_party']"/>
                             </t>
                             <t t-if="ml_even">
-                                <t t-set="po_color" t-value="o.company_id.odd_party_color"/>
+                                <t t-set="po_color" t-value="colors['odd_party']"/>
                             </t>
-                            <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ po_color + '; color: ' + text_color ">
+                            <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ po_color + '; color: ' + colors['text'] ">
                                 <td align="center" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                     <span t-out="ml_index+1"/>
                                 </td>
@@ -95,23 +96,23 @@
         <t t-set="packages" t-value="o.move_line_ids.mapped('package_id').filtered(lambda p: p)"/>
         <table cellpadding="0" cellspacing="0" class="table" style="border:0.5px solid #ccc;  border-collapse: collapse; padding:15px; border-bottom:1px solid #ccc;" width="100%" t-if="packages">
             <thead>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%">Package</th>
-                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%" class="text-center">Barcode</th>
-                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%" class="text-left">Source</th>
-                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%" class="text-right">Destination</th>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="25%">Package</th>
+                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="25%" class="text-center">Barcode</th>
+                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="25%" class="text-left">Source</th>
+                    <th align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="25%" class="text-right">Destination</th>
                 </tr>
             </thead>
             <tbody>
                 <t t-foreach="packages.sorted(key=lambda p: p.name)" t-as="package">
                     <t t-if="package_odd">
-                        <t t-set="po_color" t-value="o.company_id.even_party_color"/>
+                        <t t-set="po_color" t-value="colors['even_party']"/>
                     </t>
                     <t t-if="package_even">
-                        <t t-set="po_color" t-value="o.company_id.odd_party_color"/>
+                        <t t-set="po_color" t-value="colors['odd_party']"/>
                     </t>
                     <t t-set="package_move_line" t-value="o.move_line_ids.filtered(lambda ml: ml.package_id == package)[:1]"/>
-                    <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ po_color + '; color: ' + text_color " >
+                    <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ po_color + '; color: ' + colors['text'] " >
                         <td align="center" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'"><span t-field="package.name"/></td>
                         <td align="center" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <!-- <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', package.name, 600, 100)" style="width:300px    ;height:50px" alt="Barcode"/> -->
@@ -130,26 +131,27 @@
         <t t-set="no_reserved_product" t-value="o.move_ids.filtered(lambda x: x.move_line_ids and x.state!='done')"/>
     </template>
     <template id="delivery_note_templates_order_line">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <table cellpadding="0" cellspacing="0" class="table table-borderless" style="border:0.5px solid #ccc;  border-collapse: collapse; padding:15px; border-bottom:1px solid #ccc;" t-if="not o.move_line_ids" width="100%">
             <thead>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Product</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Status</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Location</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Ordered</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Delivered</td>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="52%">Product</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="14%">Status</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Location</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Ordered</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Delivered</td>
                 </tr>
             </thead>
             <tbody>
                 <t t-as="move" t-foreach="o.move_ids">
                     <t t-if="move_odd">
-                        <t t-set="mv_color" t-value="o.company_id.even_party_color"/>
+                        <t t-set="mv_color" t-value="colors['even_party']"/>
                     </t>
                     <t t-if="move_even">
-                        <t t-set="mv_color" t-value="o.company_id.odd_party_color"/>
+                        <t t-set="mv_color" t-value="colors['odd_party']"/>
                     </t>
-                    <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ mv_color + '; color: '+ text_color ">
+                    <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ mv_color + '; color: '+ colors['text'] ">
                         <td align="left" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <span t-out="move_index+1"/>
                         </td>
@@ -182,29 +184,29 @@
         <table cellpadding="0" cellspacing="0" class="table table-borderless" style="border:0.5px solid #ccc;  border-collapse: collapse; padding:15px; border-bottom:1px solid #ccc;" t-if="o.move_line_ids" width="100%">
             <t groups="stock.group_lot_on_delivery_slip" t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')"/>
             <thead>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <td align="center" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <td align="center" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
-                        <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="10%">Image</td>
+                        <td align="left" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="10%">Image</td>
                     </t>
-                    <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Product</td>
-                    <td align="right" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="has_serial_number" width="20%">Serial Number</td>
-                    <td align="center" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Status</td>
-                    <td align="center" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Location</td>
-                    <td align="right" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Ordered</td>
-                    <td align="right" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Delivered</td>
+                    <td align="left" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="52%">Product</td>
+                    <td align="right" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" t-if="has_serial_number" width="20%">Serial Number</td>
+                    <td align="center" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="14%">Status</td>
+                    <td align="center" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Location</td>
+                    <td align="right" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Ordered</td>
+                    <td align="right" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Delivered</td>
                 </tr>
             </thead>
             <tbody>
                 <!-- <td colspan="3"> -->
                     <t t-as="pack_operation" t-foreach="o.move_ids">
                         <t t-if="pack_operation_odd">
-                            <t t-set="po_color" t-value="o.company_id.even_party_color"/>
+                            <t t-set="po_color" t-value="colors['even_party']"/>
                         </t>
                         <t t-if="pack_operation_even">
-                            <t t-set="po_color" t-value="o.company_id.odd_party_color"/>
+                            <t t-set="po_color" t-value="colors['odd_party']"/>
                         </t>
-                        <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ po_color + '; color: ' + text_color ">
+                        <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ po_color + '; color: ' + colors['text'] ">
                             <td align="left" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-out="pack_operation_index+1"/>
                             </td>
@@ -291,7 +293,7 @@
                 <strong>Signature</strong>
             </div>
             <div class="offset-8">
-                <img t-att-src="image_data_uri(signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                <img t-att-src="o.company_id._get_report_image_uri(signature)" style="max-height: 4cm; max-width: 8cm;"/>
             </div>
         </div>
     </template>

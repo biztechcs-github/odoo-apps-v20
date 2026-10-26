@@ -9,143 +9,239 @@
             <t t-set="company" t-value="res_company"/>
         </t>
         <t t-call="general_template.purchase_template_header"/>
-        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <div class="article o_report_layout_standard o_modern_duet" t-att-data-oe-id="o and o.id" t-att-data-oe-model="o and o._name" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="general_template.creative_styles"/>
             <t t-out="0"/>
         </div>
-        <t t-call="general_template.templates_footer"/>
+        <t t-call="general_template.creative_footer"/>
     </template>
     <template id="purchase_template_header">
-        <div class="header" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
-            <div  style="float:left; width:25%;">
-                <t t-if="o.company_id.invoice_logo">
-                    <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: 100px;"/> -->
-                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)"
-                             alt="Company Logo"
-                             style="height: auto; max-height: 100px; max-width: 100%;"/>
-                </t>
-            </div>
-            <div  style="float:right; width:67%;">
-                <div t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; width:100%">
-                    <table class="table table-borderless" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'};font-weight:bold;text-align:center;font-size:28px; position: relative; margin-bottom: 0;">
-                            <tr>
-                                <td t-attf-style="width: 100%;position: relative;/* z-index: -1; */left: 0">
-                                    <span t-if="o.state not in ['draft']">Purchase Order Confirmation # </span>
-                                    <span t-if="o.state in ['draft']">Request for Quotation # </span>
-                                    <span t-field="o.name"/>
-                                </td>
-                                <td class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};position: absolute;height: 100%;width: 100%; -webkit-transform: skewX(35deg); transform: skewX(35deg); top: 0px;right: -100px; overflow: hidden; left: -50px; z-index: -1;"></td>
-                            </tr>
-                    </table>
-                </div>
-                <div class="row" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;width:100%; padding-top:10px;margin-left: 0;float:right;'">
-                    <div class="col-12" style="padding:0; width:100%;">
-                        <table class="table table-borderless" style="position: relative;">
-                            <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                <td>
-                                    <b t-if="o.state not in ['draft']">Date Ordered:</b>
-                                    <b t-if="o.state in ['draft']">Quotation Date:</b><br/>
-                                    <span t-field="o.date_order"/>
-                                </td>
-                                <td t-if="o.partner_ref">
-                                    <b>Your Order Reference:</b><br/>
-                                    <span t-field="o.partner_ref"/>
-                                </td>
-                                <td t-if="o.user_id">
-                                    <b>Purchase Representative:</b><br/>
-                                    <span t-field="o.user_id"/>
-                                </td>
-                            </tr>
-                            <tr class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};position: absolute;height: 100%;width: 89%;-webkit-transform: skewX(35deg);transform: skewX(35deg);top: 0px;right: -97px;overflow: hidden;left: -31px;z-index: -1;"></tr>
-                        </table>
-                    </div>
-                </div>
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div class="header o_modern_duet" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;' ">
+            <t t-call="general_template.creative_styles"/>
+            <t t-set="card_text" t-value="'color: %s;' % (colors['primary_text'])"/>
+            <div class="o_modern_duet_band o_modern_duet_hband">
+                <table class="duh" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="dl">
+                            <t t-if="o.company_id.invoice_logo">
+                                <img class="lg" t-att-src="o.company_id._get_report_logo_uri(colors['primary'])" alt="Company Logo"/>
+                            </t>
+                            <div class="co">
+                                <span t-field="o.company_id.name"/>
+                                <br/>
+                                <span t-out="o._get_street(o.company_id.partner_id)"/>
+                                <br/>
+                                <span t-out="o._get_address_details(o.company_id.partner_id)"/>
+                            </div>
+                        </td>
+                        <td class="dc">
+                            <div class="cardbox" t-attf-style="background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                                <div class="cdt" t-att-style="card_text"><span t-if="o.state not in ['draft']">Purchase Order Confirmation</span>
+                                <span t-if="o.state in ['draft']">Request for Quotation</span></div>
+                                <div class="cno" t-att-style="card_text"><span t-field="o.name"/></div>
+                                <table class="cgrid" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td t-if="o.date_order"> <div class="lbl"> <span t-if="o.state not in ['draft']">Date Ordered</span> <span t-if="o.state in ['draft']">Quotation Date</span> </div> <div class="fv"><span t-out="o.date_order"/></div> </td>
+                                        <td t-if="o.partner_ref"> <div class="lbl">Your Order Reference</div> <div class="fv"><span t-field="o.partner_ref"/></div> </td>
+                                        <td t-if="o.user_id"> <div class="lbl">Purchase Representative</div> <div class="fv"><span t-field="o.user_id"/></div> </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <div class="lbl">Total</div> <div class="fv" style="font-weight:700; font-size:14px;"><span t-field="o.amount_total"/></div> </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <t t-call="general_template.templates_watermark"/>
         </div>
     </template>
     <template id="report_purchase_main">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-call="general_template.purchase_template_external_layout">
             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
-            <t t-set="theme_color" t-value="o.company_id and o.company_id.theme_color"/>
-            <t t-set="theme_text_color" t-value="o.company_id and o.company_id.theme_text_color"/>
-            <t t-set="company_color" t-value="o.company_id and o.company_id.company_color"/>
-            <t t-set="company_address_color" t-value="o.company_id and o.company_id.company_address_color"/>
-            <t t-set="customer_color" t-value="o.company_id and o.company_id.customer_color"/>
-            <t t-set="customer_address_color" t-value="o.company_id and o.company_id.customer_address_color"/>
-            <t t-set="text_color" t-value="o.company_id and o.company_id.text_color"/>
             <div class="page" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="oe_structure"/>
-                <!-- <t t-call="general_template.templates_watermark"/> -->
-                <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'};  width:100%;"/>
+                <table class="parties" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <p class="lbl">Vendor Address</p>
+                            <t t-call="general_template.templates_customer_details"/>
+                            <t t-call="general_template.creative_warehouse_details"/>
+                        </td>
+                        <td class="px">
+                            <t t-if="o.company_id.name">
+                                <p class="lbl">Pay to</p>
+                                <t t-call="general_template.templates_company_details"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <t t-call="general_template.creative_purchase_order_lines"/>
+                <table class="bside" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="bl" t-attf-style="color: #{colors['text']};">
+                            <!-- purchase.order has no notes field; the original template
+                                 kept this block commented out for the same reason. -->
+                        </td>
+                        <td class="br">
+                            <t t-call="general_template.creative_purchase_totals"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="wline" t-attf-style="color: #{colors['text']};">
+                    <t t-call="general_template.template_total_amount_word"/>
                 </div>
-                <div width="100%">
-                    <!-- <div width="100%"> -->
-                        <div class="container-fluid">
-                            <div class="row" style="width: 100%;">
-                                <div class="col-4">
-                                    <t t-call="general_template.templates_customer_details"/>
-                                </div>
-                                <div class="col-4" style="padding-left: 20px;">
-                                    <t t-call="general_template.templates_warehouse_details"/>
-                                </div>
-                                <div class="col-4" style="padding-left: 20px;">
-                                    <t t-call="general_template.templates_company_details"/>
-                                </div>
-                            </div>
-                        </div> 
-                        <div>
-                            <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'};  width:100%;"/>
-                        </div>
-                        <div>
-                            <t t-call="general_template.purchase_template_order_lines"/>
-                        </div>
-                        <div style="overflow:auto;">
-                            <t t-call="general_template.purchase_template_order_subtotal"/>
-                        </div>
-                        <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
-                            <t t-call="general_template.template_total_amount_word"/>
-                        </div>
-                        <!-- <div t-attf-style="color: #{text_color or '#000000'}; padding-top:5px; width:100%;" t-if="o.notes and o.company_id.is_show_notes == True">
-                            <p t-field="o.notes"/>
-                        </div> -->
-                        <div align="right" t-attf-style="color: #{text_color or '#000000'};">
+                <table class="fin" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td t-attf-style="color: #{colors['text']};"/>
+                        <td class="fsig" t-attf-style="color: #{colors['text']};">
                             <t t-call="general_template.report_signature"/>
-                        </div>
-                        <div class="oe_structure"/>
-                    <!-- </div> -->
-                </div>
+                            <t t-call="general_template.report_barcode"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="oe_structure"/>
             </div>
-            <t t-call="general_template.report_barcode"/>
         </t>
+    </template>
+    <!-- Morden-only copies of the blocks whose look the design changes. -->
+    <template id="creative_purchase_order_lines">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <t t-set="rule_color" t-value="colors['primary']"/>
+        <t t-set="th_style" t-value="'color: %s; border-bottom: 2px solid %s;' % (rule_color, rule_color)"/>
+        <table class="lines">
+            <thead>
+                <tr>
+                    <th t-att-style="th_style" class="r k-sr">Sr.</th>
+                    <th t-att-style="th_style" class="l k-image" t-if="o.company_id.add_product_image == True">Image</th>
+                    <th t-att-style="th_style" class="l k-product">Description</th>
+                    <th t-att-style="th_style" class="c k-tax">Taxes</th>
+                    <th t-att-style="th_style" class="c k-date">Date Req.</th>
+                    <th t-att-style="th_style" class="r k-qty">Qty</th>
+                    <th t-att-style="th_style" class="r k-price">Unit Price</th>
+                    <th t-att-style="th_style" class="r k-amount">Net Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="line_span" t-value="7 if o.company_id.add_product_image == True else 6"/>
+                <t t-as="l" t-foreach="o.order_line">
+                    <t t-if="l_odd">
+                        <t t-set="ol_color" t-value="colors['even_party']"/>
+                    </t>
+                    <t t-if="l_even">
+                        <t t-set="ol_color" t-value="colors['odd_party']"/>
+                    </t>
+                    <tr t-att-class="'sec' if l.display_type == 'line_section' else ('note' if l.display_type == 'line_note' else '')" t-att-style="'background-color: %s; color: %s;' % (ol_color, colors['text'])">
+                        <t t-if="not l.display_type">
+                            <td class="r k-sr"><span t-out="l_index+1"/></td>
+                            <td class="l k-image" t-if="o.company_id.add_product_image == True">
+                                <img class="thumb" t-if="l.product_id and l.product_id.image_1920" t-att-src="image_data_uri(l.product_id.image_1920)"/>
+                            </td>
+                            <td class="l k-product">
+                                <div class="pbody">
+                                    <div class="pname">
+                                        <span t-if="l.product_id" t-out="l.product_id.display_name"/>
+                                        <span t-else="" t-field="l.name" t-options="{'widget': 'text'}"/>
+                                    </div>
+                                    <div class="pd" t-if="o.company_id.is_description and l.product_id and l.name and l.name != l.product_id.display_name">
+                                        <span t-field="l.name" t-options="{'widget': 'text'}"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="c k-tax">
+                                <span t-out="', '.join(map(lambda x: x.name, l.tax_ids))"/>
+                            </td>
+                            <td class="c k-date"><span t-field="l.date_planned"/></td>
+                            <td class="r k-qty">
+                                <span t-field="l.product_qty"/>
+                                <span groups="uom.group_uom" t-field="l.uom_id.name"/>
+                            </td>
+                            <td class="r k-price"><span t-field="l.price_unit"/></td>
+                            <td class="r k-amount">
+                                <span t-field="l.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                        </t>
+                        <t t-if="l.display_type == 'line_section'">
+                            <td class="r k-sr"><span t-out="l_index+1"/></td>
+                            <td t-att-colspan="line_span" id="section">
+                                <span t-field="l.name" t-options="{'widget': 'text'}"/>
+                            </td>
+                            <t t-set="current_section" t-value="l"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="l.display_type == 'line_note'">
+                            <td class="r k-sr"><span t-out="l_index+1"/></td>
+                            <td t-att-colspan="line_span">
+                                <span t-field="l.name" t-options="{'widget': 'text'}"/>
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+    <template id="creative_purchase_totals">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <table class="tot">
+            <tr>
+                <td>SubTotal</td>
+                <td class="r">
+                    <span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Taxes</td>
+                <td class="r">
+                    <span t-field="o.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                </td>
+            </tr>
+            <tr class="tm_gray_bg" t-attf-style="color: #{colors['primary_text']}; background-color: #{colors['primary']};">
+                <td><strong>Total</strong></td>
+                <td class="r">
+                    <span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                </td>
+            </tr>
+        </table>
     </template>
     <template id="report_purchase_custom">
         <t t-call="web.html_container">
             <t t-as="o" t-foreach="docs">
-                <t t-set="o" t-value="o.with_context(lang=lang)" />                
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
                 <t t-call="general_template.report_purchase_main" t-lang="lang"/>
             </t>
         </t>
     </template>
-    <template id="purchase.report_purchaseorder">
-        <t t-call="web.html_container">
-            <t t-set="report_name" t-value="{'report_purchase_custom': 'general_template.report_purchase_main',                                         'report_purchase_custom_creative': 'general_template.report_purchase_creative_main',                                         'report_purchase_custom_elegant': 'general_template.report_purchase_elegant_main',                                         'report_purchase_custom_professional': 'general_template.report_purchase_professional_main',                                         'report_purchase_custom_exclusive': 'general_template.report_purchase_exclusive_main',                                         'report_purchase_custom_advanced': 'general_template.report_purchase_advanced_main',                 'report_purchase_custom_incredible': 'general_template.report_purchase_incredible_main',                 'report_purchase_custom_innovative': 'general_template.report_purchase_innovative_main',}"/>
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-                <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_po_template_id and o.partner_id.report_po_template_id.report_name or o.company_id and o.company_id.report_po_template_id and o.company_id.report_po_template_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_po_template_id or o.company_id and o.company_id.report_po_template_id">
-                    <!-- <t t-call="#{report_name.get(real_name[1], 'general_template.report_purchase_advanced_main')}" t-lang="o.partner_id.lang"/>-->
-                    <t t-call="general_template.report_purchase_main" t-if="r_name == 'general_template.report_purchase_custom'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_creative_main" t-if="r_name == 'general_template.report_purchase_custom_creative'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_elegant_main" t-if="r_name == 'general_template.report_purchase_custom_elegant'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_professional_main" t-if="r_name == 'general_template.report_purchase_custom_professional'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_exclusive_main" t-if="r_name == 'general_template.report_purchase_custom_exclusive'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_advanced_main" t-if="r_name == 'general_template.report_purchase_custom_advanced'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_incredible_main" t-if="r_name == 'general_template.report_purchase_custom_incredible'" t-lang="lang"/>
-                    <t t-call="general_template.report_purchase_innovative_main" t-if="r_name == 'general_template.report_purchase_custom_innovative'" t-lang="lang"/>
+
+    <!-- Inherit rather than redefine purchase.report_purchaseorder: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_purchaseorder_dispatch" inherit_id="purchase.report_purchaseorder">
+        <xpath expr="." position="replace">
+            <t t-call="web.html_container">
+                <t t-set="report_name" t-value="{'report_purchase_custom': 'general_template.report_purchase_main',                                         'report_purchase_custom_creative': 'general_template.report_purchase_creative_main',                                         'report_purchase_custom_elegant': 'general_template.report_purchase_elegant_main',                                         'report_purchase_custom_professional': 'general_template.report_purchase_professional_main',                                         'report_purchase_custom_exclusive': 'general_template.report_purchase_exclusive_main',                                         'report_purchase_custom_advanced': 'general_template.report_purchase_advanced_main',                 'report_purchase_custom_incredible': 'general_template.report_purchase_incredible_main',                 'report_purchase_custom_innovative': 'general_template.report_purchase_innovative_main',}"/>
+                <t t-as="o" t-foreach="docs">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_po_template_id and o.partner_id.report_po_template_id.report_name or o.company_id and o.company_id.report_po_template_id and o.company_id.report_po_template_id.report_name"/>
+                    <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
+                    <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_po_template_id or o.company_id and o.company_id.report_po_template_id">
+                        <!-- <t t-call="#{report_name.get(real_name[1], 'general_template.report_purchase_advanced_main')}" t-lang="o.partner_id.lang"/>-->
+                        <t t-call="general_template.report_purchase_main" t-if="r_name == 'general_template.report_purchase_custom'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_creative_main" t-if="r_name == 'general_template.report_purchase_custom_creative'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_elegant_main" t-if="r_name == 'general_template.report_purchase_custom_elegant'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_professional_main" t-if="r_name == 'general_template.report_purchase_custom_professional'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_exclusive_main" t-if="r_name == 'general_template.report_purchase_custom_exclusive'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_advanced_main" t-if="r_name == 'general_template.report_purchase_custom_advanced'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_incredible_main" t-if="r_name == 'general_template.report_purchase_custom_incredible'" t-lang="lang"/>
+                        <t t-call="general_template.report_purchase_innovative_main" t-if="r_name == 'general_template.report_purchase_custom_innovative'" t-lang="lang"/>
+                    </t>
+                    <t t-else=''>
+                        <t t-call="purchase.report_purchaseorder_document" t-lang="lang"/>
+                    </t>
                 </t>
             </t>
-        </t>
+        </xpath>
     </template>
 </odoo>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Static look of the Corporate design. Company colours are deliberately
+         absent here and stay inline on the elements, so the Standard Template
+         Configuration keeps driving them. Called from the header, the body and
+         the footer because wkhtmltopdf renders those as three documents.
+         No child combinator is used: QWeb escapes ">" inside a style block. -->
+    <template id="exclusive_styles">
+        <!-- The band patterns below are data URIs, so the theme colour they
+             carry needs its hash percent-encoded before it reaches the url(). -->
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <t t-set="o_pat_colour" t-value="colors['primary'].replace('#', '%23')"/>
+        <style>
+            .o_corp_bp { line-height: 1.55; }
+            .o_corp_bp table { border-collapse: collapse; }
+            /* Bootstrap's reboot leaves every table element at "border-style:
+               solid; border-width: 0", which wkhtmltopdf's PDF painter still
+               strokes as a hairline (its image output does not, hence the
+               HTML preview looking clean). The "border: 0" shorthand does not
+               suppress it - only the border-style longhand does. Tables that
+               want rules re-declare them below. The implicit tbody counts: with
+               border-collapse its edge is what draws the box round a layout table. */
+            .o_corp_bp table, .o_corp_bp thead, .o_corp_bp tbody, .o_corp_bp tfoot,
+            .o_corp_bp tr, .o_corp_bp td, .o_corp_bp th { border-style: none; }
+            .o_corp_bp td, .o_corp_bp th { vertical-align: top; }
+            .o_corp_bp .r { text-align: right; }
+            .o_corp_bp .c { text-align: center; }
+            .o_corp_bp .l { text-align: left; }
+            .o_corp_bp .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: 10px; font-weight: 700; color: #475569; line-height: 1.4; margin-bottom: 2px; }
+            .o_corp_bp .fv { font-size: 11px; white-space: nowrap; }
+
+            /* Flat navy band, as the drawing-sheet header of the design.
+               report.scss gutters the page with 11mm of body padding, so the
+               band cancels it to bleed to the paper edge. */
+            .o_corp_bp_band { background: #0f1f3d; -webkit-box-sizing: border-box; box-sizing: border-box; }
+            .o_corp_bp_band, .o_corp_bp_band td, .o_corp_bp_band th,
+            .o_corp_bp_band div, .o_corp_bp_band span, .o_corp_bp_band p,
+            .o_corp_bp_band strong, .o_corp_bp_band b, .o_corp_bp_band li { color: #f3f4f6; }
+            /* The t-if spans inside .lbl/.dt match the rule above directly, so
+               they need naming here too: an inherited colour never wins. */
+            .o_corp_bp_band .lbl, .o_corp_bp_band .lbl span { color: #93c5fd; }
+            .o_corp_bp_band .dt, .o_corp_bp_band .dt span { color: #93c5fd; }
+            .o_corp_bp_band .tbno, .o_corp_bp_band .tbno span { color: #fff; }
+            .o_corp_bp_band .tbh, .o_corp_bp_band .tbh td { border-color: #60a5fa; }
+            .o_corp_bp_band .tbh td.id { background: #1b3056; }
+            .o_corp_bp_band .lg { background: #fff; border-radius: 6px; padding: 4px 6px; }
+            /* The pdf body is ".o_body_pdf.o_css_margins container overflow-hidden":
+               11mm of body padding plus Bootstrap's container padding. Rather than
+               match that sum exactly, overshoot the side bleed and let the body's
+               own overflow:hidden clip it to the paper edge. Margin and padding
+               cancel, so the content keeps its position. */
+            .o_corp_bp_hband { margin: -11mm -40mm 0; padding: 13mm 40mm 6mm; min-height: 46mm; }
+            /* min-height fills the 32mm strip paperformat_report_template reserves
+               as margin_bottom. wkhtmltopdf draws the footer document from the top
+               of that strip downwards, so a band shorter than it left bare paper
+               underneath; filling it puts the band - and the edge pattern anchored
+               to the band's bottom - on the paper edge. The value is in px because
+               wkhtmltopdf lays the footer document out at its own ~1024px viewport
+               and then stretches it across the 210mm page, which leaves a CSS mm
+               about a quarter short: 32mm of paper is ~158 of those px. A footer
+               taller than the strip still clips at the same boundary, as before. */
+            .o_corp_bp_fband { margin: 0 -40mm; padding: 4mm 40mm 12mm; min-height: 158px; }
+
+            /* Edge pattern, the band's half of the design's letterhead. It is a
+               data URI and not a file under static/ because its single fill is the
+               company theme colour, which no fixed asset could carry. The artwork
+               is drawn on a 960-unit canvas - the 794 the design was laid out for
+               plus the 83 of side bleed this band carries at each edge - so
+               stretching it over the whole band puts the design on the paper
+               itself. Width is a percentage and height follows it: a mm
+               background-size comes out short under wkhtmltopdf's 90 dpi.
+               The fade is fill-opacity and not opacity: wkhtmltopdf drops a
+               group opacity in the header document, so every faded motif would
+               vanish from the top of the page while the footer kept its own.
+               The bands' top and bottom padding leaves room for the strip, so
+               no line of the masthead or the footer runs through it. */
+            .o_corp_bp_hband {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='36' viewBox='0 0 960 36'%3E%3Cg fill='<t t-out='o_pat_colour'/>'%3E%3Cpolygon points='83,0 877,0 877,3 83,3' fill-opacity='1'/%3E%3Cpolygon points='851.5,9 854.5,9 854.5,31 851.5,31' fill-opacity='0.5'/%3E%3Cpolygon points='842,18.5 864,18.5 864,21.5 842,21.5' fill-opacity='0.5'/%3E%3Cpolygon points='807.5,9 810.5,9 810.5,31 807.5,31' fill-opacity='0.4'/%3E%3Cpolygon points='798,18.5 820,18.5 820,21.5 798,21.5' fill-opacity='0.4'/%3E%3Cpolygon points='763.5,9 766.5,9 766.5,31 763.5,31' fill-opacity='0.4'/%3E%3Cpolygon points='754,18.5 776,18.5 776,21.5 754,21.5' fill-opacity='0.4'/%3E%3Cpolygon points='719.5,9 722.5,9 722.5,31 719.5,31' fill-opacity='0.4'/%3E%3Cpolygon points='710,18.5 732,18.5 732,21.5 710,21.5' fill-opacity='0.4'/%3E%3Cpolygon points='675.5,9 678.5,9 678.5,31 675.5,31' fill-opacity='0.3'/%3E%3Cpolygon points='666,18.5 688,18.5 688,21.5 666,21.5' fill-opacity='0.3'/%3E%3Cpolygon points='631.5,9 634.5,9 634.5,31 631.5,31' fill-opacity='0.3'/%3E%3Cpolygon points='622,18.5 644,18.5 644,21.5 622,21.5' fill-opacity='0.3'/%3E%3Cpolygon points='587.5,9 590.5,9 590.5,31 587.5,31' fill-opacity='0.3'/%3E%3Cpolygon points='578,18.5 600,18.5 600,21.5 578,21.5' fill-opacity='0.3'/%3E%3Cpolygon points='543.5,9 546.5,9 546.5,31 543.5,31' fill-opacity='0.2'/%3E%3Cpolygon points='534,18.5 556,18.5 556,21.5 534,21.5' fill-opacity='0.2'/%3E%3Cpolygon points='499.5,9 502.5,9 502.5,31 499.5,31' fill-opacity='0.2'/%3E%3Cpolygon points='490,18.5 512,18.5 512,21.5 490,21.5' fill-opacity='0.2'/%3E%3Cpolygon points='455.5,9 458.5,9 458.5,31 455.5,31' fill-opacity='0.2'/%3E%3Cpolygon points='446,18.5 468,18.5 468,21.5 446,21.5' fill-opacity='0.2'/%3E%3Cpolygon points='411.5,9 414.5,9 414.5,31 411.5,31' fill-opacity='0.1'/%3E%3Cpolygon points='402,18.5 424,18.5 424,21.5 402,21.5' fill-opacity='0.1'/%3E%3Cpolygon points='367.5,9 370.5,9 370.5,31 367.5,31' fill-opacity='0.1'/%3E%3Cpolygon points='358,18.5 380,18.5 380,21.5 358,21.5' fill-opacity='0.1'/%3E%3Cpolygon points='323.5,9 326.5,9 326.5,31 323.5,31' fill-opacity='0.1'/%3E%3Cpolygon points='314,18.5 336,18.5 336,21.5 314,21.5' fill-opacity='0.1'/%3E%3Cpolygon points='279.5,9 282.5,9 282.5,31 279.5,31' fill-opacity='0'/%3E%3Cpolygon points='270,18.5 292,18.5 292,21.5 270,21.5' fill-opacity='0'/%3E%3Cpolygon points='235.5,9 238.5,9 238.5,31 235.5,31' fill-opacity='0'/%3E%3Cpolygon points='226,18.5 248,18.5 248,21.5 226,21.5' fill-opacity='0'/%3E%3Cpolygon points='191.5,9 194.5,9 194.5,31 191.5,31' fill-opacity='0'/%3E%3Cpolygon points='182,18.5 204,18.5 204,21.5 182,21.5' fill-opacity='0'/%3E%3Cpolygon points='147.5,9 150.5,9 150.5,31 147.5,31' fill-opacity='0'/%3E%3Cpolygon points='138,18.5 160,18.5 160,21.5 138,21.5' fill-opacity='0'/%3E%3Cpolygon points='103.5,9 106.5,9 106.5,31 103.5,31' fill-opacity='0'/%3E%3Cpolygon points='94,18.5 116,18.5 116,21.5 94,21.5' fill-opacity='0'/%3E%3C/g%3E%3C/svg%3E");
+                background-repeat: no-repeat; background-position: left top;
+                -webkit-background-size: 100% auto; background-size: 100% auto; }
+            .o_corp_bp_fband {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='36' viewBox='0 0 960 36'%3E%3Cg fill='<t t-out='o_pat_colour'/>'%3E%3Cpolygon points='83,36 877,36 877,33 83,33' fill-opacity='1'/%3E%3Cpolygon points='851.5,27 854.5,27 854.5,5 851.5,5' fill-opacity='0.5'/%3E%3Cpolygon points='842,17.5 864,17.5 864,14.5 842,14.5' fill-opacity='0.5'/%3E%3Cpolygon points='807.5,27 810.5,27 810.5,5 807.5,5' fill-opacity='0.4'/%3E%3Cpolygon points='798,17.5 820,17.5 820,14.5 798,14.5' fill-opacity='0.4'/%3E%3Cpolygon points='763.5,27 766.5,27 766.5,5 763.5,5' fill-opacity='0.4'/%3E%3Cpolygon points='754,17.5 776,17.5 776,14.5 754,14.5' fill-opacity='0.4'/%3E%3Cpolygon points='719.5,27 722.5,27 722.5,5 719.5,5' fill-opacity='0.4'/%3E%3Cpolygon points='710,17.5 732,17.5 732,14.5 710,14.5' fill-opacity='0.4'/%3E%3Cpolygon points='675.5,27 678.5,27 678.5,5 675.5,5' fill-opacity='0.3'/%3E%3Cpolygon points='666,17.5 688,17.5 688,14.5 666,14.5' fill-opacity='0.3'/%3E%3Cpolygon points='631.5,27 634.5,27 634.5,5 631.5,5' fill-opacity='0.3'/%3E%3Cpolygon points='622,17.5 644,17.5 644,14.5 622,14.5' fill-opacity='0.3'/%3E%3Cpolygon points='587.5,27 590.5,27 590.5,5 587.5,5' fill-opacity='0.3'/%3E%3Cpolygon points='578,17.5 600,17.5 600,14.5 578,14.5' fill-opacity='0.3'/%3E%3Cpolygon points='543.5,27 546.5,27 546.5,5 543.5,5' fill-opacity='0.2'/%3E%3Cpolygon points='534,17.5 556,17.5 556,14.5 534,14.5' fill-opacity='0.2'/%3E%3Cpolygon points='499.5,27 502.5,27 502.5,5 499.5,5' fill-opacity='0.2'/%3E%3Cpolygon points='490,17.5 512,17.5 512,14.5 490,14.5' fill-opacity='0.2'/%3E%3Cpolygon points='455.5,27 458.5,27 458.5,5 455.5,5' fill-opacity='0.2'/%3E%3Cpolygon points='446,17.5 468,17.5 468,14.5 446,14.5' fill-opacity='0.2'/%3E%3Cpolygon points='411.5,27 414.5,27 414.5,5 411.5,5' fill-opacity='0.1'/%3E%3Cpolygon points='402,17.5 424,17.5 424,14.5 402,14.5' fill-opacity='0.1'/%3E%3Cpolygon points='367.5,27 370.5,27 370.5,5 367.5,5' fill-opacity='0.1'/%3E%3Cpolygon points='358,17.5 380,17.5 380,14.5 358,14.5' fill-opacity='0.1'/%3E%3Cpolygon points='323.5,27 326.5,27 326.5,5 323.5,5' fill-opacity='0.1'/%3E%3Cpolygon points='314,17.5 336,17.5 336,14.5 314,14.5' fill-opacity='0.1'/%3E%3Cpolygon points='279.5,27 282.5,27 282.5,5 279.5,5' fill-opacity='0'/%3E%3Cpolygon points='270,17.5 292,17.5 292,14.5 270,14.5' fill-opacity='0'/%3E%3Cpolygon points='235.5,27 238.5,27 238.5,5 235.5,5' fill-opacity='0'/%3E%3Cpolygon points='226,17.5 248,17.5 248,14.5 226,14.5' fill-opacity='0'/%3E%3Cpolygon points='191.5,27 194.5,27 194.5,5 191.5,5' fill-opacity='0'/%3E%3Cpolygon points='182,17.5 204,17.5 204,14.5 182,14.5' fill-opacity='0'/%3E%3Cpolygon points='147.5,27 150.5,27 150.5,5 147.5,5' fill-opacity='0'/%3E%3Cpolygon points='138,17.5 160,17.5 160,14.5 138,14.5' fill-opacity='0'/%3E%3Cpolygon points='103.5,27 106.5,27 106.5,5 103.5,5' fill-opacity='0'/%3E%3Cpolygon points='94,17.5 116,17.5 116,14.5 94,14.5' fill-opacity='0'/%3E%3C/g%3E%3C/svg%3E");
+                background-repeat: no-repeat; background-position: left bottom;
+                -webkit-background-size: 100% auto; background-size: 100% auto; }
+
+            /* Masthead: one ruled sheet of logo, document identity and facts. */
+            .o_corp_bp .tbh { width: 100%; border: 1.5px solid #93c5fd; }
+            .o_corp_bp .tbh td { border: 1px solid #bfdbfe; padding: 4px 8px; vertical-align: top; }
+            .o_corp_bp .tbh td.lgc { width: 20%; vertical-align: middle; text-align: center; }
+            .o_corp_bp .tbh .lg { display: inline-block; height: auto; max-height: 48px; max-width: 100%; }
+            .o_corp_bp .tbh td.id { width: 26%; vertical-align: middle; }
+            .o_corp_bp .tbh .dt { font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+            .o_corp_bp .tbh .tbno { font-size: 20px; font-weight: 700; line-height: 1.2; }
+            .o_corp_bp .bpco { font-size: 10px; line-height: 1.45; margin-top: 6px; text-align: right; }
+
+            /* Section headings and addresses, ruled like the rest of the sheet. */
+            .o_corp_bp .blkh { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; border-bottom: 1px solid #bfdbfe; padding-bottom: 3px; margin-bottom: 5px; }
+            .o_corp_bp .parties { width: 100%; margin: 14px 0 14px; line-height: 1.4; }
+            .o_corp_bp .parties td { width: 50%; padding: 0 16px 0 0; vertical-align: top; }
+            .o_corp_bp .parties td.px { padding-right: 0; }
+            .o_corp_bp .parties p { margin: 0 0 4px; }
+            .o_corp_bp .parties .lbl { border-bottom: 1px solid #bfdbfe; padding-bottom: 2px; margin-bottom: 4px; }
+
+            /* Line table: every cell ruled, pale heading band. */
+            .o_corp_bp .lines { width: 100%; border: 1.5px solid #93c5fd; }
+            .o_corp_bp .lines thead { display: table-header-group; }
+            .o_corp_bp .lines tr { page-break-inside: avoid; }
+            .o_corp_bp .lines th { text-align: left; padding: 8px 7px 5px; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; background: #eff6ff; border: 1px solid #bfdbfe; vertical-align: middle; }
+            .o_corp_bp .lines th.r { text-align: right; }
+            .o_corp_bp .lines th.c { text-align: center; }
+            .o_corp_bp .lines td { padding: 6px 7px; border: 1px solid #bfdbfe; line-height: 1.45; }
+            .o_corp_bp .lines td.k-sr { color: #475569; width: 24px; }
+            .o_corp_bp .lines td.k-qty, .o_corp_bp .lines td.k-price,
+            .o_corp_bp .lines td.k-amount, .o_corp_bp .lines td.k-disc,
+            .o_corp_bp .lines td.k-tax { white-space: nowrap; }
+            .o_corp_bp .lines .thumb { float: left; max-width: 30px; max-height: 30px; margin-right: 8px; border: 1px solid #bfdbfe; background: #fff; }
+            .o_corp_bp .lines .pbody { overflow: hidden; }
+            .o_corp_bp .lines .pname { font-weight: 700; }
+            .o_corp_bp .lines .pd { color: #475569; font-size: .9em; }
+            /* Section and note lines of the document, which carry no amounts. */
+            .o_corp_bp .lines tr.sec td { font-weight: 700; background: #f8fafc; }
+            .o_corp_bp .lines tr.note td { font-style: italic; color: #475569; }
+
+            /* Terms on the left, a ruled totals box on the right. */
+            .o_corp_bp .bside { width: 100%; margin-top: 14px; page-break-inside: avoid; }
+            .o_corp_bp .bside td.bl { padding-right: 18px; vertical-align: top; }
+            .o_corp_bp .bside td.br { width: 44%; vertical-align: top; }
+            /* The notes/terms partials emit a plain ul, so target that rather
+               than a class of our own. */
+            .o_corp_bp .bside td.bl ul { margin: 0; font-size: 12px; line-height: 1.7; }
+            .o_corp_bp .bside td.bl li { margin-bottom: 3px; }
+            .o_corp_bp .bside td.bl p { margin: 0 0 3px; }
+            .o_corp_bp .tot { width: 100%; border: 1.5px solid #93c5fd; }
+            .o_corp_bp .tot td { padding: 4px 8px; border-bottom: 1px solid #bfdbfe; white-space: nowrap; }
+            .o_corp_bp .tot tr.o_subtotal td { background: #eff6ff; }
+            .o_corp_bp .tot tr.o_taxes td { font-size: .95em; color: #475569; }
+            /* tm_gray_bg is the grand-total row of document_tax_totals_custom. It
+               is the figure the reader looks for, so it is set larger than the
+               lines above it. */
+            .o_corp_bp .tot tr.tm_gray_bg td { font-weight: 700; font-size: 16px; padding: 9px 8px 7px; vertical-align: middle; }
+            .o_corp_bp .tot tr.o_due td { font-weight: 700; vertical-align: middle; }
+
+            /* Amount in words. */
+            .o_corp_bp .wline { margin-top: 12px; page-break-inside: avoid; }
+            .o_corp_bp .wline .lbl { display: inline; margin: 0; }
+            .o_corp_bp .wv { font-style: italic; }
+
+            /* Signature strip. The shared signature partial lays itself out
+               with col-10 + col-3, which is 13 columns and so overruns the
+               page; inside this cell the grid is flattened to a plain block. */
+            .o_corp_bp .fin { width: 100%; margin-top: 10px; page-break-inside: avoid; }
+            .o_corp_bp .fin td { vertical-align: bottom; }
+            .o_corp_bp .fin td:first-child { width: 68%; }
+            .o_corp_bp .fin td.fsig { width: 32%; padding-left: 18px; text-align: center; }
+            .o_corp_bp .fin .container-fluid { padding: 0; }
+            .o_corp_bp .fin .row { display: block; margin: 0; }
+            .o_corp_bp .fin .col-10 { display: none; }
+            .o_corp_bp .fin .col-3 { display: block; width: 100%; max-width: 100%; -webkit-box-flex: 0; flex: 0 0 100%; padding: 0; }
+            .o_corp_bp .fin .col-3 img { max-height: 70px; max-width: 100%; }
+            /* The delivery note's signature partial offsets itself with
+               offset-8 and the ml64/mr4 spacing helpers, which overrun this
+               narrow cell; the cell already places the block. */
+            .o_corp_bp .fin .offset-8 { margin-left: 0; }
+            .o_corp_bp .fin .ml64 { margin-left: 0; }
+            .o_corp_bp .fin .mr4 { margin-right: 0; }
+            .o_corp_bp .fin .mt32 { margin-top: 8px; }
+            .o_corp_bp .fin [name=signature] img { max-height: 70px; max-width: 100%; }
+
+            /* Footer. */
+            .o_corp_bp .ft { width: 100%; }
+            .o_corp_bp .ft td { vertical-align: bottom; padding: 4px 10px 0 0; font-size: 11px; }
+            .o_corp_bp .ft td.pgx { text-align: right; white-space: nowrap; padding-right: 0; }
+            .o_corp_bp .ft.fv-det td { font-size: 10px; line-height: 1.35; }
+        </style>
+    </template>
+
+    <!-- One address block for the Corporate invoice. The caller sets "partner". -->
+    <template id="exclusive_partner_block">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <p t-attf-style="color: #{colors['customer']};">
+            <t t-if="o.company_id and o.company_id.is_customer_bold">
+                <strong><span t-out="partner.display_name"/></strong>
+            </t>
+            <t t-if="not o.company_id.is_customer_bold">
+                <span t-out="partner.display_name"/>
+            </t>
+        </p>
+        <p t-attf-style="color: #{colors['customer_address']};">
+            <span t-out="o._get_street(partner)"/>
+            <br/>
+            <span t-out="o._get_address_details(partner)"/>
+            <t t-if="partner.phone">
+                <br/>
+                <span t-field="partner.phone"/>
+            </t>
+            <t t-if="partner.email">
+                <br/>
+                <span t-field="partner.email"/>
+            </t>
+            <t t-if="partner.vat">
+                <br/>
+                <strong>Vat: </strong>
+                <span t-field="partner.vat"/>
+            </t>
+        </p>
+    </template>
+
+    <!-- Corporate footer. Mirrors general_template.template_footer field
+         for field so both report_footer_selection values keep working;
+         only the look differs. -->
+    <template id="exclusive_footer">
+        <div class="footer o_corp_bp" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'" t-if="o.company_id.report_footer_selection == 'standard'">
+            <t t-call="general_template.exclusive_styles"/>
+            <div class="o_corp_bp_band o_corp_bp_fband">
+                <table class="ft fv-std" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <span t-if="company.phone">Phone: <span t-field="company.phone"/> &#183; </span>
+                            <span t-if="company.email">Email: <span t-field="company.email"/> &#183; </span>
+                            <span t-if="company.website">Web: <span t-field="company.website"/> &#183; </span>
+                            <span t-if="company.vat">
+                                <t t-out="company.country_id.vat_label or 'TIN'"/>: <span t-field="company.vat"/>
+                            </span>
+                            <div name="financial_infos">
+                                <span t-field="company.report_footer"/>
+                            </div>
+                        </td>
+                        <td class="pgx">Page <span class="page"/> / <span class="topage"/></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="footer o_corp_bp" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'" t-if="o.company_id.report_footer_selection == 'multi_columns'">
+            <t t-call="general_template.exclusive_styles"/>
+            <div class="o_corp_bp_band o_corp_bp_fband">
+                <table class="ft fv-det" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <strong t-field="o.company_id.name"/>
+                            <br/>
+                            <span t-out="o._get_street(o.company_id.partner_id)"/>
+                            <br/>
+                            <span t-out="o._get_address_details(o.company_id.partner_id)"/>
+                        </td>
+                        <td>
+                            <span t-field="o.company_id.phone"/>
+                            <br/>
+                            <span t-field="o.company_id.website"/>
+                            <br/>
+                            <span t-field="o.company_id.email"/>
+                        </td>
+                        <td>
+                            <img t-if="o.company_id.logo_footer" t-att-src="o.company_id._get_report_image_uri(o.company_id.logo_footer)" style="max-height:48px;"/>
+                        </td>
+                        <td class="pgx">Page <span class="page"/> / <span class="topage"/></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <!-- Shipping address of the Purchase Order and the RFQ. Same two branches
+         as general_template.templates_warehouse_details; the label is the
+         heading above, so the inner heading that partial carries is dropped. -->
+    <template id="exclusive_warehouse_details">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <p class="lbl" t-attf-style="color: #{colors['primary']};">Shipping Address</p>
+        <t t-if="o.dest_address_id">
+            <t t-set="partner" t-value="o.dest_address_id"/>
+            <t t-call="general_template.exclusive_partner_block"/>
+        </t>
+        <t t-if="not o.dest_address_id and o.picking_type_id and o.picking_type_id.warehouse_id">
+            <p t-attf-style="color: #{colors['customer']};">
+                <t t-if="o.company_id and o.company_id.is_customer_bold">
+                    <strong><span t-field="o.picking_type_id.warehouse_id.name"/></strong>
+                </t>
+                <t t-if="not o.company_id.is_customer_bold">
+                    <span t-field="o.picking_type_id.warehouse_id.name"/>
+                </t>
+            </p>
+            <p t-attf-style="color: #{colors['customer_address']};">
+                <span t-out="o._get_street(o.picking_type_id.warehouse_id.partner_id)"/>
+                <br/>
+                <span t-out="o._get_address_details(o.picking_type_id.warehouse_id.partner_id)"/>
+                <t t-if="o.picking_type_id.warehouse_id.partner_id.phone">
+                    <br/>
+                    <span t-field="o.picking_type_id.warehouse_id.partner_id.phone"/>
+                </t>
+                <t t-if="o.picking_type_id.warehouse_id.partner_id.email">
+                    <br/>
+                    <span t-field="o.picking_type_id.warehouse_id.partner_id.email"/>
+                </t>
+            </p>
+        </t>
+    </template>
+
+    <!-- Address column of the Delivery Note and the Picking List. Same fields
+         and same conditions as the stock templates the design replaces. -->
+    <template id="exclusive_picking_addresses">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div t-if="o.should_print_delivery_address()">
+            <p class="lbl" t-attf-style="color: #{colors['primary']};">Delivery Address</p>
+            <div t-field="o.move_ids[0].partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+        </div>
+        <div t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id">
+            <p class="lbl" t-attf-style="color: #{colors['primary']};">Warehouse Address</p>
+            <div t-field="o.picking_type_id.warehouse_id.partner_id"
+                t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+        </div>
+        <div name="div_incoming_address">
+            <p class="lbl" t-attf-style="color: #{colors['primary']};" t-if="o.picking_type_id.code=='incoming' and o.partner_id">Vendor Address</p>
+            <p class="lbl" t-attf-style="color: #{colors['primary']};" t-if="o.picking_type_id.code=='internal' and o.partner_id">Warehouse Address</p>
+            <p class="lbl" t-attf-style="color: #{colors['primary']};" t-if="o.picking_type_id.code=='outgoing' and o.partner_id">Customer Address</p>
+            <div t-if="o.partner_id" name="partner_header">
+                <div t-field="o.partner_id"
+                     t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'/>
+            </div>
+        </div>
+    </template>
+</odoo>

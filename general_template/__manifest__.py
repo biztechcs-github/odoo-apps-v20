@@ -26,6 +26,7 @@ SO report template, Po Report Template
     'summary': 'Get Diverse Templates For PO/RFQ/SO/Delivery Note/Picking List One Go!',
     'data': [
         'data/template_data.xml',
+        'data/report_paperformat.xml',
         'security/base_security.xml',
         'security/ir.access.csv',
         'views/report_extra_content_view.xml',
@@ -44,6 +45,12 @@ SO report template, Po Report Template
         'views/purchase_view.xml',
         'views/invoice_view.xml',
         'views/preview_template.xml',
+
+        'views/bold_common.xml',
+        'views/classic_common.xml',
+        'views/corporate_common.xml',
+        'views/morden_common.xml',
+        'views/polished_common.xml',
 
         'views/polished_sale.xml',
         'views/morden_sale.xml',

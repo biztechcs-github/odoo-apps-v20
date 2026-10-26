@@ -2,14 +2,13 @@
 
 <odoo>
     <template id="invoice_templates_customer_details">
-        <t t-set="customer_color_template" t-value="o.company_id and o.company_id.customer_color_template"/>
-        <t t-set="customer_address_color_template" t-value="o.company_id and o.company_id.customer_address_color_template"/>
-        <p t-attf-style="text-transform:capitalize; color: #{o.company_id and o.company_id.theme_color_template or '#000000'}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px;">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px;">
             <strong t-if="o.partner_shipping_id == o.partner_id">Invoicing and shipping address:</strong>
             <strong t-if="o.partner_shipping_id != o.partner_id">Invoicing address:</strong>
         </p>
         <t t-if="o.partner_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color_template or '#000000'};">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.company_id and o.company_id.is_customer_bold_template">
                     <strong>
                         <span t-field="o.partner_id"/>
@@ -19,7 +18,7 @@
                     <span t-field="o.partner_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color_template or '#000000'};">
+            <p t-attf-style="color: #{colors['customer_address']};">
                 <span t-out="o._get_street(o.partner_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.partner_id)"/>
@@ -42,11 +41,12 @@
         </t>
     </template>
     <template id="invoice_templates_customer_shipping_details">
-        <p t-attf-style="text-transform:capitalize; color: #{o.company_id and o.company_id.theme_color_template or '#000000'}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px; margin-top:3px;" t-if="o.partner_shipping_id != o.partner_id">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold; margin:0; margin-bottom:5px; padding:5px 0px 0px 0px; margin-top:3px;" t-if="o.partner_shipping_id != o.partner_id">
             <strong t-if="o.partner_shipping_id  and o.partner_shipping_id != o.partner_id">Shipping address:</strong>
         </p>
         <t t-if="o.partner_shipping_id and o.partner_shipping_id != o.partner_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color_template or '#000000'};">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.company_id and o.company_id.is_customer_bold_template">
                     <strong>
                         <span t-field="o.partner_shipping_id"/>
@@ -56,7 +56,7 @@
                     <span t-field="o.partner_shipping_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color_template or '#000000'};">
+            <p t-attf-style="color: #{colors['customer_address']};">
                 <span t-out="o._get_street(o.partner_shipping_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.partner_shipping_id)"/>
@@ -79,9 +79,8 @@
         </t>
     </template>
     <template id="templates_company_details">
-        <t t-set="company_color_template" t-value="o.company_id and o.company_id.company_color_template"/>
-        <t t-set="company_address_color_template" t-value="o.company_id and o.company_id.company_address_color_template"/>
-        <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{company_color_template or '#000000'};">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['company']};">
             <t t-if="o.company_id and o.company_id.is_company_bold_template">
                 <strong>
                     <span t-field="o.company_id.partner_id"/>
@@ -91,7 +90,7 @@
                 <span t-field="o.company_id.partner_id"/>
             </t>
         </span>
-        <div t-attf-style="color: #{company_address_color_template or '#000000'};">
+        <div t-attf-style="color: #{colors['company_address']};">
             <span t-out="o._get_street(o.company_id.partner_id)"/>
             <br/>
             <span t-out="o._get_address_details(o.company_id.partner_id)"/>
@@ -109,11 +108,12 @@
         </div>
     </template>
        <template id="report_main_table">
+           <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <div class="main" style="margin-top:1%;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
             
             <table class="table table-striped" style="margin-top:1%;border: 2px solid #ddd;border-radius: 8px;padding:8px;text-transform:capitalize;text-align:left" width="100%">
               <thead>
-                <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
+                <tr t-attf-style="color: #{colors['primary_text']};background-color: #{colors['primary']};">
                     <th style="border-bottom:2px solid #ddd">Sr.</th>
                     <t t-if="o.company_id.add_product_image_template">
                         <th style="border-bottom:2px solid #ddd">Image</th>
@@ -129,7 +129,7 @@
                     <th style="border-bottom:2px solid #ddd">Total</th>
                 </tr>
               </thead>
-              <tbody t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};">
+              <tbody t-attf-style="color: #{colors['text']};">
                 <t t-as="l" t-foreach="o.invoice_line_ids">
                     <tr>
                         <td><t t-out="l_index+1"/></td>
@@ -172,7 +172,7 @@
             <t t-set="subtotal_to_show" t-value="subtotal['name']"/>
             <t t-call="biztech_report_template.tax_groups_totals_custom"/>
         </t>
-        <tr class="tm_gray_bg" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+        <tr class="tm_gray_bg" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']};">
             <td><strong>Total</strong></td>
             <td class="text-end">
                 <span t-out="tax_totals['formatted_amount_total']"/>
@@ -182,6 +182,7 @@
 
     <!-- new added -->
      <template id="document_tax_totals_custom">
+         <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
             <!--
                 Generic template to display tax totals in pdf reports.
                 Used by invoices, SO and PO.
@@ -252,7 +253,7 @@
             </tr>
             
             <!--Total amount with all taxes-->
-            <tr class="tm_gray_bg" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
+            <tr class="tm_gray_bg" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']};">
                 <td><strong>Total</strong></td>
                 <td class="text-end">
                     <strong t-out="tax_totals['total_amount_currency']"
@@ -286,6 +287,7 @@
         </t>
     </template>
     <template id="report_main_total">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <div class="fix" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
             <div id="total1" class="rows">
                 <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
@@ -293,7 +295,7 @@
                         <!--Tax totals-->
                         <t t-set="tax_totals" t-value="o.tax_totals"/>
                         <t t-call="biztech_report_template.document_tax_totals_custom"/>
-                       <!--  <tr class="tm_gray_bg" t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};font-weight:bold; ">
+                       <!--  <tr class="tm_gray_bg" t-attf-style="color: #{colors['text']};font-weight:bold; ">
                             <td class="tm_width_3 tm_primary_color tm_bold">Subtotal</td>
                             <td class="tm_width_3 tm_primary_color tm_bold tm_text_right" style="text-align:right"><t t-out="o.currency_id.symbol"/><span t-out="o.amount_untaxed"/></td>
                         </tr>
@@ -308,7 +310,7 @@
                             <td t-attf-style="padding-bottom: 5px;">Tax ID</td>
                             <td style="text-align:right" t-out="o.partner_id.vat"/>
                         </tr>
-                        <tr class="tm_gray_bg" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                        <tr class="tm_gray_bg" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']};">
                              <td class="tm_width_3 tm_primary_color tm_bold">Grand Total</td>
                             <td class="tm_width_3 tm_primary_color tm_bold tm_text_right" style="text-align:right"><t t-out="o.currency_id.symbol"/><span t-out="o.amount_total"/></td>
                         </tr> -->
@@ -326,7 +328,7 @@
                                         </tr>
                                 </t>
                                 <t t-if="len(payments_vals) > 0">
-                                    <tr class="border-black" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
+                                    <tr class="border-black" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']};">
                                         <td><strong>Amount Due</strong></td>
                                         <td class="text-end">
                                             <span t-field="o.amount_residual"/>
@@ -337,7 +339,7 @@
                         </tr>
                     </table>  
                         <t t-if="o.company_id.add_amount_in_words_template == True">
-                            <span t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};">Total in word:- 
+                            <span t-attf-style="color: #{colors['text']};">Total in word:- 
                                 <t t-out="o.amount_to_text"/>
                             </span>
                         </t> 
@@ -345,20 +347,21 @@
                     </div>
                 </div>
                 <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color_template or '#ececec'}; padding:0px 0px 10px 0px; width:100%;"/>
+                    <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:0px 0px 10px 0px; width:100%;"/>
                 </div>
             </div>
     </template>
 
     <template id="template_watermark">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-if="o.company_id and o.company_id.is_show_watermark_template">
             <div class="watermark_template text-center" style="position:absolute; opacity:0.25; width:100%; height:auto; z-index:1000; -webkit-transform: rotate(-45deg); -moz-transform:rotate(-45deg); bottom:-600px; left:-100px;">
                 <t t-if="o.company_id.watermark_template == 'logo'">
-                    <span style="max-height: 500px; height:auto;" t-field="o.company_id.watermark_logo_template" t-options="{'widget':'image'}"/>
+                    <img t-if="o.company_id.watermark_logo_template" t-att-src="o.company_id._get_report_image_uri(o.company_id.watermark_logo_template)" style="max-height: 500px; height:auto;"/>
                     <!-- <img style="max-height: 500px; height:auto;" t-att-src="'data:image/png;base64,%s' %  to_text(o.company_id.watermark_logo)" t-if="o.company_id"/> -->
                 </t>
                 <t t-if="o.company_id.watermark_template != 'logo'">
-                    <span t-att-style="'font-size:'+str(o.company_id.watermark_text_font_size_template)+'em; color:'+o.company_id.watermark_text_color_template">
+                    <span t-att-style="'font-size:'+str(o.company_id.watermark_text_font_size_template)+'em; color:'+colors['watermark_text']">
                         <span t-field="o.company_id.watermark_text_template" t-if="o.company_id.watermark_template == 'text'"/>
                         <span t-field="o.state" t-if="o.company_id.watermark_template == 'status'"/>
                     </span>
@@ -368,7 +371,8 @@
     </template>
     
     <template id="report_footer">
-        <div t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-attf-style="color: #{colors['text']};">
            <p t-if="o.company_id.is_show_payment_notes_template"> Please use the following communication for your payment : <b><span t-field="o.payment_reference"/></b></p>
             <p t-if="o.invoice_payment_term_id.note and o.company_id.is_show_payment_description_template == True">
             <strong><span t-field="o.invoice_payment_term_id.note"/></strong>
@@ -409,22 +413,24 @@
         </div>
     </template>
     <template id="signature" >
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <div class="container-fluid">
             <div class="row" style="page-break-inside: avoid;">
                 <div class="col-10"></div>
                 <div class="col-3" style="text-align:center;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px; '">
                     <t t-if="o.company_id.signature_template">
-                        <img t-att-src="image_data_uri(o.company_id.signature_template)" style="max-height: 80px; max-width: 80px;"/>
-                        <div t-attf-style="color: #{o.company_id and o.company_id.text_color_template or '#000000'};margin-top:5%;">Accounts Manager</div>
+                        <img t-att-src="o.company_id._get_report_signature_uri()" style="max-height: 80px; max-width: 80px;"/>
+                        <div t-attf-style="color: #{colors['text']};margin-top:5%;">Accounts Manager</div>
                     </t> 
                 </div>
             </div>
         </div>
     </template>
     <template id="template_footer">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
             <div class="footer" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-if="o.company_id.report_footer_selection_template == 'standard'">
                 <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color_template}; padding:5px"/>
+                    <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:5px"/>
                 </div>
                 <div class="text-center">
                     <ul class="list-inline mb4">
@@ -468,46 +474,95 @@
                 </div>
                 <div class="col-md-4 text-center" style="width:33%; flex: 0 0 33%; max-width: 33%; margin-top: 25px; margin-bottom:20px; display: inline-block; text-align:center; vertical-align: top;">
                     <!-- <img style='max-height: 110px;max-width:100%;' t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo_footer)"/> -->
-                    <span t-options="{'widget':'image',
-                    'img_style':'width:80px;height:80px','height':'80px','width':'80px'}" t-field="o.company_id.logo_footer_template"/>
+                    <img t-if="o.company_id.logo_footer_template" t-att-src="o.company_id._get_report_image_uri(o.company_id.logo_footer_template)" style="width:80px;height:80px;"/>
                 </div>
             </div>
         </template>
-    <template id="account.report_invoice">
-        <t t-call="web.html_container">
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-                <t t-set="r_name" t-value="o.report_template_inv_id and o.report_template_inv_id.report_name or o.partner_id and o.partner_id.report_template_inv_id and o.partner_id.report_template_inv_id.report_name or o.company_id and o.company_id.report_template_inv_id and o.company_id.report_template_inv_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_inv_id or o.partner_id and o.partner_id.report_template_inv_id or o.company_id and o.company_id.report_template_inv_id">
-
-                    <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_3_template" t-if="r_name == 'biztech_report_template.report_main_invoice_3'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_4_template" t-if="r_name == 'biztech_report_template.report_main_invoice_4'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_5_template" t-if="r_name == 'biztech_report_template.report_main_invoice_5'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_6_template" t-if="r_name == 'biztech_report_template.report_main_invoice_6'" t-lang="lang"/>
+    <!-- Inherit rather than redefine account.report_invoice: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_invoice_dispatch" inherit_id="account.report_invoice">
+        <xpath expr="." position="replace">
+            <t t-call="web.html_container">
+                <t t-as="o" t-foreach="docs">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <!-- general_template and biztech_report_template both define this template id,
+                         so which copy survives depends on module load order. Resolve the selection
+                         from whichever module's field is installed, record before partner before
+                         company, so the chosen design prints either way. -->
+                    <t t-set="has_biz" t-value="'report_template_inv_id' in o._fields"/>
+                    <t t-set="has_gen" t-value="'report_template_id' in o._fields"/>
+                    <t t-set="sel_rec" t-value="has_biz and o.report_template_inv_id or has_gen and o.report_template_id"/>
+                    <t t-set="sel_partner" t-value="has_biz and o.partner_id.report_template_inv_id or has_gen and o.partner_id.report_template_id"/>
+                    <t t-set="sel_company" t-value="has_biz and o.company_id.report_template_inv_id or has_gen and o.company_id.report_template_id"/>
+                    <t t-set="sel" t-value="sel_rec or sel_partner or sel_company"/>
+                    <t t-set="r_name" t-value="sel and sel.report_name"/>
+                    <t t-set="known" t-value="r_name and (r_name.startswith('general_template.report_invoice_template_custom') or r_name.startswith('biztech_report_template.report_main_invoice_'))"/>
+                    <t t-if="known">
+                        <t t-call="general_template.report_invoice_template_main" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_advanced_main" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_elegant_main" t-if="r_name == 'general_template.report_invoice_template_custom_elegant'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_exclusive_main" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_creative_main" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_incredible_main" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_3_template" t-if="r_name == 'biztech_report_template.report_main_invoice_3'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_4_template" t-if="r_name == 'biztech_report_template.report_main_invoice_4'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_5_template" t-if="r_name == 'biztech_report_template.report_main_invoice_5'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_6_template" t-if="r_name == 'biztech_report_template.report_main_invoice_6'" t-lang="lang"/>
+                    </t>
+                    <t t-else=''>
+                        <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                           t-call="account.report_invoice_document"
+                           t-lang="lang"/>
+                    </t>
                 </t>
             </t>
-        </t>
+        </xpath>
     </template>
-    <template id="account.report_invoice_with_payments">
-        <t t-call="web.html_container">
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-
-                <t t-set="print_with_payments" t-value="True"/>
-                <t t-set="r_name" t-value="o.report_template_inv_id and o.report_template_inv_id.report_name or o.partner_id and o.partner_id.report_template_inv_id and o.partner_id.report_template_inv_id.report_name or o.company_id and o.company_id.report_template_inv_id and o.company_id.report_template_inv_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_inv_id or o.partner_id and o.partner_id.report_template_inv_id or o.company_id and o.company_id.report_template_inv_id">
-                    <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_3_template" t-if="r_name == 'biztech_report_template.report_main_invoice_3'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_4_template" t-if="r_name == 'biztech_report_template.report_main_invoice_4'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_5_template" t-if="r_name == 'biztech_report_template.report_main_invoice_5'" t-lang="lang"/>
-                    <t t-call="biztech_report_template.report_main_invoice_6_template" t-if="r_name == 'biztech_report_template.report_main_invoice_6'" t-lang="lang"/>
-              </t>
+    <!-- Inherit rather than redefine account.report_invoice_with_payments: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_invoice_with_payments_dispatch" inherit_id="account.report_invoice_with_payments">
+        <xpath expr="." position="replace">
+            <t t-call="web.html_container">
+                <t t-as="o" t-foreach="docs">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="print_with_payments" t-value="True"/>
+                    <!-- general_template and biztech_report_template both define this template id,
+                         so which copy survives depends on module load order. Resolve the selection
+                         from whichever module's field is installed, record before partner before
+                         company, so the chosen design prints either way. -->
+                    <t t-set="has_biz" t-value="'report_template_inv_id' in o._fields"/>
+                    <t t-set="has_gen" t-value="'report_template_id' in o._fields"/>
+                    <t t-set="sel_rec" t-value="has_biz and o.report_template_inv_id or has_gen and o.report_template_id"/>
+                    <t t-set="sel_partner" t-value="has_biz and o.partner_id.report_template_inv_id or has_gen and o.partner_id.report_template_id"/>
+                    <t t-set="sel_company" t-value="has_biz and o.company_id.report_template_inv_id or has_gen and o.company_id.report_template_id"/>
+                    <t t-set="sel" t-value="sel_rec or sel_partner or sel_company"/>
+                    <t t-set="r_name" t-value="sel and sel.report_name"/>
+                    <t t-set="known" t-value="r_name and (r_name.startswith('general_template.report_invoice_template_custom') or r_name.startswith('biztech_report_template.report_main_invoice_'))"/>
+                    <t t-if="known">
+                        <t t-call="general_template.report_invoice_template_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_advanced_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_elegant_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_elegant'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_exclusive_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_creative_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_incredible_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_3_template" t-if="r_name == 'biztech_report_template.report_main_invoice_3'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_4_template" t-if="r_name == 'biztech_report_template.report_main_invoice_4'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_5_template" t-if="r_name == 'biztech_report_template.report_main_invoice_5'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_6_template" t-if="r_name == 'biztech_report_template.report_main_invoice_6'" t-lang="lang"/>
+                    </t>
+                    <t t-else=''>
+                        <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                           t-call="account.report_invoice_document"
+                           t-lang="lang"/>
+                    </t>
+                </t>
             </t>
-        </t>
+        </xpath>
     </template>
 </odoo>

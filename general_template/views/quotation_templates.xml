@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="templates_warehouse_details">
-        <p t-attf-style="text-transform:capitalize; color: #{theme_color or '#000000'}; margin:0; padding-top:10px;">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; margin:0; padding-top:10px;">
             <strong>Shipping address:</strong>
         </p>
         <t t-if="o.dest_address_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#ffffff'};">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.company_id and o.company_id.is_customer_bold">
                     <strong>
                         <span t-field="o.dest_address_id"/>
@@ -15,7 +16,7 @@
                     <span t-field="o.dest_address_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color or '#ffffff'};">
+            <p t-attf-style="color: #{colors['customer_address']};">
                 <span t-out="o._get_street(o.dest_address_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.dest_address_id)"/>
@@ -32,7 +33,7 @@
             </p>
         </t>
         <t t-if="not o.dest_address_id and o.picking_type_id and o.picking_type_id.warehouse_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#ffffff'};">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.company_id and o.company_id.is_customer_bold">
                     <strong>
                         <span t-field="o.picking_type_id.warehouse_id.name"/>
@@ -42,7 +43,7 @@
                     <span t-field="o.picking_type_id.warehouse_id.name"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color or '#ffffff'};">
+            <p t-attf-style="color: #{colors['customer_address']};">
                 <span t-out="o._get_street(o.picking_type_id.warehouse_id.partner_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.picking_type_id.warehouse_id.partner_id)"/>
@@ -60,27 +61,28 @@
         </t>
     </template>
     <template id="quotation_template_order_lines">
-        <table BORDERCOLOR="#{theme_color or '#000000'}" border="1" cellpadding="0" cellspacing="0" class="table table-bordered" style="border:0.5px solid #ccc;  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <table BORDERCOLOR="#{colors['primary']}" border="1" cellpadding="0" cellspacing="0" class="table table-bordered" style="border:0.5px solid #ccc;  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
             <thead>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <td align="center" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <td align="center" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
-                        <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="10%">Image</td>
+                        <td align="left" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="10%">Image</td>
                     </t>
-                    <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
-                    <td align="center" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Expected Date</td>
-                    <td align="left" t-attf-style="padding:5px 10px; color: #{theme_text_color or '#000000'}; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Qty</td>
+                    <td align="left" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="52%">Description</td>
+                    <td align="center" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="14%">Expected Date</td>
+                    <td align="left" t-attf-style="padding:5px 10px; color: #{colors['primary_text']}; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Qty</td>
                 </tr>
             </thead>
             <tbody>
                 <t t-as="l" t-foreach="o.order_line">
                     <t t-if="l_odd">
-                        <t t-set="ol_color" t-value="o.company_id.even_party_color"/>
+                        <t t-set="ol_color" t-value="colors['even_party']"/>
                     </t>
                     <t t-if="l_even">
-                        <t t-set="ol_color" t-value="o.company_id.odd_party_color"/>
+                        <t t-set="ol_color" t-value="colors['odd_party']"/>
                     </t>
-                    <tr t-att-style="'page-break-inside: avoid !important;background-color: ' + ol_color + '; color: ' + text_color">
+                    <tr t-att-style="'page-break-inside: avoid !important;background-color: ' + ol_color + '; color: ' + colors['text']">
                         <td align="left" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                             <span t-out="l_index+1"/>
                         </td>

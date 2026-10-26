@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="purchase_template_order_lines">
-        <table BORDERCOLOR="#{theme_color or '#000000'}" border="1" cellpadding="0" cellspacing="0" class="table table-bordered" style="border:0.5px solid #ccc;  border-collapse: collapse; text-transform:capitalize; padding:15px;border-bottom:1px solid #ccc;" width="100%">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <table BORDERCOLOR="#{colors['primary']}" border="1" cellpadding="0" cellspacing="0" class="table table-bordered" style="border:0.5px solid #ccc;  border-collapse: collapse; text-transform:capitalize; padding:15px;border-bottom:1px solid #ccc;" width="100%">
             <thead>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
-                        <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="10%">Image</td>
+                        <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="10%">Image</td>
                     </t>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Taxes</td>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Date Req.</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Qty</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Unit Price</td>
-                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="20%">Net Price</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="52%">Description</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="12%">Taxes</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="14%">Date Req.</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Qty</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="12%">Unit Price</td>
+                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="20%">Net Price</td>
                 </tr>
             </thead>
             <tbody>
                 <t t-as="l" t-foreach="o.order_line">
                     <t t-if="l_odd">
-                        <t t-set="ol_color" t-value="o.company_id.even_party_color"/>
+                        <t t-set="ol_color" t-value="colors['even_party']"/>
                     </t>
                     <t t-if="l_even">
-                        <t t-set="ol_color" t-value="o.company_id.odd_party_color"/>
+                        <t t-set="ol_color" t-value="colors['odd_party']"/>
                     </t>
-                    <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ ol_color + '; color: '+ text_color">
+                    <tr t-att-style="'page-break-inside: avoid !important;background-color: '+ ol_color + '; color: '+ colors['text']">
                         <t t-if="not l.display_type">
                             <td align="left" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-out="l_index+1"/>
@@ -85,10 +86,11 @@
     </template>
 
     <template id="purchase_template_order_subtotal">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <div class="fix" t-attf-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
         <div id="total1" class="rows">
                 <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
-            <table class="table table-striped" style="font-weight:bold;width:40%; text-transform:capitalize; page-break-inside: avoid;" t-att-style="'color: '+ text_color">
+            <table class="table table-striped" style="font-weight:bold;width:40%; text-transform:capitalize; page-break-inside: avoid;" t-att-style="'color: '+ colors['text']">
                 <tr>
                     <td colspan="2" t-att-style="'padding:9px 10px 7px 10px;'">SubTotal</td>
                     <td align="right" tyle="padding:9px 10px 7px 10px;">

@@ -12,19 +12,20 @@
                 </t>
             
                 <t t-if="o.signature">
-                    <img t-att-src="image_data_uri(o.signature)" style="max-height:50px;"/>
+                    <img t-att-src="o.company_id._get_report_image_uri(o.signature)" style="max-height:50px;"/>
                 </t>
            
         </div>
     </template>
     <template id="sale_templates_customer_details">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <!-- <td align="left" style="padding:15px 0px 0px 15px; width:50%; line-height:18px;" valign="top">-->
-        <p t-attf-style="text-transform:capitalize; color: #{theme_color or '#ffffff'}; font-weight:bold; margin:0;">
+        <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold; margin:0;">
             <strong t-if="o.partner_shipping_id == o.partner_id and o.partner_invoice_id == o.partner_id">Customer, invoice and shipping address:</strong>
             <strong t-else="">Customer address:</strong>
         </p>
         <t t-if="o.partner_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#ffffff'};">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.company_id and o.company_id.is_customer_bold">
                     <strong>
                         <span t-field="o.partner_id"/>
@@ -34,7 +35,7 @@
                     <span t-field="o.partner_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color or '#ffffff'};">
+            <p t-attf-style="color: #{colors['customer_address']};">
                 <span t-out="o._get_street(o.partner_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.partner_id)"/>
@@ -53,13 +54,14 @@
         </t>
     </template>
     <template id="sale_templates_invoice_customer_details">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <!-- <td align="left" style="padding:15px 0px 0px 15px; width:50%; line-height:18px;" valign="top">-->
-        <p t-attf-style="text-transform:capitalize; color: #{theme_color or '#ffffff'}; font-weight:bold; margin:0; margin-bottom:5px;">
+        <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold; margin:0; margin-bottom:5px;">
             <strong t-if="o.partner_shipping_id == o.partner_invoice_id">Invoicing and shipping address:</strong>
             <strong t-if="o.partner_shipping_id != o.partner_invoice_id">Invoicing address:</strong>
         </p>
         <t t-if="o.partner_invoice_id">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#ffffff'};">
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.company_id and o.company_id.is_customer_bold">
                     <strong>
                         <span t-field="o.partner_invoice_id"/>
@@ -69,7 +71,7 @@
                     <span t-field="o.partner_invoice_id"/>
                 </t>
             </span>
-            <p t-attf-style="color: #{customer_address_color or '#ffffff'};">
+            <p t-attf-style="color: #{colors['customer_address']};">
                 <span t-out="o._get_street(o.partner_invoice_id)"/>
                 <br/>
                 <span t-out="o._get_address_details(o.partner_invoice_id)"/>
@@ -93,12 +95,13 @@
     </template>
         <!-- </td><td align="left" style="padding:15px 0px 0px 15px; width:50%; line-height:18px;" valign="top">-->
     <template id="sale_templates_invoice_customer_shipping_details">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-if="o.partner_shipping_id != o.partner_invoice_id" >
             <div>
-                <p t-attf-style="text-transform:capitalize; color: #{theme_color or '#ffffff'}; font-weight:bold; margin:0; margin-bottom:5px;">
+                <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold; margin:0; margin-bottom:5px;">
                     <strong>Shipping address:</strong>
                 </p>
-                <span t-attf-style="text-transform:capitalize;padding:0px; margin:0; color: #{customer_color or '#ffffff'};">
+                <span t-attf-style="text-transform:capitalize;padding:0px; margin:0; color: #{colors['customer']};">
                     <t t-if="o.company_id and o.company_id.is_customer_bold">
                         <strong>
                             <span t-field="o.partner_shipping_id"/>
@@ -108,7 +111,7 @@
                         <span t-field="o.partner_shipping_id"/>
                     </t>
                 </span>
-                <p t-attf-style="color: #{customer_address_color or '#ffffff'};">
+                <p t-attf-style="color: #{colors['customer_address']};">
                     <span t-out="o._get_street(o.partner_shipping_id)"/>
                     <br/>
                     <span t-out="o._get_address_details(o.partner_shipping_id)"/>
@@ -134,24 +137,25 @@
     </template>
         <!-- </td>-->
     <template id="sale_order_lines_tem">
-        <table BORDERCOLOR="#{theme_color or '#000000'}" border="1" cellpadding="0" cellspacing="0" class="table table-bordered" style="border:0.5px solid #ccc;  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <table BORDERCOLOR="#{colors['primary']}" border="1" cellpadding="0" cellspacing="0" class="table table-bordered" style="border:0.5px solid #ccc;  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
             <thead>
                 <t t-set="display_discount" t-value="any([l.discount for l in o.order_line])"/>
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
                     <t t-set="colspan" t-value="5"/>
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
-                        <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">
+                        <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">
                             <span>Image</span>
                             <t t-set="colspan" t-value="colspan+1"/>
                         </td>
                     </t>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
-                    <td align="left" t-attf-style="padding:5px 10px;border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Quantity</td>
-                    <td align="left" t-attf-style="padding:5px 10px;border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Unit Price</td>
-                    <td align="left" groups="product.group_discount_per_so_line" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" t-if="display_discount" width="12%"><t t-set="colspan" t-value="colspan+1"/>Disc.(%)</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%">Taxes</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="25%">Price</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="52%">Description</td>
+                    <td align="left" t-attf-style="padding:5px 10px;border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="14%">Quantity</td>
+                    <td align="left" t-attf-style="padding:5px 10px;border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Unit Price</td>
+                    <td align="left" groups="product.group_discount_per_so_line" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" t-if="display_discount" width="12%"><t t-set="colspan" t-value="colspan+1"/>Disc.(%)</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="12%">Taxes</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="25%">Price</td>
                 </tr>
             </thead>
             <tbody class="sale_tbody">
@@ -160,7 +164,7 @@
                 <t t-foreach="o.order_line" t-as="line">
                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
                     <t t-set="current_total" t-value="current_subtotal + line.price_total" t-if="o.company_id.tax_calculation_rounding_method == 'round_per_line'"/>
-                    <tr t-att-style="'page-break-inside: avoid !important; color: %s; background-color: %s '%(text_color, ol_color)  ">
+                    <tr t-att-style="'page-break-inside: avoid !important; color: %s; background-color: %s '%(colors['text'], ol_color)  ">
                         <t t-if="not line.display_type">
                             <td class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <span t-out="index_no"/>
@@ -213,7 +217,7 @@
                         </t>
                     </tr>
                     <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
-                        <tr class="is-subtotal text-right" t-att-style="'background-color: %s; color: %s; '%(ol_color, text_color)">
+                        <tr class="is-subtotal text-right" t-att-style="'background-color: %s; color: %s; '%(ol_color, colors['text'])">
                             <td class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important;'">
                                 <t t-set="index_no" t-value="index_no+1"/>
                                 <span t-out="index_no"/>
@@ -259,7 +263,8 @@
     </template>
 
     <template id="sale_templates_notes">
-        <ul t-attf-style="padding-left:0px; margin:0; color: #{text_color or '#000000'};">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <ul t-attf-style="padding-left:0px; margin:0; color: #{colors['text']};">
             <p t-field="o.note" t-if="o.company_id.is_show_notes == True"/>
             <p t-if="o.payment_term_id.name and o.company_id.is_show_payment_notes == True">
                 <strong>Payment Terms:</strong>
@@ -282,31 +287,32 @@
         </ul>
     </template>
     <template id="sale_templates_suggested_order_line">
-        <h2 t-attf-style="font-weight:bold; color: #{text_color or '#000000'};">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <h2 t-attf-style="font-weight:bold; color: #{colors['text']};">
             <span>Suggested Products</span>
         </h2>
         <table cellpadding="0" cellspacing="0" class="table" style="border:0.5px solid #ccc;  border-collapse: collapse; padding:15px; border-bottom:1px solid #ccc;" width="100%">
             <thead t-attf-style="display: table-header-group; page-break-after: always;">
-                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{theme_color or '#000000'}; color: #{theme_text_color or '#000000'};">
-                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="8%">Sr.</td>
+                <tr t-attf-style="page-break-inside: avoid !important;background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                    <td align="center" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="8%">Sr.</td>
                     <t t-if="o.company_id.add_product_image == True">
-                        <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Image</td>
+                        <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Image</td>
                     </t>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="15%">Product</td>
-                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="52%">Description</td>
-                    <td align="center" groups="sale.group_discount_per_so_line" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="12%"/>
-                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{theme_color or '#000000'} !important; border-right:0px solid #{theme_color or '#000000'} !important; font-weight:bold;" width="14%">Unit Price</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="15%">Product</td>
+                    <td align="left" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="52%">Description</td>
+                    <td align="center" groups="sale.group_discount_per_so_line" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="12%"/>
+                    <td align="right" t-attf-style="padding:5px 10px; border:1px solid #{colors['primary']} !important; border-right:0px solid #{colors['primary']} !important; font-weight:bold;" width="14%">Unit Price</td>
                 </tr>
             </thead>
             <tbody>
                 <t t-as="option" t-foreach="o.order_line">
                     <t t-if="option_odd">
-                        <t t-set="option_color" t-value="o.company_id.even_party_color"/>
+                        <t t-set="option_color" t-value="colors['even_party']"/>
                     </t>
                     <t t-if="option_even">
-                        <t t-set="option_color" t-value="o.company_id.odd_party_color"/>
+                        <t t-set="option_color" t-value="colors['odd_party']"/>
                     </t>
-                    <tr t-att-style="'page-break-inside: avoid !important;background-color: ' + option_color+ '; color:' + text_color ">
+                    <tr t-att-style="'page-break-inside: avoid !important;background-color: ' + option_color+ '; color:' + colors['text'] ">
                         <td align="left" class="text-center" t-att-style="'padding:5px 10px; border:0.5px solid #ccc !important; border-right:0px solid #ccc !important; '">
                             <span t-out="option_index+1"/>
                         </td>
