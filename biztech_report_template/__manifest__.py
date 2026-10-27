@@ -14,6 +14,12 @@
     'data': [
         'security/ir.access.csv',
         'data/template_data.xml',
+        'data/report_paperformat.xml',
+        'views/bold_common.xml',
+        'views/classic_common.xml',
+        'views/corporate_common.xml',
+        'views/morden_common.xml',
+        'views/polished_common.xml',
         'views/polished.xml',
         'views/morden.xml',
         'views/vintage.xml',

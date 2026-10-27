@@ -16,6 +16,7 @@
         <t t-call="general_template.template_footer"/>
     </template>
     <template id="sale_template_header">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
             <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tbody>
@@ -32,14 +33,14 @@
                                                             <tr>
                                                                 <td align="left" valign="middle">
                                                                     <t t-if="o.company_id.invoice_logo">
-                                                                        <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-height: 100px; max-width: 100%;"/>
+                                                                        <img t-att-src="o.company_id._get_report_logo_uri(colors['primary'])" style="height: auto; max-height: 100px; max-width: 100%;"/>
                                                                     </t>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </td>
                                                     <td align="right" rowspan="3" valign="top">
-                                                        <p t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; text-align:center; text-transform:uppercase; width:70%;font-size:35px;padding:2px">
+                                                        <p t-attf-style="color: #{colors['primary_text']};background-color: #{colors['primary']}; text-align:center; text-transform:uppercase; width:70%;font-size:35px;padding:2px">
                                                             <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
                                                                 <span t-if="o.state not in ['draft','sent']">Order # </span>
                                                                 <span t-if="o.state in ['draft','sent']">Quotation # </span>
@@ -64,15 +65,9 @@
         </div>
     </template>
     <template id="report_sale_order_main">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-call="general_template.sale_external_layout">
             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
-            <t t-set="theme_color" t-value="o.company_id and o.company_id.theme_color"/>
-            <t t-set="theme_text_color" t-value="o.company_id and o.company_id.theme_text_color"/>
-            <t t-set="company_color" t-value="o.company_id and o.company_id.company_color"/>
-            <t t-set="company_address_color" t-value="o.company_id and o.company_id.company_address_color"/>
-            <t t-set="customer_color" t-value="o.company_id and o.company_id.customer_color"/>
-            <t t-set="customer_address_color" t-value="o.company_id and o.company_id.customer_address_color"/>
-            <t t-set="text_color" t-value="o.company_id and o.company_id.text_color"/>
             <div class="page" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="oe_structure"/>
                 <!-- <t t-call="general_template.template_watermark"/> -->
@@ -83,9 +78,9 @@
                             <div class="col-5" colspan="1" style="margin-top:20px;">
                                <div style="background-color:#C0C0C0; height:20px;border: 2px solid #C0C0C0;border-radius: 10px;padding: 5px;margin-top:20px;margin-right:20px;"></div>
                             </div>
-                            <div class="col-7" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; ">
+                            <div class="col-7" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']}; ">
                                 <table class="table table-borderless" style="margin-bottom:0;">
-                                    <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold;background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                    <tr t-attf-style="color: #{colors['primary_text']};font-weight:bold;background-color: #{colors['primary']};">
                                         <td t-if="o.date_order">
                                             <b t-if="o.state not in ['draft','sent']">Date Ordered:</b><br/>
                                             <b t-if="o.state in ['draft','sent']">Quotation Date:</b>
@@ -112,7 +107,7 @@
                             </div>
                         </div>
                         <div>
-                            <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; padding:5px"/>
+                            <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:5px"/>
                         </div>
                         <div class="row">
                             <div class="col-8">
@@ -130,7 +125,7 @@
                             </t>
                         </div>
                         <div>
-                            <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; padding:5px"/>
+                            <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:5px"/>
                         </div>
                         <div align="left" style="padding:10px 0px 0 0; font-weight:bold; width:100%;" valign="top">
                             <t t-call="general_template.sale_order_lines_tem"/>
@@ -139,14 +134,14 @@
                         <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
                             <t t-call="general_template.template_total_amount_word"/>
                         </div>
-                        <div class="left" style="color: #{text_color or '#000000'}; padding-top:10px; ">
+                        <div class="left" style="color: #{colors['text']}; padding-top:10px; ">
                             <t t-call="general_template.sale_templates_notes"/>
                         </div>
                         <div t-if="o.order_line and o.state in ['draft', 'sent']">
                             <t t-call="general_template.sale_templates_suggested_order_line"/>
                         </div>
                         <div class="container-fluid">
-                            <div class="row" style="color: #{text_color or '#000000'};">
+                            <div class="row" style="color: #{colors['text']};">
                                 <div class="col-9">
                             </div> 
                             <div class="col-3">                       
@@ -156,12 +151,12 @@
                                 <t t-else="">
                                     <t t-call="general_template.report_signature"/>
                                 </t>
+                                <t t-call="general_template.report_barcode"/>
                             </div>
                     </div>
                 </div>
                         <div class="oe_structure"/>
                     </div>
-                    <t t-call="general_template.report_barcode"/>
                 </div>
             </div>
         </t>
@@ -174,57 +169,18 @@
             </t>
         </t>
     </template>
-    <template id="sale.report_saleorder_raw">
-        <t t-call="web.html_container">
-            <t t-set="report_name" t-value="{'report_sale_order_custom': 'general_template.report_sale_order_main',                                         'report_sale_order_custom_creative': 'general_template.report_sale_creative_main',                                         'report_sale_order_custom_elegant': 'general_template.report_sale_elegant_main',                                         'report_sale_order_custom_professional': 'general_template.report_sale_professional_main',                                         'report_sale_order_custom_exclusive': 'general_template.report_sale_exclusive_main',                                         'report_sale_order_custom_advanced': 'general_template.report_sale_advanced_main',}"/>
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-                <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_sale_template_id and o.partner_id.report_sale_template_id.report_name or o.company_id and o.company_id.report_sale_template_id and o.company_id.report_sale_template_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_sale_template_id or o.company_id and o.company_id.report_sale_template_id">
-                    <t t-call="general_template.report_sale_order_main" t-if="r_name == 'general_template.report_sale_order_custom'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_creative_main" t-if="r_name == 'general_template.report_sale_order_custom_creative'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_elegant_main" t-if="r_name == 'general_template.report_sale_order_custom_elegant'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_professional_main" t-if="r_name == 'general_template.report_sale_order_custom_professional'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_exclusive_main" t-if="r_name == 'general_template.report_sale_order_custom_exclusive'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_advanced_main" t-if="r_name == 'general_template.report_sale_order_custom_advanced'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_incredible_main" t-if="r_name == 'general_template.report_sale_order_custom_incredible'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_innovative_main" t-if="r_name == 'general_template.report_sale_order_custom_innovative'" t-lang="lang"/>
-                </t>
-            </t>
-        </t>
-    </template>
-    <template id="sale.report_saleorder">
-        <t t-call="web.html_container">
-            <t t-set="report_name" t-value="{'report_sale_order_custom': 'general_template.report_sale_order_main',                                         'report_sale_order_custom_creative': 'general_template.report_sale_creative_main',                                         'report_sale_order_custom_elegant': 'general_template.report_sale_elegant_main',                                         'report_sale_order_custom_professional': 'general_template.report_sale_professional_main',                                         'report_sale_order_custom_exclusive': 'general_template.report_sale_exclusive_main',                                         'report_sale_order_custom_advanced': 'general_template.report_sale_advanced_main',}"/>
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-                <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_sale_template_id and o.partner_id.report_sale_template_id.report_name or o.company_id and o.company_id.report_sale_template_id and o.company_id.report_sale_template_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_sale_template_id or o.company_id and o.company_id.report_sale_template_id">
-                    <t t-call="general_template.report_sale_order_main" t-if="r_name == 'general_template.report_sale_order_custom'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_creative_main" t-if="r_name == 'general_template.report_sale_order_custom_creative'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_elegant_main" t-if="r_name == 'general_template.report_sale_order_custom_elegant'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_professional_main" t-if="r_name == 'general_template.report_sale_order_custom_professional'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_exclusive_main" t-if="r_name == 'general_template.report_sale_order_custom_exclusive'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_advanced_main" t-if="r_name == 'general_template.report_sale_order_custom_advanced'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_incredible_main" t-if="r_name == 'general_template.report_sale_order_custom_incredible'" t-lang="lang"/>
-                    <t t-call="general_template.report_sale_innovative_main" t-if="r_name == 'general_template.report_sale_order_custom_innovative'" t-lang="lang"/>
-                </t>
-            </t>
-        </t>
-    </template>
-    <template id="sale.report_saleorder_pro_forma">
+    <!-- Inherit rather than redefine sale.report_saleorder_raw: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_saleorder_raw_dispatch" inherit_id="sale.report_saleorder_raw">
+        <xpath expr="." position="replace">
             <t t-call="web.html_container">
-                
-                <t t-set="is_pro_forma" t-value="True"/>
-                <t t-set="report_name" t-value="{'report_sale_order_custom': 'general_template.report_sale_order_main',                                         'report_sale_order_custom_creative': 'general_template.report_sale_creative_main',                                         'report_sale_order_custom_elegant': 'general_template.report_sale_elegant_main',                                         'report_sale_order_custom_professional': 'general_template.report_sale_professional_main',                                         'report_sale_order_custom_exclusive': 'general_template.report_sale_exclusive_main',                                         'report_sale_order_custom_advanced': 'general_template.report_sale_advanced_main',                 'report_sale_order_custom_incredible': 'general_template.report_sale_incredible_main',                 'report_sale_order_custom_innovative': 'general_template.report_sale_innovative_main',}"/>
+                <t t-set="report_name" t-value="{'report_sale_order_custom': 'general_template.report_sale_order_main',                                         'report_sale_order_custom_creative': 'general_template.report_sale_creative_main',                                         'report_sale_order_custom_elegant': 'general_template.report_sale_elegant_main',                                         'report_sale_order_custom_professional': 'general_template.report_sale_professional_main',                                         'report_sale_order_custom_exclusive': 'general_template.report_sale_exclusive_main',                                         'report_sale_order_custom_advanced': 'general_template.report_sale_advanced_main',}"/>
                 <t t-as="o" t-foreach="docs">
                     <t t-set="lang" t-value="o.partner_id.lang"/>
                     <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_sale_template_id and o.partner_id.report_sale_template_id.report_name or o.company_id and o.company_id.report_sale_template_id and o.company_id.report_sale_template_id.report_name"/>
                     <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
                     <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_sale_template_id or o.company_id and o.company_id.report_sale_template_id">
-                        <!-- <t t-call="#{report_name.get(real_name[1], 'general_template.report_sale_advanced_main')}" t-lang="o.partner_id.lang"/>-->
                         <t t-call="general_template.report_sale_order_main" t-if="r_name == 'general_template.report_sale_order_custom'" t-lang="lang"/>
                         <t t-call="general_template.report_sale_creative_main" t-if="r_name == 'general_template.report_sale_order_custom_creative'" t-lang="lang"/>
                         <t t-call="general_template.report_sale_elegant_main" t-if="r_name == 'general_template.report_sale_order_custom_elegant'" t-lang="lang"/>
@@ -234,7 +190,74 @@
                         <t t-call="general_template.report_sale_incredible_main" t-if="r_name == 'general_template.report_sale_order_custom_incredible'" t-lang="lang"/>
                         <t t-call="general_template.report_sale_innovative_main" t-if="r_name == 'general_template.report_sale_order_custom_innovative'" t-lang="lang"/>
                     </t>
+                    <t t-else=''>
+                        <t t-set="doc" t-value="o"/>
+                        <t t-call="sale.report_saleorder_document" t-lang="lang"/>
+                    </t>
                 </t>
             </t>
-        </template>
+        </xpath>
+    </template>
+    <!-- Inherit rather than redefine sale.report_saleorder: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_saleorder_dispatch" inherit_id="sale.report_saleorder">
+        <xpath expr="." position="replace">
+            <t t-call="web.html_container">
+                <t t-set="report_name" t-value="{'report_sale_order_custom': 'general_template.report_sale_order_main',                                         'report_sale_order_custom_creative': 'general_template.report_sale_creative_main',                                         'report_sale_order_custom_elegant': 'general_template.report_sale_elegant_main',                                         'report_sale_order_custom_professional': 'general_template.report_sale_professional_main',                                         'report_sale_order_custom_exclusive': 'general_template.report_sale_exclusive_main',                                         'report_sale_order_custom_advanced': 'general_template.report_sale_advanced_main',}"/>
+                <t t-as="o" t-foreach="docs">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_sale_template_id and o.partner_id.report_sale_template_id.report_name or o.company_id and o.company_id.report_sale_template_id and o.company_id.report_sale_template_id.report_name"/>
+                    <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
+                    <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_sale_template_id or o.company_id and o.company_id.report_sale_template_id">
+                        <t t-call="general_template.report_sale_order_main" t-if="r_name == 'general_template.report_sale_order_custom'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_creative_main" t-if="r_name == 'general_template.report_sale_order_custom_creative'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_elegant_main" t-if="r_name == 'general_template.report_sale_order_custom_elegant'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_professional_main" t-if="r_name == 'general_template.report_sale_order_custom_professional'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_exclusive_main" t-if="r_name == 'general_template.report_sale_order_custom_exclusive'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_advanced_main" t-if="r_name == 'general_template.report_sale_order_custom_advanced'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_incredible_main" t-if="r_name == 'general_template.report_sale_order_custom_incredible'" t-lang="lang"/>
+                        <t t-call="general_template.report_sale_innovative_main" t-if="r_name == 'general_template.report_sale_order_custom_innovative'" t-lang="lang"/>
+                    </t>
+                    <t t-else=''>
+                        <t t-set="doc" t-value="o"/>
+                        <t t-call="sale.report_saleorder_document" t-lang="lang"/>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+    <!-- Inherit rather than redefine sale.report_saleorder_pro_forma: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_saleorder_pro_forma_dispatch" inherit_id="sale.report_saleorder_pro_forma">
+        <xpath expr="." position="replace">
+                <t t-call="web.html_container">
+                
+                    <t t-set="is_pro_forma" t-value="True"/>
+                    <t t-set="report_name" t-value="{'report_sale_order_custom': 'general_template.report_sale_order_main',                                         'report_sale_order_custom_creative': 'general_template.report_sale_creative_main',                                         'report_sale_order_custom_elegant': 'general_template.report_sale_elegant_main',                                         'report_sale_order_custom_professional': 'general_template.report_sale_professional_main',                                         'report_sale_order_custom_exclusive': 'general_template.report_sale_exclusive_main',                                         'report_sale_order_custom_advanced': 'general_template.report_sale_advanced_main',                 'report_sale_order_custom_incredible': 'general_template.report_sale_incredible_main',                 'report_sale_order_custom_innovative': 'general_template.report_sale_innovative_main',}"/>
+                    <t t-as="o" t-foreach="docs">
+                        <t t-set="lang" t-value="o.partner_id.lang"/>
+                        <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_sale_template_id and o.partner_id.report_sale_template_id.report_name or o.company_id and o.company_id.report_sale_template_id and o.company_id.report_sale_template_id.report_name"/>
+                        <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
+                        <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_sale_template_id or o.company_id and o.company_id.report_sale_template_id">
+                            <!-- <t t-call="#{report_name.get(real_name[1], 'general_template.report_sale_advanced_main')}" t-lang="o.partner_id.lang"/>-->
+                            <t t-call="general_template.report_sale_order_main" t-if="r_name == 'general_template.report_sale_order_custom'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_creative_main" t-if="r_name == 'general_template.report_sale_order_custom_creative'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_elegant_main" t-if="r_name == 'general_template.report_sale_order_custom_elegant'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_professional_main" t-if="r_name == 'general_template.report_sale_order_custom_professional'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_exclusive_main" t-if="r_name == 'general_template.report_sale_order_custom_exclusive'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_advanced_main" t-if="r_name == 'general_template.report_sale_order_custom_advanced'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_incredible_main" t-if="r_name == 'general_template.report_sale_order_custom_incredible'" t-lang="lang"/>
+                            <t t-call="general_template.report_sale_innovative_main" t-if="r_name == 'general_template.report_sale_order_custom_innovative'" t-lang="lang"/>
+                        </t>
+                        <t t-else=''>
+                            <t t-set="doc" t-value="o"/>
+                            <t t-call="sale.report_saleorder_document" t-lang="lang"/>
+                        </t>
+                    </t>
+                </t>
+    
+        </xpath>
+    </template>
 </odoo>

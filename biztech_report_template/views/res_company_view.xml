@@ -28,6 +28,8 @@
                             <group>
                                 <field name="invoice_logo_template" widget="image"  class="responsive-img"
                                     style="text-align: center; max-width: 200px; width: 100%; height: auto; margin: auto;"/>
+                                <field name="invoice_logo_color_mode_template"/>
+                                <field invisible="invoice_logo_color_mode_template != 'custom'" required="invoice_logo_color_mode_template == 'custom'" name="invoice_logo_color_template" placeholder=" like #a24689" widget="color"/>
                                 <field name="standard_template_report"/>
                             </group>
                             <group name="watermark" string="Watermark">

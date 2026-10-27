@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Static look of the Morden design. Company colours are deliberately
+         absent here and stay inline on the elements, so the Standard Template
+         Configuration keeps driving them. Called from the header, the body and
+         the footer because wkhtmltopdf renders those as three documents.
+         No child combinator is used: QWeb escapes ">" inside a style block. -->
+    <template id="morden_styles">
+        <!-- The band patterns below are data URIs, so the theme colour they
+             carry needs its hash percent-encoded before it reaches the url(). -->
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <t t-set="o_pat_colour" t-value="colors['primary'].replace('#', '%23')"/>
+        <style>
+            .o_modern_duet { line-height: 1.55; }
+            .o_modern_duet table { border-collapse: collapse; }
+            /* Bootstrap's reboot leaves every table element at "border-style:
+               solid; border-width: 0", which wkhtmltopdf's PDF painter still
+               strokes as a hairline (its image output does not, hence the
+               HTML preview looking clean). The "border: 0" shorthand does not
+               suppress it - only the border-style longhand does. Tables that
+               want rules re-declare them below. The implicit tbody counts: with
+               border-collapse its edge is what draws the box round a layout table. */
+            .o_modern_duet table, .o_modern_duet thead, .o_modern_duet tbody, .o_modern_duet tfoot,
+            .o_modern_duet tr, .o_modern_duet td, .o_modern_duet th { border-style: none; }
+            .o_modern_duet td, .o_modern_duet th { vertical-align: top; }
+            .o_modern_duet .r { text-align: right; }
+            .o_modern_duet .c { text-align: center; }
+            .o_modern_duet .l { text-align: left; }
+            .o_modern_duet .lbl { text-transform: uppercase; letter-spacing: .07em; font-size: 10px; font-weight: 700; color: <t t-out="colors['primary']"/>; line-height: 1.4; margin-bottom: 2px; }
+            .o_modern_duet .fv { font-size: 11.5px; }
+
+            /* The design tints the head and foot of the sheet rather than
+               filling them. report.scss gutters the page with 11mm of body
+               padding, so the band cancels it to bleed to the paper edge. */
+            .o_modern_duet_band { background: #faf5ff; -webkit-box-sizing: border-box; box-sizing: border-box; }
+            /* The pdf body is ".o_body_pdf.o_css_margins container overflow-hidden":
+               11mm of body padding plus Bootstrap's container padding. Rather than
+               match that sum exactly, overshoot the side bleed and let the body's
+               own overflow:hidden clip it to the paper edge. Margin and padding
+               cancel, so the content keeps its position. */
+            .o_modern_duet_hband { margin: -11mm -40mm 0; padding: 13mm 40mm 5mm; min-height: 46mm; border-bottom: 2px dotted #d8b4fe; }
+            /* min-height fills the 32mm strip paperformat_report_template reserves
+               as margin_bottom. wkhtmltopdf draws the footer document from the top
+               of that strip downwards, so a band shorter than it left bare paper
+               underneath; filling it puts the band - and the edge pattern anchored
+               to the band's bottom - on the paper edge. The value is in px because
+               wkhtmltopdf lays the footer document out at its own ~1024px viewport
+               and then stretches it across the 210mm page, which leaves a CSS mm
+               about a quarter short: 32mm of paper is ~158 of those px. A footer
+               taller than the strip still clips at the same boundary, as before. */
+            .o_modern_duet_fband { margin: 0 -40mm; padding: 4mm 40mm 12mm; min-height: 158px; border-top: 2px dotted #d8b4fe; }
+
+            /* Edge pattern, the band's half of the design's letterhead. It is a
+               data URI and not a file under static/ because its single fill is the
+               company theme colour, which no fixed asset could carry. The artwork
+               is drawn on a 960-unit canvas - the 794 the design was laid out for
+               plus the 83 of side bleed this band carries at each edge - so
+               stretching it over the whole band puts the design on the paper
+               itself. Width is a percentage and height follows it: a mm
+               background-size comes out short under wkhtmltopdf's 90 dpi.
+               The fade is fill-opacity and not opacity: wkhtmltopdf drops a
+               group opacity in the header document, so every faded motif would
+               vanish from the top of the page while the footer kept its own.
+               The bands' top and bottom padding leaves room for the strip, so
+               no line of the masthead or the footer runs through it. */
+            .o_modern_duet_hband {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='36' viewBox='0 0 960 36'%3E%3Cg fill='<t t-out='o_pat_colour'/>'%3E%3Cpolygon points='977,-70 975.9,-53 972.6,-36.4 967.1,-20.3 959.6,-5 950.1,9.1 938.9,21.9 926.1,33.1 912,42.6 896.7,50.1 880.6,55.6 864,58.9 847,60 830,58.9 813.4,55.6 797.3,50.1 782,42.6 767.9,33.1 755.1,21.9 743.9,9.1 734.4,-5 726.9,-20.3 721.4,-36.4 718.1,-53 717,-70 718.1,-87 721.4,-103.6 726.9,-119.7 734.4,-135 743.9,-149.1 755.1,-161.9 767.9,-173.1 782,-182.6 797.3,-190.1 813.4,-195.6 830,-198.9 847,-200 864,-198.9 880.6,-195.6 896.7,-190.1 912,-182.6 926.1,-173.1 938.9,-161.9 950.1,-149.1 959.6,-135 967.1,-119.7 972.6,-103.6 975.9,-87 977,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70 847,-70' fill-opacity='0.1'/%3E%3Cpolygon points='432.4,0 877,0 877,36 575.3,36' fill-opacity='1'/%3E%3Cpolygon points='384.7,0 424.4,0 527.6,36 487.9,36' fill-opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+                background-repeat: no-repeat; background-position: left top;
+                -webkit-background-size: 100% auto; background-size: 100% auto; }
+            .o_modern_duet_fband {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='960' height='36' viewBox='0 0 960 36'%3E%3Cg fill='<t t-out='o_pat_colour'/>'%3E%3Cpolygon points='977,106 975.9,89 972.6,72.4 967.1,56.3 959.6,41 950.1,26.9 938.9,14.1 926.1,2.9 912,-6.6 896.7,-14.1 880.6,-19.6 864,-22.9 847,-24 830,-22.9 813.4,-19.6 797.3,-14.1 782,-6.6 767.9,2.9 755.1,14.1 743.9,26.9 734.4,41 726.9,56.3 721.4,72.4 718.1,89 717,106 718.1,123 721.4,139.6 726.9,155.7 734.4,171 743.9,185.1 755.1,197.9 767.9,209.1 782,218.6 797.3,226.1 813.4,231.6 830,234.9 847,236 864,234.9 880.6,231.6 896.7,226.1 912,218.6 926.1,209.1 938.9,197.9 950.1,185.1 959.6,171 967.1,155.7 972.6,139.6 975.9,123 977,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106 847,106' fill-opacity='0.1'/%3E%3Cpolygon points='432.4,36 877,36 877,0 575.3,0' fill-opacity='1'/%3E%3Cpolygon points='384.7,36 424.4,36 527.6,0 487.9,0' fill-opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+                background-repeat: no-repeat; background-position: left bottom;
+                -webkit-background-size: 100% auto; background-size: 100% auto; }
+
+            /* Masthead: logo left, rounded document card right. */
+            .o_modern_duet .duh { width: 100%; }
+            .o_modern_duet .duh td { vertical-align: middle; padding: 0; }
+            .o_modern_duet .duh td.dl { width: 38%; padding-right: 16px; }
+            .o_modern_duet .duh .lg { height: auto; max-height: 48px; max-width: 100%; display: block; }
+            .o_modern_duet .duh .co { font-size: 10.5px; line-height: 1.45; margin-top: 6px; color: #374151; }
+            .o_modern_duet .duh td.dc { width: 62%; }
+            /* The rounded fill sits on an inner div: wkhtmltopdf does not round
+               a table cell's background once the table collapses its borders. */
+            .o_modern_duet .cardbox { border-radius: 12px; padding: 10px 16px; }
+            .o_modern_duet .cardbox .cdt { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+            .o_modern_duet .cardbox .cno { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.2; }
+            .o_modern_duet .cardbox .cgrid { width: 100%; }
+            .o_modern_duet .cardbox .cgrid td { padding: 1px 10px 1px 0; vertical-align: top; }
+            .o_modern_duet .cardbox .fv { white-space: nowrap; }
+            /* The card carries the knocked-out text colour inline; the labels
+               and values inside it inherit that rather than the purple the
+               design uses for labels on white. */
+            .o_modern_duet .cardbox td, .o_modern_duet .cardbox .fv,
+            .o_modern_duet .cardbox .lbl, .o_modern_duet .cardbox .lbl span { color: inherit; }
+
+            /* Big document title and the addresses under it. */
+            .o_modern_duet .dtitle { font-size: 25px; font-weight: 700; line-height: 1.1; margin: 0 0 14px; }
+            .o_modern_duet .parties { width: 100%; margin: 0 0 18px; line-height: 1.5; }
+            .o_modern_duet .parties td { width: 50%; padding: 0 16px 0 0; vertical-align: top; }
+            .o_modern_duet .parties td.px { padding-right: 0; }
+            .o_modern_duet .parties p { margin: 0 0 4px; }
+
+            /* Line table: ruled head, soft lavender row separators. */
+            .o_modern_duet .lines { width: 100%; }
+            .o_modern_duet .lines thead { display: table-header-group; }
+            .o_modern_duet .lines tr { page-break-inside: avoid; }
+            .o_modern_duet .lines th { text-align: left; padding: 7px 6px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; vertical-align: middle; }
+            .o_modern_duet .lines th.r { text-align: right; }
+            .o_modern_duet .lines th.c { text-align: center; }
+            .o_modern_duet .lines td { padding: 7px 6px; border-bottom: 1px solid #ddd6fe; line-height: 1.45; }
+            .o_modern_duet .lines td.k-sr { color: #4b5563; width: 24px; }
+            .o_modern_duet .lines td.k-qty, .o_modern_duet .lines td.k-price,
+            .o_modern_duet .lines td.k-amount, .o_modern_duet .lines td.k-disc,
+            .o_modern_duet .lines td.k-tax { white-space: nowrap; }
+            .o_modern_duet .lines .thumb { float: left; max-width: 30px; max-height: 30px; margin-right: 8px; border: 1px solid #ede9fe; border-radius: 4px; background: #fff; }
+            .o_modern_duet .lines .pbody { overflow: hidden; }
+            .o_modern_duet .lines .pname { font-weight: 700; }
+            .o_modern_duet .lines .pd { color: #4b5563; font-size: .9em; }
+            /* Section and note lines of the document, which carry no amounts. */
+            .o_modern_duet .lines tr.sec td { font-weight: 700; background: #faf5ff; color: #7e22ce; }
+            .o_modern_duet .lines tr.note td { font-style: italic; color: #4b5563; }
+
+            /* Terms on the left, totals in a tinted rounded panel on the right. */
+            .o_modern_duet .bside { width: 100%; margin-top: 14px; page-break-inside: avoid; }
+            .o_modern_duet .bside td.bl { padding-right: 18px; vertical-align: top; }
+            .o_modern_duet .bside td.br { width: 44%; vertical-align: top; }
+            /* The notes/terms partials emit a plain ul, so target that rather
+               than a class of our own. */
+            .o_modern_duet .bside td.bl ul { margin: 0; font-size: 12px; line-height: 1.7; }
+            .o_modern_duet .bside td.bl li { margin-bottom: 3px; }
+            .o_modern_duet .bside td.bl p { margin: 0 0 3px; }
+            .o_modern_duet .totbox { background: #faf5ff; border-radius: 12px; padding: 8px 10px; }
+            .o_modern_duet .tot { width: 100%; }
+            .o_modern_duet .tot td { padding: 4px 8px; white-space: nowrap; }
+            .o_modern_duet .tot tr.o_taxes td { font-size: .95em; color: #4b5563; }
+            /* tm_gray_bg is the grand-total row of document_tax_totals_custom. It
+               is the figure the reader looks for, so it is set larger than the
+               lines above it. */
+            .o_modern_duet .tot tr.tm_gray_bg td { font-weight: 700; font-size: 16px; padding: 9px 8px 7px; vertical-align: middle; }
+            .o_modern_duet .tot tr.o_due td { font-weight: 700; vertical-align: middle; }
+
+            /* Amount in words. */
+            .o_modern_duet .wline { margin-top: 12px; page-break-inside: avoid; }
+            .o_modern_duet .wline .lbl { display: inline; margin: 0; }
+            .o_modern_duet .wv { font-style: italic; }
+
+            /* Signature strip. The shared signature partial lays itself out
+               with col-10 + col-3, which is 13 columns and so overruns the
+               page; inside this cell the grid is flattened to a plain block. */
+            .o_modern_duet .fin { width: 100%; margin-top: 10px; page-break-inside: avoid; }
+            .o_modern_duet .fin td { vertical-align: bottom; }
+            .o_modern_duet .fin td:first-child { width: 68%; }
+            .o_modern_duet .fin td.fsig { width: 32%; padding-left: 18px; text-align: center; }
+            .o_modern_duet .fin .container-fluid { padding: 0; }
+            .o_modern_duet .fin .row { display: block; margin: 0; }
+            .o_modern_duet .fin .col-10 { display: none; }
+            .o_modern_duet .fin .col-3 { display: block; width: 100%; max-width: 100%; -webkit-box-flex: 0; flex: 0 0 100%; padding: 0; }
+            .o_modern_duet .fin .col-3 img { max-height: 70px; max-width: 100%; }
+            /* The delivery note's signature partial offsets itself with
+               offset-8 and the ml64/mr4 spacing helpers, which overrun this
+               narrow cell; the cell already places the block. */
+            .o_modern_duet .fin .offset-8 { margin-left: 0; }
+            .o_modern_duet .fin .ml64 { margin-left: 0; }
+            .o_modern_duet .fin .mr4 { margin-right: 0; }
+            .o_modern_duet .fin .mt32 { margin-top: 8px; }
+            .o_modern_duet .fin [name=signature] img { max-height: 70px; max-width: 100%; }
+
+            /* Footer. */
+            .o_modern_duet .ft { width: 100%; }
+            .o_modern_duet .ft td { vertical-align: bottom; padding: 4px 10px 0 0; font-size: 11px; color: #374151; }
+            .o_modern_duet .ft td.pgx { text-align: right; white-space: nowrap; padding-right: 0; }
+            .o_modern_duet .ft.fv-det td { font-size: 10px; line-height: 1.35; }
+        </style>
+    </template>
+
+    <!-- One address block for the Morden invoice. The caller sets "partner". -->
+    <template id="morden_partner_block">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <p t-attf-style="color: #{colors['customer']};">
+            <t t-if="o.company_id and o.company_id.is_customer_bold_template">
+                <strong><span t-out="partner.display_name"/></strong>
+            </t>
+            <t t-if="not o.company_id.is_customer_bold_template">
+                <span t-out="partner.display_name"/>
+            </t>
+        </p>
+        <p t-attf-style="color: #{colors['customer_address']};">
+            <span t-out="o._get_street(partner)"/>
+            <br/>
+            <span t-out="o._get_address_details(partner)"/>
+            <t t-if="partner.phone">
+                <br/>
+                <span t-field="partner.phone"/>
+            </t>
+            <t t-if="partner.email">
+                <br/>
+                <span t-field="partner.email"/>
+            </t>
+            <t t-if="partner.vat">
+                <br/>
+                <strong>Vat: </strong>
+                <span t-field="partner.vat"/>
+            </t>
+        </p>
+    </template>
+
+    <!-- Morden footer. Mirrors biztech_report_template.template_footer field
+         for field so both report_footer_selection_template values keep working;
+         only the look differs. -->
+    <template id="morden_footer">
+        <div class="footer o_modern_duet" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-if="o.company_id.report_footer_selection_template == 'standard'">
+            <t t-call="biztech_report_template.morden_styles"/>
+            <div class="o_modern_duet_band o_modern_duet_fband">
+                <table class="ft fv-std" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <span t-if="company.phone">Phone: <span t-field="company.phone"/> &#183; </span>
+                            <span t-if="company.email">Email: <span t-field="company.email"/> &#183; </span>
+                            <span t-if="company.website">Web: <span t-field="company.website"/> &#183; </span>
+                            <span t-if="company.vat">
+                                <t t-out="company.country_id.vat_label or 'TIN'"/>: <span t-field="company.vat"/>
+                            </span>
+                            <div name="financial_infos">
+                                <span t-field="company.report_footer"/>
+                            </div>
+                        </td>
+                        <td class="pgx">Page <span class="page"/> / <span class="topage"/></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="footer o_modern_duet" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'" t-if="o.company_id.report_footer_selection_template == 'multi_columns'">
+            <t t-call="biztech_report_template.morden_styles"/>
+            <div class="o_modern_duet_band o_modern_duet_fband">
+                <table class="ft fv-det" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <strong t-field="o.company_id.name"/>
+                            <br/>
+                            <span t-out="o._get_street(o.company_id.partner_id)"/>
+                            <br/>
+                            <span t-out="o._get_address_details(o.company_id.partner_id)"/>
+                        </td>
+                        <td>
+                            <span t-field="o.company_id.phone"/>
+                            <br/>
+                            <span t-field="o.company_id.website"/>
+                            <br/>
+                            <span t-field="o.company_id.email"/>
+                        </td>
+                        <td>
+                            <img t-if="o.company_id.logo_footer_template" t-att-src="o.company_id._get_report_image_uri(o.company_id.logo_footer_template)" style="max-height:48px;"/>
+                        </td>
+                        <td class="pgx">Page <span class="page"/> / <span class="topage"/></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+</odoo>

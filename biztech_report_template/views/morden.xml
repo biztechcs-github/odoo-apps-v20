@@ -10,121 +10,268 @@
             <t t-set="company" t-value="res_company"/>
         </t>
         <t t-call="biztech_report_template.report_header2"/>
-        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <div class="article o_report_layout_standard o_modern_duet" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="biztech_report_template.morden_styles"/>
             <t t-out="0"/>
         </div>
-        <t t-call="biztech_report_template.template_footer"/>
+        <t t-call="biztech_report_template.morden_footer"/>
     </template>
 
     <template id="report_header2">
-        <div class="header clearfix" style="height:100px;" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
-            <div style="float:left; width: 27%; height: 90px;">
-                <t t-if="o.company_id.invoice_logo_template">
-                     <img t-att-src="image_data_uri(o.company_id.invoice_logo_template)" style="height: auto; max-height: 100%; max-width: 100%;"/>
-                </t>
-            </div>
-            <div style="float:right; width:60%;">
-                <div t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold;width:100%;">
-                    <table class="table table-borderless" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};font-weight:bold;text-align:center;font-size:35px; position: relative; margin-bottom: 0;">
-                            <tr>
-                                <td t-attf-style="width: 100%;position: relative;/* z-index: -1; */left: 0">
-                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">INVOICE</span>
-                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft INVOICE</span>
-                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled INVOICE</span>
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div class="header o_modern_duet" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
+            <t t-call="biztech_report_template.morden_styles"/>
+            <t t-set="card_text" t-value="'color: %s;' % (colors['primary_text'])"/>
+            <div class="o_modern_duet_band o_modern_duet_hband">
+                <table class="duh" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="dl">
+                            <t t-if="o.company_id.invoice_logo_template">
+                                <img class="lg" t-att-src="o.company_id._get_report_logo_uri(colors['primary'])" alt="Company Logo"/>
+                            </t>
+                            <div class="co">
+                                <span t-field="o.company_id.name"/>
+                                <br/>
+                                <span t-out="o._get_street(o.company_id.partner_id)"/>
+                                <br/>
+                                <span t-out="o._get_address_details(o.company_id.partner_id)"/>
+                            </div>
+                        </td>
+                        <td class="dc">
+                            <div class="cardbox" t-attf-style="background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                                <div class="cdt" t-att-style="card_text">
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                                    <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
                                     <span t-if="o.move_type == 'out_refund'">Credit Note</span>
                                     <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
                                     <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
-                                </td>
-                                <td class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};position: absolute;height: 100%;width: 100%; -webkit-transform: skewX(35deg); transform: skewX(35deg); top: 0px;right: -100px; overflow: hidden; left: -77px; z-index: -1;"></td>
-                            </tr>
-                    </table>
-                </div>
-                <div class="row" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;width:100%; padding-top:20px;margin-left: 0;float:right;'">
-                    <div class="col-12" style="padding:0;width:100%;">
-                        <table class="table table-borderless" style="position: relative;">
-                            <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color_template or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">
-                                <td t-if="o.move_type == 'out_invoice'">
-                                    <b>Invoice Date:</b>
-                                    <span t-out="o._get_invoice_date()"/>
-                                </td>
-                                <td t-if="o.name">
-                                    <b>Invoice No:</b>
+                                </div>
+                                <div class="cno" t-att-style="card_text" t-if="o.name">
                                     <span t-field="o.name"/>
-                                </td>
-                                <td t-if="o.ref">
-                                    <b>Reference:</b>
-                                    <span t-field="o.ref"/>
-                                </td>
-                                
-                                <td t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'">
-                                    <b>Due Date:</b>
-                                    <span t-out="o._get_invoice_due_date()"/>
-                                </td>
-                                
-                                <td t-if="o.source_id">
-                                    <b>Source:</b>
-                                    <span t-out="o.source_id.name"/>
-                                </td>
-                               
-                                <td t-if="o.partner_id.ref">
-                                    <b>Customer code:</b>
-                                    <span t-out="o.partner_id.ref"/>
-                                </td>
-                                <td t-if="o.invoice_origin">
-                                    <b t-if="o.move_type in ('out_invoice','out_refund')">SO:</b>
-                                    <b t-if="o.move_type in ('in_invoice', 'in_refund')">PO:</b>
-                                    <span t-field="o.invoice_origin"/>
-
-
-                                </td>
-                                <td t-if="o._get_origin_date(o.invoice_origin)">
-                                    
-                                        <b>Order Date:</b>
-                                        <span t-out="o._get_origin_date(o.invoice_origin)"/>
-                                                            
-                                </td>
-                            </tr>
-                            <tr class="tm_shape_bg " t-attf-style="background-color: #{o.company_id and o.company_id.theme_color_template or '#000000'};position: absolute;height: 100%;width: 89%;-webkit-transform: skewX(35deg);transform: skewX(35deg);top: 0px;right: -97px;overflow: hidden;left: -22px;z-index: -1;"></tr>
-                        </table>
-                    </div>
-                </div>
+                                </div>
+                                <table class="cgrid" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+                                            <t t-if="o._get_invoice_date()">
+                                                <div class="lbl" t-att-style="card_text">Invoice Date</div>
+                                                <div class="fv" t-att-style="card_text"><span t-out="o._get_invoice_date()"/></div>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="o.ref">
+                                                <div class="lbl" t-att-style="card_text">Reference</div>
+                                                <div class="fv" t-att-style="card_text"><span t-out="o.ref"/></div>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="o._get_invoice_due_date()">
+                                                <div class="lbl" t-att-style="card_text">Due Date</div>
+                                                <div class="fv" t-att-style="card_text"><span t-out="o._get_invoice_due_date()"/></div>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <t t-if="o.invoice_origin">
+                                                <div class="lbl" t-att-style="card_text">
+                                                    <span t-if="o.move_type in ('out_invoice','out_refund')">Sales Order</span>
+                                                    <span t-if="o.move_type in ('in_invoice','in_refund')">Purchase Order</span>
+                                                </div>
+                                                <div class="fv" t-att-style="card_text"><span t-field="o.invoice_origin"/></div>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="o._get_origin_date(o.invoice_origin)">
+                                                <div class="lbl" t-att-style="card_text">Order Date</div>
+                                                <div class="fv" t-att-style="card_text"><span t-out="o._get_origin_date(o.invoice_origin)"/></div>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="o.partner_id.ref">
+                                                <div class="lbl" t-att-style="card_text">Customer Code</div>
+                                                <div class="fv" t-att-style="card_text"><span t-out="o.partner_id.ref"/></div>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <t t-call="biztech_report_template.template_watermark"/>
         </div>
     </template>
+
     <template id="report_main_h2">
-            <div>
-                <p t-attf-style="border-bottom:1px solid #{theme_color_template or '#ececec'}; width:100%;"/>
-            </div>
-            <div class="container-fluid" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
-                <div class="row">
-                    <div class="col-5" style="margin-top:1.5%;margin-right:5px; margin-left:5px;">
-                        <t t-call="biztech_report_template.invoice_templates_customer_details"/>
-                    </div>
-                    <div class="col-4" style="margin-top:1.5%;margin-right:5px; margin-left:5px;">
-                        <t t-call="biztech_report_template.invoice_templates_customer_shipping_details"/>
-                    </div>
-                    <div class="col-3" style="margin-top:1.5%;margin-right:5px; margin-left:5px;">
-                        <strong t-attf-style="color: #{o.company_id and o.company_id.theme_color_template or '#000000'};">Pay to:</strong><br/>
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div class="dtitle" t-attf-style="color: #{colors['primary']};">
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+            <span t-if="o.move_type == 'out_refund'">Credit Note</span>
+            <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
+            <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
+        </div>
+        <table class="parties" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <t t-call="biztech_report_template.morden_customer_details"/>
+                </td>
+                <td class="px">
+                    <t t-if="o.company_id.name">
+                        <p class="lbl">Pay to</p>
                         <t t-call="biztech_report_template.templates_company_details"/>
-                    </div>
-                </div>
-                <div>
-                    <p t-attf-style="border-bottom:1px solid #{theme_color_template};width:100%; padding:5px;"/>
-                </div>
-            </div>
+                    </t>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <!-- Morden-only copies of the blocks whose look the design changes. The
+         shared biztech_report_template.* versions stay untouched so Polished,
+         Classic, Vintage, Corporate and Bold are unaffected. -->
+    <template id="morden_customer_details">
+        <p class="lbl">
+            <span t-if="o.partner_shipping_id == o.partner_id">Invoicing and Shipping Address</span>
+            <span t-if="o.partner_shipping_id != o.partner_id">Invoicing Address</span>
+        </p>
+        <t t-if="o.partner_id">
+            <t t-set="partner" t-value="o.partner_id"/>
+            <t t-call="biztech_report_template.morden_partner_block"/>
+        </t>
+        <t t-if="o.partner_shipping_id and o.partner_shipping_id != o.partner_id">
+            <p class="lbl">Shipping Address</p>
+            <t t-set="partner" t-value="o.partner_shipping_id"/>
+            <t t-call="biztech_report_template.morden_partner_block"/>
+        </t>
+    </template>
+
+    <template id="morden_invoice_order_lines">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+            <t t-set="colspan" t-value="5"/>
+            <t t-if="o.company_id.add_product_image_template"><t t-set="colspan" t-value="colspan+1"/></t>
+            <t t-if="o.company_id.is_description_template"><t t-set="colspan" t-value="colspan+1"/></t>
+        <t t-set="rule_color" t-value="colors['primary']"/>
+        <t t-set="th_style" t-value="'color: %s; border-bottom: 2px solid %s;' % (rule_color, rule_color)"/>
+        <table class="lines">
+            <thead>
+                <tr>
+                    <th class="r k-sr" t-att-style="th_style">Sr.</th>
+                    <th class="l k-image" t-att-style="th_style" t-if="o.company_id.add_product_image_template">Image</th>
+                    <th class="l k-product" t-att-style="th_style">Item</th>
+                    <th class="l k-desc" t-att-style="th_style" t-if="o.company_id.is_description_template">Description</th>
+                    <th class="r k-price" t-att-style="th_style">Price</th>
+                    <th class="r k-qty" t-att-style="th_style">Qty</th>
+                    <th class="r k-disc" t-att-style="th_style">Discount(%)</th>
+                    <th class="r k-tax" t-att-style="th_style">Taxes</th>
+                    <th class="r k-amount" t-att-style="th_style">Total</th>
+                </tr>
+            </thead>
+            <tbody t-attf-style="color: #{colors['text']};">
+                <t t-as="l" t-foreach="o.invoice_line_ids">
+                    <t t-if="l_odd">
+                        <t t-set="ol_color" t-value="colors['even_party']"/>
+                    </t>
+                    <t t-if="l_even">
+                        <t t-set="ol_color" t-value="colors['odd_party']"/>
+                    </t>
+                    <tr t-att-class="'sec' if l.display_type == 'line_section' else ('note' if l.display_type == 'line_note' else '')" t-attf-style="background-color: #{ol_color or '#FFFFFF'};">
+                        <td class="r k-sr"><t t-out="l_index+1"/></td>
+                        <t t-if="l.display_type in ('line_section', 'line_note')">
+                            <td t-att-colspan="colspan">
+                                <span t-field="l.name" t-options="{'widget': 'text'}"/>
+                            </td>
+                        </t>
+                        <t t-if="l.display_type not in ('line_section', 'line_note')">
+                            <td class="l k-image" t-if="o.company_id.add_product_image_template">
+                                <img class="thumb" t-if="l.product_id and l.product_id.image_1920" t-att-src="image_data_uri(l.product_id.image_1920)"/>
+                            </td>
+                            <td class="l k-product">
+                                <div class="pbody">
+                                    <div class="pname">
+                                        <span t-if="l.product_id" t-out="l.product_id.display_name"/>
+                                        <span t-else="" t-field="l.name" t-options="{'widget': 'text'}"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="l k-desc" t-if="o.company_id.is_description_template">
+                                <span t-field='l.name'/>
+                            </td>
+                            <td class="r k-price"><t t-out="o.currency_id.symbol"/><span t-field="l.price_unit"/></td>
+                            <td class="r k-qty"><span t-field="l.quantity"/></td>
+                            <td class="r k-disc"><span t-field="l.discount"/></td>
+                            <td class="r k-tax"><span t-field='l.tax_ids'/></td>
+                            <td class="r k-amount"><span t-field="l.price_subtotal"/></td>
+                        </t>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <template id="morden_invoice_totals">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div class="totbox">
+            <table class="tot">
+                <t t-set="tax_totals" t-value="o.tax_totals"/>
+                <t t-call="biztech_report_template.document_tax_totals_custom"/>
+                <t t-if="print_with_payments">
+                    <t t-if="o.payment_state != 'invoicing_legacy'">
+                        <t t-set="payments_vals" t-value="o.sudo().invoice_payments_widget and o.sudo().invoice_payments_widget['content'] or []"/>
+                        <t t-foreach="payments_vals" t-as="payment_vals">
+                            <tr t-if="payment_vals['is_exchange'] == 0">
+                                <td>
+                                    <i class="oe_form_field oe_payment_label">Paid on <t t-out="payment_vals['date']" t-options='{"widget": "date"}'/></i>
+                                </td>
+                                <td class="r">
+                                    <span t-out="payment_vals['amount']" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr class="o_due" t-attf-style="color: #{colors['primary_text']}; background-color: #{colors['primary']};" t-if="len(payments_vals) &gt; 0">
+                            <td><strong>Amount Due</strong></td>
+                            <td class="r">
+                                <span t-field="o.amount_residual"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </table>
+        </div>
     </template>
 
     <template id="report_main_invoice_2_template">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
          <t t-call="biztech_report_template.report_main_invoice_2_external_layout">
             <t t-set="o" t-value="o.with_context(lang=lang)" />
-            <div class="page">
+            <div class="page" t-att-style="'font-family:'+o.company_id.font_template_id.family+';font-size:'+str(o.company_id.font_size_template)+'px;'">
                 <t t-call="biztech_report_template.report_main_h2"/>
-                <t t-call="biztech_report_template.report_main_table"/>
-                <t t-call="biztech_report_template.report_main_total"/>
-                <t t-call="biztech_report_template.report_footer"/>
-                <t t-call="biztech_report_template.signature"/>
-            </div> 
+                <t t-call="biztech_report_template.morden_invoice_order_lines"/>
+                <table class="bside" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="bl" t-attf-style="color: #{colors['text']};">
+                            <t t-call='biztech_report_template.report_footer'/>
+                        </td>
+                        <td class="br">
+                            <t t-call="biztech_report_template.morden_invoice_totals"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="wline" t-attf-style="color: #{colors['text']};" t-if="o.company_id.add_amount_in_words_template == True">
+                    <span class="lbl">Amount in words:</span>
+                    <span class="wv"><t t-out="o.amount_to_text"/></span>
+                </div>
+                <table class="fin" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td/>
+                        <td class="fsig">
+                            <t t-call="biztech_report_template.signature"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </t>
     </template>
 

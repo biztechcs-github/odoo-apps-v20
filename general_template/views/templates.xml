@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="templates_company_details">
-        <span t-attf-style="padding:0px; margin:0; color: #{company_color or '#ffffff'};">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <span t-attf-style="padding:0px; margin:0; color: #{colors['company']};">
             <t t-if="o.company_id and o.company_id.is_company_bold">
                 <strong>
                     <span t-field="o.company_id.partner_id"/>
@@ -11,13 +12,13 @@
                 <span t-field="o.company_id.partner_id"/>
             </t>
         </span>
-        <div t-attf-style="color: #{company_address_color or '#ffffff'};">
+        <div t-attf-style="color: #{colors['company_address']};">
             <span t-out="o._get_street(o.company_id.partner_id)"/>
             <br/>
             <span t-out="o._get_address_details(o.company_id.partner_id)"/>
             <br/>
         </div>
-        <div t-attf-style="color: #{company_address_color or '#ffffff'};">
+        <div t-attf-style="color: #{colors['company_address']};">
             <t t-if="o.company_id.partner_id.phone">
                 <strong>Mobile:</strong>
                 <span t-field="o.company_id.partner_id.phone"/>
@@ -32,7 +33,8 @@
         </div>
     </template>
     <template id="templates_customer_details">
-        <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{customer_color or '#ffffff'};">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
             <t t-if="o.company_id and o.company_id.is_customer_bold">
                 <strong>
                     <span t-field="o.partner_id"/>
@@ -42,7 +44,7 @@
                 <span t-field="o.partner_id"/>
             </t>
         </span>
-        <p t-attf-style="margin:0; padding-top:0; color: #{customer_address_color or '#ffffff'};">
+        <p t-attf-style="margin:0; padding-top:0; color: #{colors['customer_address']};">
             <span t-out="o._get_street(o.partner_id)"/>
             <br/>
             <span t-out="o._get_address_details(o.partner_id)"/>
@@ -64,13 +66,14 @@
         </p>
     </template>
     <template id="templates_watermark">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-if="o.company_id and o.company_id.is_show_watermark">
             <div class="watermark text-center" style="position:absolute; opacity:0.25; width:100%; height:auto; z-index:1000; -webkit-transform: rotate(-45deg); -moz-transform:rotate(-45deg); bottom:-600px; left:-100px;">
                 <t t-if="o.company_id.watermark == 'logo'">
-                    <span style="max-height: 500px;" t-field="o.company_id.watermark_logo" t-options="{'widget':'image'}"/>
+                    <img t-if="o.company_id.watermark_logo" t-att-src="o.company_id._get_report_image_uri(o.company_id.watermark_logo)" style="max-height: 500px;"/>
                 </t>
                 <t t-if="o.company_id.watermark != 'logo'">
-                    <span t-att-style="'font-size:'+str(o.company_id.watermark_text_font_size)+'em; color:'+o.company_id.watermark_text_color">
+                    <span t-att-style="'font-size:'+str(o.company_id.watermark_text_font_size)+'em; color:'+colors['watermark_text']">
                         <span t-field="o.company_id.watermark_text" t-if="o.company_id.watermark == 'text'"/>
                         <span t-field="o.state" t-if="o.company_id.watermark == 'status'"/>
                     </span>
@@ -79,8 +82,9 @@
         </t>
     </template>
     <template id="template_total_amount_word">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-if="o.company_id.add_amount_in_words == True">
-            <span t-attf-style="color: #{text_color or '#000000'};padding-bottom: 5px; padding-top: 10px; display: block;">Total in words : 
+            <span t-attf-style="color: #{colors['text']};padding-bottom: 5px; padding-top: 10px; display: block;">Total in words : 
                 <t t-out="o.amount_to_text"/>
             </span>
         </t>
@@ -89,16 +93,16 @@
         <t t-if="o.company_id.signature">
             <!-- <img style="max-height: 80px; padding:5px;" t-att-src="'data:image/png;base64,%s' %  to_text(o.company_id.signature)" t-if="o.company_id.signature"/> -->
             <div>
-                <img t-att-src="image_data_uri(o.company_id.signature)" style="max-height: 60px;"/>
+                <img t-att-src="o.company_id._get_report_signature_uri()" style="max-height: 60px;"/>
             </div>
         </t>
     </template>
     <template id="report_barcode">
-        <div class="row" t-if="o.company_id.is_show_barcode==True">
-            <div style="position:absolute; width:100%; text-align:center;">
-                <!-- <img style="width:190px; height:35px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)"/> -->
-                <span t-field="o.name" t-options="{'widget':'barcode','width':190,'height':35}"/>
-            </div>
+        <!-- Kept in the normal flow: absolute positioning used to lift the
+             barcode out of its cell, so it could not sit under the signature. -->
+        <div class="o_tpl_barcode" t-if="o.company_id.is_show_barcode==True"
+             style="margin-top: 6px; page-break-inside: avoid;">
+            <span t-field="o.name" t-options="{'widget':'barcode','width':190,'height':35}"/>
         </div>
     </template>
     <template id="templates_footer">
@@ -145,8 +149,7 @@
             </div>
             <div class="col-md-4 text-center" style="width:33%; flex: 0 0 33%; max-width: 33%; margin-top: 25px; margin-bottom:20px; display: inline-block; text-align:center; vertical-align: top;">
                 <!-- <img style="margin-bottom:50px;max-height: 110px;max-width: 100%;"  t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo_footer)"/> -->
-                <span t-options="{'widget':'image',
-                'img_style':'width:80px;height:80px','height':'80px','width':'80px'}" t-field="o.company_id.logo_footer"/>
+                <img t-if="o.company_id.logo_footer" t-att-src="o.company_id._get_report_image_uri(o.company_id.logo_footer)" style="width:80px;height:80px;"/>
             </div>
         </div>
     </template>

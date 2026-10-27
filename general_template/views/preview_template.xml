@@ -12,57 +12,60 @@
     </data>
     <data>
         <template id="report_demo_company_details">
-            <span t-attf-style="padding:0px; margin:0; color: #{o.company_color or '#ffffff'};">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
+            <span t-attf-style="padding:0px; margin:0; color: #{colors['company']};">
                 <t t-if="o.is_company_bold">
                     <b>Biztech IT Consultancy Pvt. Ltd.</b>
                 </t>
                 <t t-if="not o.is_company_bold">Biztech IT Consultancy Pvt. Ltd.
                 </t>
             </span>
-            <p t-attf-style="text-transform:capitalize; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+            <p t-attf-style="text-transform:capitalize; margin:0; padding-top:0;color: #{colors['company_address']};">C/801, Dev Aurum Commercial,
                 
                 <br/>
                 Prahalad Nagar, Gujarat, India.
                 <br/></p>
-            <p t-attf-style="text-transform:capitalize; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};">
+            <p t-attf-style="text-transform:capitalize; margin:8px 0px; padding:0;color: #{colors['company_address']};">
                 <strong>Mobile:</strong>+91-987-962-2024
                 <br/>
                 <strong>Email:</strong>
                 sales@biztechconsultancy.com</p>
         </template>
         <template id="report_demo_customer_details">
-            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{o.customer_color or '#ffffff'};">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
+            <span t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['customer']};">
                 <t t-if="o.is_customer_bold">
                     <b>Biztech IT Consultancy Pvt. Ltd.</b>
                 </t>
                 <t t-if="not o.is_customer_bold">Biztech IT Consultancy Pvt. Ltd.
                 </t>
             </span>
-            <p t-attf-style="text-transform:capitalize; margin:0; padding-top:0; color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+            <p t-attf-style="text-transform:capitalize; margin:0; padding-top:0; color: #{colors['customer_address']};">C/801, Dev Aurum Commercial,
                 
                 <br/>
                 Prahalad Nagar, Gujarat, India.
                 <br/></p>
-            <p t-attf-style="text-transform:capitalize; margin:8px 0px; padding:0; color: #{o.customer_address_color or '#ffffff'};">
+            <p t-attf-style="text-transform:capitalize; margin:8px 0px; padding:0; color: #{colors['customer_address']};">
                 <strong>Mobile:</strong>+91-987-962-2024
                 <br/>
                 <strong>Email:</strong>
                 sales@biztechconsultancy.com</p>
         </template>
         <template id="report_demo_professional">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
-                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:9px 0px 9px 0px; border-bottom:2px solid #{o.theme_color or '#ffffff'};" valign="middle">
+                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:9px 0px 9px 0px; border-bottom:2px solid #{colors['primary']};" valign="middle">
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td align="left" style="color:#4D4D4F; padding:0 0px; margin:0;" valign="middle">
                                 <!-- <img style="max-height:45px;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%;" t-if="o.company_id.invoice_logo"/>
+                                <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="height: auto; max-width: 100%;" t-if="o.invoice_logo"/>
                             </td>
                         </tr>
                     </table>
                 </td>
                 <td align="right" rowspan="3" style="padding:0; width:33%;" valign="top">
-                    <h2 t-attf-style="color:#fff; text-align:center; font-weight:bold; background-color:#{o.theme_color or '#ffffff'}; text-transform:uppercase; padding: 60px 0px; width:177px; color:#{o.theme_text_color or '#ffffff'};">Invoice No:
+                    <h2 t-attf-style="color:#fff; text-align:center; font-weight:bold; background-color:#{colors['primary']}; text-transform:uppercase; padding: 60px 0px; width:177px; color:#{colors['primary_text']};">Invoice No:
                         <br/>
                         <p style="font-weight:normal; margin:5px 0px;">123456789135</p></h2>
                     <table border="0" cellpadding="0" cellspacing="0" style="color:#fff; background-color:#FF6340; text-transform:capitalize;" width="100%"/>
@@ -75,18 +78,18 @@
             </tr>
             <tr>
                 <td align="left" colspan="2" style="padding:15px 0px 15px 0px; width:50%; line-height:18px;" valign="top">
-                    <p t-attf-style="text-transform:capitalize; font-weight:bold;margin:0; margin-bottom:5px; color:#{o.theme_color or '#ffffff'};">Invoice to:</p>
+                    <p t-attf-style="text-transform:capitalize; font-weight:bold;margin:0; margin-bottom:5px; color:#{colors['primary']};">Invoice to:</p>
                     <t t-call="general_template.report_demo_customer_details"/>
                 </td>
             </tr>
             <tr>
-                <td colspan="3" t-attf-style="border-bottom:2px solid #{o.theme_color or '#ffffff'}; padding:0px;"/>
+                <td colspan="3" t-attf-style="border-bottom:2px solid #{colors['primary']}; padding:0px;"/>
             </tr>
             <tr>
                 <td align="left" colspan="4" style="padding:15px 0px; " valign="top">
                     <table border="0" cellpadding="0" cellspacing="0" style="color:#fff; text-transform:capitalize;" width="100%">
-                        <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
-                            <td t-attf-style="padding:9px 15px; font-weight:bold; background-color:#{o.theme_color or '#000000'};">
+                        <tr t-attf-style="color: #{colors['primary_text']}; background-color: #{colors['primary']};">
+                            <td t-attf-style="padding:9px 15px; font-weight:bold; background-color:#{colors['primary']};">
                                 <b style="padding:10px 15px;">Invoice No:</b>
                                 <br/>
                                 <p style="font-weight:normal; margin: 5px 0px;">123456789135</p>
@@ -116,10 +119,11 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3" t-attf-style="border-bottom:2px solid #{o.theme_color or '#ffffff'}; padding:0px"/>
+                <td colspan="3" t-attf-style="border-bottom:2px solid #{colors['primary']}; padding:0px"/>
             </tr>
         </template>
         <template id="report_demo_incredible">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
                 <td valign="top">
                     <center>
@@ -127,7 +131,7 @@
                             <tr>
                                 <td align="left" style="color:#4D4D4F; padding: 0; margin:0 " valign="middle">
                                     <!-- <img style="max-height: 80px;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                    <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
                                 </td>
                             </tr>
                         </table>
@@ -181,6 +185,7 @@
             </tr>
         </template>
         <template id="report_demo_innovative">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
                 <td style="padding:10px;" valign="top">
                     <center>
@@ -188,7 +193,7 @@
                             <tr>
                                 <td align="left" style="color:#4D4D4F; padding: 0; margin:0 " valign="middle">
                                     <!-- <img style="max-height: 80px;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                    <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                    <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
                                 </td>
                             </tr>
                         </table>
@@ -242,26 +247,27 @@
             </tr>
         </template>
         <template id="report_demo_exclusive">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
-                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#ffffff'};" valign="top">
+                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{colors['primary']};" valign="top">
                     <table border="0" cellpadding="0" cellspacing="0" width="700">
                         <tr>
-                            <td align="left" style="color: #{o.text_color or '#ffffff'}; padding: 15px; border-right: 1px solid color: #{o.theme_color or '#ffffff'};" valign="middle">
+                            <td align="left" style="color: #{colors['text']}; padding: 15px; border-right: 1px solid color: #{colors['primary']};" valign="middle">
                                 <!-- <img style="max-height: 45px; margin-top: 37%;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
 
                             </td>
                             <td style="padding:15px;">
-                                <h2 t-attf-style="text-transform:capitalize; padding:0px; margin:0;color: #{o.theme_color or '#ffffff'};">Address</h2>
+                                <h2 t-attf-style="text-transform:capitalize; padding:0px; margin:0;color: #{colors['primary']};">Address</h2>
                                 <t t-call="general_template.report_demo_company_details"/>
                             </td>
                             <td align="left" style="padding:15px 0px 15px 15px;">
-                                <h2 t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{o.theme_color or '#ffffff'};">Invoice to:</h2>
+                                <h2 t-attf-style="text-transform:capitalize; padding:0px; margin:0; color: #{colors['primary']};">Invoice to:</h2>
                                 <t t-call="general_template.report_demo_customer_details"/>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3" t-attf-style="border-bottom:1px solid #{o.theme_color or '#ffffff'}; padding:0px;"/>
+                            <td colspan="3" t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:0px;"/>
                         </tr>
                     </table>
                 </td>
@@ -271,8 +277,8 @@
             </tr>
             <tr>
                 <td align="left" colspan="2" style="padding:15px 0px; " valign="top">
-                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; text-transform:capitalize; border: 1px solid #{o.theme_color or '#000000'};" width="100%">
-                        <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
+                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; text-transform:capitalize; border: 1px solid #{colors['primary']};" width="100%">
+                        <tr t-attf-style="color: #{colors['primary_text']}; background-color: #{colors['primary']};">
                             <td style="padding:9px 15px; font-weight:bold;">
                                 <b style="padding:10px 15px 10px 0px;">Invoice No:</b>
                                 <br/>
@@ -304,8 +310,9 @@
             </tr>
         </template>
         <template id="report_demo_custom">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
-                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{colors['primary']};" valign="top">
                     <table border="0" cellpadding="0" cellspacing="0" width="700">
                         <tr>
                             <td align="left" style="color:#4D4D4F; padding:0 0px; margin:0 " valign="middle">
@@ -313,7 +320,7 @@
                                 <t t-if="o.invoice_logo">
                                     <!-- <span t-options="{'widget':'image',
                                     'img_style':'width:80px;height:80px','height':'80px','width':'80px'}" t-field="o.invoice_logo"/> -->
-                                    <img t-att-src="image_data_uri(o.invoice_logo)" style="max-height: 80px;" t-if="o.invoice_logo"/>
+                                    <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
                                 </t>
                             </td>
                             <td align="right" style="color:#4D4D4F; padding: 0 0 25px 0; line-height:16px; padding-top:16px" valign="top" width="570">
@@ -325,52 +332,53 @@
             </tr>
             <tr bgcolor="#f2f2f2">
                 <td align="left" style="padding:15px; width:50%; line-height:18px;" valign="top">
-                    <p t-attf-style="text-transform:capitalize; color: #{o.theme_color or '#000000'}; font-weight:bold;margin:0; margin-bottom:5px;">Invoice to:</p>
+                    <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold;margin:0; margin-bottom:5px;">Invoice to:</p>
                     <t t-call="general_template.report_demo_customer_details"/>
                 </td>
                 <td align="right" style="padding:15px; width:50%; " valign="top">
-                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="background-color: #{o.theme_color or '#000000'}; color: #{'#ffffff'}; text-transform:capitalize;" width="100%">
+                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="background-color: #{colors['primary']}; color: #{'#ffffff'}; text-transform:capitalize;" width="100%">
                         <tr>
-                            <td t-attf-style="padding:9px 15px; font-weight:bold; color: #{o.theme_text_color or '#000000'};">Invoice No:</td>
-                            <td t-attf-style="text-align:right; font-weight:bold;padding:9px 15px; color: #{o.theme_text_color or '#000000'};">123456789135</td>
+                            <td t-attf-style="padding:9px 15px; font-weight:bold; color: #{colors['primary_text']};">Invoice No:</td>
+                            <td t-attf-style="text-align:right; font-weight:bold;padding:9px 15px; color: #{colors['primary_text']};">123456789135</td>
                         </tr>
                         <tr>
                             <td colspan="2" style="background-color:#f2f2f2; height:4px;"/>
                         </tr>
                         <tr>
-                            <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                            <td t-attf-style="padding:5px 15px; color: #{colors['primary_text']};">
                                 <b>Invoice Date:</b>
                             </td>
-                            <td t-attf-style="text-align:right; padding:5px 15px; color: #{o.theme_text_color or '#000000'};">15 March, 2016</td>
+                            <td t-attf-style="text-align:right; padding:5px 15px; color: #{colors['primary_text']};">15 March, 2016</td>
                         </tr>
                         <tr>
-                            <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                            <td t-attf-style="padding:5px 15px; color: #{colors['primary_text']};">
                                 <b>PO:</b>
                             </td>
-                            <td t-attf-style="text-align:right;padding:5px 15px; color: #{o.theme_text_color or '#000000'};">SO/124/4567</td>
+                            <td t-attf-style="text-align:right;padding:5px 15px; color: #{colors['primary_text']};">SO/124/4567</td>
                         </tr>
                         <tr>
-                            <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                            <td t-attf-style="padding:5px 15px; color: #{colors['primary_text']};">
                                 <b>Order Date:</b>
                             </td>
-                            <td t-attf-style="text-align:right; padding:5px 15px; color: #{o.theme_text_color or '#000000'};">10 March, 2016</td>
+                            <td t-attf-style="text-align:right; padding:5px 15px; color: #{colors['primary_text']};">10 March, 2016</td>
                         </tr>
                         <tr>
-                            <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                            <td t-attf-style="padding:5px 15px; color: #{colors['primary_text']};">
                                 <b>Due Date:</b>
                             </td>
-                            <td t-attf-style="text-align:right; padding:5px 15px; color: #{o.theme_text_color or '#000000'};">20 March, 2016</td>
+                            <td t-attf-style="text-align:right; padding:5px 15px; color: #{colors['primary_text']};">20 March, 2016</td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr>
-                <td colspan="2" t-attf-style="border-bottom:2px solid #{o.theme_color or '#000000'}; padding:0px"/>
+                <td colspan="2" t-attf-style="border-bottom:2px solid #{colors['primary']}; padding:0px"/>
             </tr>
         </template>
         <template id="report_demo_creative">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
-                <td align="right" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+                <td align="right" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{colors['primary']};" valign="top">
                     <table border="0" cellpadding="0" cellspacing="0" width="700">
                         <tr>
                             <td align="left" style="color:#4D4D4F; padding: 0 0 25px 0; line-height:16px; padding-top:16px" valign="top" width="570">
@@ -378,7 +386,7 @@
                             </td>
                             <td align="left" style="color:#4D4D4F; padding:0 0px; margin:0 " valign="middle">
                                 <!-- <img style="max-height: 45px; margin-top: 18%;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
                             </td>
                         </tr>
                     </table>
@@ -390,34 +398,34 @@
                     <t t-call="general_template.report_demo_customer_details"/>
                 </td>
                 <td align="right" style="padding:15px; width:50%; " valign="top">
-                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="text-transform:capitalize;    border: 1px solid #{o.theme_color or '#000000'}; " width="100%">
-                        <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
+                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="text-transform:capitalize;    border: 1px solid #{colors['primary']}; " width="100%">
+                        <tr t-attf-style="color: #{colors['primary_text']}; background-color: #{colors['primary']};">
                             <td style="padding:9px 15px; font-weight:bold;color:#fff">Invoice No:</td>
                             <td style="text-align:right; font-weight:bold;padding:9px 15px;color:#fff">123456789135</td>
                         </tr>
-                        <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
-                            <td colspan="2" t-attf-style="background-color: #{o.theme_color or '#000000'}; height:2px;"/>
+                        <tr t-attf-style="color: #{colors['primary_text']}; background-color: #{colors['primary']};">
+                            <td colspan="2" t-attf-style="background-color: #{colors['primary']}; height:2px;"/>
                         </tr>
-                        <tr t-attf-style="color: #{o.text_color or '#000000'};">
+                        <tr t-attf-style="color: #{colors['text']};">
                             <td style="padding:5px 15px;">
                                 <b>Invoice Date:</b>
                             </td>
                             <td style="text-align:right; padding:5px 15px;">15 March, 2016</td>
                         </tr>
                         <tr/>
-                        <tr t-attf-style="color: #{o.text_color or '#000000'};">
+                        <tr t-attf-style="color: #{colors['text']};">
                             <td style="padding:5px 15px;">
                                 <b>PO:</b>
                             </td>
                             <td style="text-align:right;padding:5px 15px;">SO/124/4567</td>
                         </tr>
-                        <tr t-attf-style="color: #{o.text_color or '#000000'};">
+                        <tr t-attf-style="color: #{colors['text']};">
                             <td style="padding:5px 15px;">
                                 <b>Order Date:</b>
                             </td>
                             <td style="text-align:right; padding:5px 15px;">10 March, 2016</td>
                         </tr>
-                        <tr t-attf-style="color: #{o.text_color or '#000000'};">
+                        <tr t-attf-style="color: #{colors['text']};">
                             <td style="padding:5px 15px;">
                                 <b>Due Date:</b>
                             </td>
@@ -427,17 +435,18 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" t-attf-style="border-bottom:1px solid #{o.theme_color or '#000000'}; padding:0px;"/>
+                <td colspan="2" t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:0px;"/>
             </tr>
         </template>
         <template id="report_demo_elegant">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
-                <td align="left" colspan="2" style="color:#4D4D4F; padding:20px 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
-                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="border-bottom:1px solid #{o.theme_color or '#000000'};" width="100%">
+                <td align="left" colspan="2" style="color:#4D4D4F; padding:20px 0px; border-bottom:2px solid #{colors['primary']};" valign="top">
+                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="border-bottom:1px solid #{colors['primary']};" width="100%">
                         <tr>
                             <td align="center" style="color:#4D4D4F; padding:0 0px; margin:0 " valign="middle">
                                 <!-- <img style="max-height: 45px; margin-top: 4%;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
                             </td>
                         </tr>
                     </table>
@@ -454,8 +463,8 @@
             </tr>
             <tr>
                 <td align="left" colspan="2" style="padding:15px 0px; " valign="top">
-                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; background-color:#{o.theme_color or '#000000'}; text-transform:capitalize; " width="100%">
-                        <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{ o.theme_color or '#000000'};">
+                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; background-color:#{colors['primary']}; text-transform:capitalize; " width="100%">
+                        <tr t-attf-style="color: #{colors['primary_text']}; background-color: #{ colors['primary']};">
                             <td style="padding:9px 15px; font-weight:bold;">
                                 <b>Invoice No:</b>
                                 <br/>
@@ -486,12 +495,13 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" t-attf-style="border-bottom:2px solid #{o.theme_color or '#000000'}; padding:0px"/>
+                <td colspan="2" t-attf-style="border-bottom:2px solid #{colors['primary']}; padding:0px"/>
             </tr>
         </template>
         <template id="report_demo_advanced">
+            <t t-set="colors" t-value="o._get_report_colors()"/>
             <tr>
-                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+                <td align="left" colspan="2" t-attf-style="color:#4D4D4F; padding:0 0px; border-bottom:2px solid #{colors['primary']};" valign="top">
                     <table border="0" cellpadding="0" cellspacing="0" width="700">
                         <tr>
                             <td align="left" style="color:#4D4D4F; padding: 30px 0px 0px 0px; margin:0 " valign="middle">
@@ -499,61 +509,61 @@
                                     <tr>
                                         <td align="left" style="color:#4D4D4F; padding:0 0px; margin:0 " valign="middle">
                                             <!-- <img style="max-height: 45px;" t-att-src="'data:image/png;base64,%s' % to_text(o.invoice_logo) or to_text(o.logo)" t-if="o.logo"/> -->
-                                            <!-- <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/> -->
+                                            <!-- <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/> -->
                                             <t t-if="o.invoice_logo">
-                                                <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="max-height: 80px;" t-if="o.company_id.invoice_logo"/>
+                                                <img t-att-src="o._get_report_logo_uri(colors['primary'])" style="max-height: 80px;" t-if="o.invoice_logo"/>
                                             </t>
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                             <td align="right" style="padding:15px 0px 0px 15px; width:31.5%;" valign="top">
-                                <h2 t-attf-style="color: #{o.theme_text_color or '#000000'}; text-align:center;font-weight:bold; background-color: #{o.theme_color or '#000000'}; text-transform:uppercase; padding:10px 0px; width: 250px;">Invoice</h2>
+                                <h2 t-attf-style="color: #{colors['primary_text']}; text-align:center;font-weight:bold; background-color: #{colors['primary']}; text-transform:uppercase; padding:10px 0px; width: 250px;">Invoice</h2>
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" t-attf-style="padding:15px 0px 15px 0px;line-height:18px; border-top:1px solid #{o.theme_color or '#ececec'};">
+                            <td align="left" t-attf-style="padding:15px 0px 15px 0px;line-height:18px; border-top:1px solid #{colors['primary']};">
                                 <t t-call="general_template.report_demo_company_details"/>
                             </td>
                             <td align="right" style="padding:15px 0px 15px 15px; width:33%;" valign="top">
-                                <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; text-transform:capitalize; border-collapse: collapse; background-color: #{o.theme_color or '#000000'}; width: 250px;">
+                                <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; text-transform:capitalize; border-collapse: collapse; background-color: #{colors['primary']}; width: 250px;">
                                     <tr>
-                                        <td t-attf-style="padding:9px 15px; font-weight:bold; color: #{o.theme_text_color or '#000000'};">Invoice No:</td>
-                                        <td t-attf-style="text-align:right; font-weight:bold;padding:9px 15px;color: #{o.theme_text_color or '#000000'};">123456789135</td>
+                                        <td t-attf-style="padding:9px 15px; font-weight:bold; color: #{colors['primary_text']};">Invoice No:</td>
+                                        <td t-attf-style="text-align:right; font-weight:bold;padding:9px 15px;color: #{colors['primary_text']};">123456789135</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" style="background-color:#f2f2f2; height:4px;"/>
                                     </tr>
                                     <tr>
-                                        <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                                        <td t-attf-style="padding:5px 15px;color: #{colors['primary_text']};">
                                             <b>Invoice Date:</b>
                                         </td>
-                                        <td t-attf-style="text-align:right; padding:5px 15px;color: #{o.theme_text_color or '#000000'};">15 March, 2016</td>
+                                        <td t-attf-style="text-align:right; padding:5px 15px;color: #{colors['primary_text']};">15 March, 2016</td>
                                     </tr>
                                     <tr>
-                                        <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                                        <td t-attf-style="padding:5px 15px;color: #{colors['primary_text']};">
                                             <b>PO:</b>
                                         </td>
-                                        <td t-attf-style="text-align:right;padding:5px 15px;color: #{o.theme_text_color or '#000000'};">SO/124/4567</td>
+                                        <td t-attf-style="text-align:right;padding:5px 15px;color: #{colors['primary_text']};">SO/124/4567</td>
                                     </tr>
                                     <tr>
-                                        <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                                        <td t-attf-style="padding:5px 15px;color: #{colors['primary_text']};">
                                             <b>Order Date:</b>
                                         </td>
-                                        <td t-attf-style="text-align:right; padding:5px 15px;color: #{o.theme_text_color or '#000000'};">10 March, 2016</td>
+                                        <td t-attf-style="text-align:right; padding:5px 15px;color: #{colors['primary_text']};">10 March, 2016</td>
                                     </tr>
                                     <tr>
-                                        <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                                        <td t-attf-style="padding:5px 15px;color: #{colors['primary_text']};">
                                             <b>Due Date:</b>
                                         </td>
-                                        <td t-attf-style="text-align:right; padding:5px 15px;color: #{o.theme_text_color or '#000000'};">20 March, 2016</td>
+                                        <td t-attf-style="text-align:right; padding:5px 15px;color: #{colors['primary_text']};">20 March, 2016</td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
                             <td align="left" style="width:50%; padding:15px 0px 15px 0px; line-height:18px;border-top:1px solid #ececec;">
-                                <p t-attf-style="text-transform:capitalize; color: #{o.theme_color or '#000000'}; font-weight:bold;margin:0; margin-bottom:5px;">Invoice to:</p>
+                                <p t-attf-style="text-transform:capitalize; color: #{colors['primary']}; font-weight:bold;margin:0; margin-bottom:5px;">Invoice to:</p>
                                 <t t-call="general_template.report_demo_customer_details"/>
                             </td>
                         </tr>
@@ -564,6 +574,7 @@
         <template id="report_demo_template_main">
             <t t-as="o" t-foreach="docs">
                 <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <t t-set="colors" t-value="o._get_report_colors()"/>
                 <div class="page" t-att-style="'font-family:'+o.font_id.family+';font-size:'+str(o.font_size)+'px;'">
                     <div class="oe_structure"/>
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -571,7 +582,7 @@
                             <tr>
                                 <td>
                                     <center>
-                                        <table border="0" cellpadding="0" cellspacing="0" t-attf-style="padding:0px 20px 20px 20px; margin:0; background:#fff; text-transform:uppercase; line-height:20px; border:2px solid #{o.theme_color or '#000000'};" width="700">
+                                        <table border="0" cellpadding="0" cellspacing="0" t-attf-style="padding:0px 20px 20px 20px; margin:0; background:#fff; text-transform:uppercase; line-height:20px; border:2px solid #{colors['primary']};" width="700">
                                             <t t-set="real_name" t-value="str('general_template.report_demo_')+str(o.standard_template)"/>
                                              <t t-call="general_template.report_demo_custom" t-lang="o.partner_id.lang"/>
                                             <t t-call="general_template.report_demo_custom" t-if="real_name == 'general_template.report_demo_custom'"/>
@@ -584,50 +595,50 @@
                                             <t t-call="general_template.report_demo_innovative" t-if="real_name == 'general_template.report_demo_innovative'"/>
                                             <tr>
                                                 <td align="left" colspan="3" style="padding:20px 0px 0 0; text-transform:uppercase; font-weight:bold; " valign="top">
-                                                    <table BORDERCOLOR="ff0000" border="1" cellpadding="0" cellspacing="0" t-attf-style="border:1px solid #{o.theme_color or '#000000'};  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
-                                                        <tr t-attf-style="background-color: #{o.theme_color or '#000000'}; color: #{o.theme_text_color or '#000000'};">
-                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; border:1px solid #{o.theme_color or '#000000'}; font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="5%">sr.</td>
-                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; border:1px solid #{o.theme_color or '#000000'}; font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="49%">Description</td>
-                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="9%">quantity</td>
-                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="14%">Unit Price</td>
-                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="9%">Taxes</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="14%">Price</td>
+                                                    <table BORDERCOLOR="ff0000" border="1" cellpadding="0" cellspacing="0" t-attf-style="border:1px solid #{colors['primary']};  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
+                                                        <tr t-attf-style="background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; border:1px solid #{colors['primary']}; font-weight:bold;color: #{colors['primary_text']};" width="5%">sr.</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; border:1px solid #{colors['primary']}; font-weight:bold;color: #{colors['primary_text']};" width="49%">Description</td>
+                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{colors['primary']};font-weight:bold;color: #{colors['primary_text']};" width="9%">quantity</td>
+                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{colors['primary']};font-weight:bold;color: #{colors['primary_text']};" width="14%">Unit Price</td>
+                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{colors['primary']};font-weight:bold;color: #{colors['primary_text']};" width="9%">Taxes</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{colors['primary']};font-weight:bold;color: #{colors['primary_text']};" width="14%">Price</td>
                                                         </tr>
                                                         <tr style="color:#232323">
-                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1</td>
-                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">Mackbook Pro</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.odd_party_color or '#000000'};">900.00</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.odd_party_color or '#000000'};"/>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.odd_party_color or '#000000'};">900.00</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">1</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{colors['text']};color: #{colors['text']}; background-color: #{colors['odd_party']};">Mackbook Pro</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">1</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']};background-color: #{colors['odd_party']};">900.00</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']};background-color: #{colors['odd_party']};"/>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']};background-color: #{colors['odd_party']};">900.00</td>
                                                         </tr>
                                                         <tr style="color:#232323; background-color: rgba(232, 230, 230, 0.62)">
-                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.even_party_color or '#000000'};">2</td>
-                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.even_party_color or '#000000'};">Apple Mobile</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.even_party_color or '#000000'};">2</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.even_party_color or '#000000'};">500.00</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.even_party_color or '#000000'};">5.00%</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.even_party_color or '#000000'};">1000.00</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['even_party']};">2</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['even_party']};">Apple Mobile</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['even_party']};">2</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['even_party']};">500.00</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['even_party']};">5.00%</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['even_party']};">1000.00</td>
                                                         </tr>
                                                     </table>
                                                     <table align="right" style="font-weight:bold; width:40%; text-transform:capitalize;">
                                                         <tr>
-                                                            <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px;color: #{o.text_color or '#000000'};">SubTotal</td>
-                                                            <td align="right" t-attf-style="padding:9px 0px 7px 10px;color: #{o.text_color or '#000000'};">1900.00</td>
+                                                            <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px;color: #{colors['text']};">SubTotal</td>
+                                                            <td align="right" t-attf-style="padding:9px 0px 7px 10px;color: #{colors['text']};">1900.00</td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3" style="border-bottom:1px solid #959595"/>
                                                         </tr>
                                                         <tr>
-                                                            <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px;color: #{o.text_color or '#000000'};">taxes</td>
-                                                            <td align="right" t-attf-style="padding:9px 0px 7px 10px;color: #{o.text_color or '#000000'};">50.00</td>
+                                                            <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px;color: #{colors['text']};">taxes</td>
+                                                            <td align="right" t-attf-style="padding:9px 0px 7px 10px;color: #{colors['text']};">50.00</td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3" style="border-bottom:1px solid #959595"/>
                                                         </tr>
                                                         <tr>
-                                                            <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px; text-transform: uppercase; color: #{o.text_color or '#000000'};">total</td>
-                                                            <td align="right" t-attf-style="padding:9px 0px 7px 10px; text-transform:uppercase; color: #{o.text_color or '#000000'};">1950.00</td>
+                                                            <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px; text-transform: uppercase; color: #{colors['text']};">total</td>
+                                                            <td align="right" t-attf-style="padding:9px 0px 7px 10px; text-transform:uppercase; color: #{colors['text']};">1950.00</td>
                                                         </tr>
                                                     </table>
                                                 </td>
@@ -642,26 +653,26 @@
                                             </tr>
                                             <tr>
                                                 <td align="left" colspan="3" style="color:#4D4D4F; padding:12px 0px 0 0; text-transform:uppercase;" valign="top">
-                                                    <table BORDERCOLOR="ff0000" border="1" cellpadding="0" cellspacing="0" t-attf-style="border:1px solid #{o.theme_color or '#000000'};  border-collapse: collapse; text-transform:capitalize;" width="100%">
-                                                        <tr t-attf-style="background-color: #{o.theme_color or '#000000'}; color: #{o.theme_text_color or '#000000'};">
-                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="6%">sr.</td>
-                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="19%">date</td>
-                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="39%">method</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="23%">ref.</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="13%">amount</td>
+                                                    <table BORDERCOLOR="ff0000" border="1" cellpadding="0" cellspacing="0" t-attf-style="border:1px solid #{colors['primary']};  border-collapse: collapse; text-transform:capitalize;" width="100%">
+                                                        <tr t-attf-style="background-color: #{colors['primary']}; color: #{colors['primary_text']};">
+                                                            <td align="center" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{colors['primary']};color: #{colors['primary_text']};" width="6%">sr.</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{colors['primary']};color: #{colors['primary_text']};" width="19%">date</td>
+                                                            <td align="left" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{colors['primary']};color: #{colors['primary_text']};" width="39%">method</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{colors['primary']};color: #{colors['primary_text']};" width="23%">ref.</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; border:1px solid #{colors['primary']};color: #{colors['primary_text']};" width="13%">amount</td>
                                                         </tr>
                                                         <tr style="color:#232323">
-                                                            <td align="center" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1</td>
-                                                            <td t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">01 February, 2016</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">Online Bank Transfer</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">4569896347</td>
-                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1500.00</td>
+                                                            <td align="center" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">1</td>
+                                                            <td t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">01 February, 2016</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">Online Bank Transfer</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">4569896347</td>
+                                                            <td align="right" t-attf-style="padding:5px 10px;color: #{colors['text']}; background-color: #{colors['odd_party']};">1500.00</td>
                                                         </tr>
                                                     </table>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td align="left" colspan="3" t-attf-style="color: #{o.text_color or '#000000'}; padding-top:100px">
+                                                <td align="left" colspan="3" t-attf-style="color: #{colors['text']}; padding-top:100px">
                                                     <ul style="padding-left:15px; margin:0">
                                                         <li>
                                                             <b>Payment Term:</b>30 Days</li>

@@ -2,7 +2,9 @@
 # Part of Appjetty. See LICENSE file for full copyright and licensing details.
 
 import base64
+import re
 from odoo import fields, models, api, _
+from odoo.tools.image import image_data_uri
 from odoo.exceptions import ValidationError
 from odoo.tools.misc import file_path
 
@@ -24,6 +26,8 @@ template = {
         'customer_color_template': '#000000',
         'company_address_color_template': '#6F8192',
         'customer_address_color_template': '#000000',
+        'odd_party_color_template': '#FFFFFF',
+        'even_party_color_template': '#f4f5f7',
         'watermark_text_color_template': '#007aff',
     },
     'Morden': {
@@ -34,6 +38,8 @@ template = {
         'customer_color_template': '#000000',
         'company_address_color_template': '#6F8192',
         'customer_address_color_template': '#000000',
+        'odd_party_color_template': '#FFFFFF',
+        'even_party_color_template': '#f4f5f7',
         'watermark_text_color_template': '#007aff',
     },
     'Vintage': {
@@ -44,6 +50,8 @@ template = {
         'customer_color_template': '#000000',
         'company_address_color_template': '#6F8192',
         'customer_address_color_template': '#000000',
+        'odd_party_color_template': '#FFFFFF',
+        'even_party_color_template': '#e6e8ed',
         'watermark_text_color_template': '#000000',
     },
     'Bold': {
@@ -54,6 +62,8 @@ template = {
         'customer_color_template': '#000000',
         'company_address_color_template': '#6F8192',
         'customer_address_color_template': '#000000',
+        'odd_party_color_template': '#FFFFFF',
+        'even_party_color_template': '#f4f5f7',
         'watermark_text_color_template': '#32a860',
     },
     'Corporate': {
@@ -64,6 +74,8 @@ template = {
         'customer_color_template': '#000000',
         'company_address_color_template': '#6F8192',
         'customer_address_color_template': '#000000',
+        'odd_party_color_template': '#FFFFFF',
+        'even_party_color_template': '#f4f5f7',
         'watermark_text_color_template': '#bfbcbb',
     },
     'Classic': {
@@ -74,9 +86,81 @@ template = {
         'customer_color_template': '#000000',
         'company_address_color_template': '#6F8192',
         'customer_address_color_template': '#000000',
+        'odd_party_color_template': '#FFFFFF',
+        'even_party_color_template': '#f4f5f7',
         'watermark_text_color_template': '#a24689',
     },
 }
+
+
+SVG_PAINT_ATTRIBUTES = ('fill', 'stroke', 'stop-color', 'flood-color',
+                        'lighting-color', 'color')
+# Values that name no colour of their own and so must survive a recolour.
+SVG_KEPT_PAINTS = ('none', 'transparent', 'currentcolor', 'inherit')
+
+
+def _paint_svg(markup, color):
+    """Point every paint in an SVG at ``color``, attributes and style
+    declarations alike. Gradients keep their shape and flatten to the colour."""
+    def attribute(match):
+        name, quote, value = match.group(1), match.group(2), match.group(3)
+        if value.strip().lower() in SVG_KEPT_PAINTS or value.lstrip().startswith('url('):
+            return match.group(0)
+        return '%s=%s%s%s' % (name, quote, color, quote)
+
+    markup = re.sub(r'\b(%s)=(["\'])(.*?)\2' % '|'.join(SVG_PAINT_ATTRIBUTES),
+                    attribute, markup)
+
+    def declaration(match):
+        name, value = match.group(1), match.group(2)
+        if value.strip().lower() in SVG_KEPT_PAINTS or value.lstrip().startswith('url('):
+            return match.group(0)
+        return '%s:%s' % (name, color)
+
+    return re.sub(r'\b(%s)\s*:\s*([^;"\'}]+)' % '|'.join(SVG_PAINT_ATTRIBUTES),
+                  declaration, markup)
+
+
+def _flatten_svg_gradients(markup):
+    """Resolve every ``url(#...)`` paint to the plain colour it starts with.
+
+    wkhtmltopdf draws an SVG as vector content and silently drops any shape
+    filled from a gradient, so a logo built around one prints with a hole where
+    that shape should be. Nothing about how the gradient is declared changes
+    that, so the first stop stands in for the whole run: the shape comes back,
+    flat instead of graded. A ``url()`` naming anything else is left alone."""
+    stops = {}
+    for gradient in re.finditer(
+            r'<(linearGradient|radialGradient)\b[^>]*\bid\s*=\s*["\']([^"\']+)["\'][^>]*>(.*?)</\1>',
+            markup, re.S):
+        stop = re.search(
+            r'stop-color\s*[:=]\s*["\']?\s*(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))',
+            gradient.group(3))
+        if stop:
+            stops[gradient.group(2)] = stop.group(1)
+    if not stops:
+        return markup
+    return re.sub(r'url\(\s*#([^)\s]+)\s*\)',
+                  lambda match: stops.get(match.group(1), match.group(0)), markup)
+
+
+def _size_svg(markup):
+    """Give a viewBox-only SVG the width and height it implies.
+
+    Browsers fall back to 300x150 for an SVG that declares no size, so one
+    looks right on screen; wkhtmltopdf resolves it to nothing and the report
+    prints a blank space where the logo should be."""
+    root = re.search(r'<svg\b[^>]*>', markup)
+    if not root or re.search(r'\b(width|height)\s*=', root.group(0)):
+        return markup
+    box = re.search(
+        r'\bviewBox\s*=\s*["\']\s*[-\d.e]+[,\s]+[-\d.e]+[,\s]+([\d.e]+)[,\s]+([\d.e]+)',
+        root.group(0))
+    if not box:
+        return markup
+    sized = root.group(0).replace(
+        '<svg', '<svg width="%s" height="%s"' % (box.group(1), box.group(2)), 1)
+    return markup.replace(root.group(0), sized, 1)
 
 
 class ResCompany(models.Model):
@@ -148,6 +232,71 @@ class ResCompany(models.Model):
                 'watermark_text_color_template', '#000000')
         return
 
+    def _get_report_colors(self):
+        """Every colour the report designs draw with, resolved once.
+
+        "primary" is the Template Base Color: the belt, the document title
+        block and the table headings all take it. Templates read these instead
+        of reaching for the fields inline, so a design states a colour once and
+        the Standard Template Configuration stays the only place that sets it."""
+        self.ensure_one()
+        return {
+            'primary': self.theme_color_template or '#000000',
+            'primary_text': self.theme_text_color_template or '#FFFFFF',
+            'text': self.text_color_template or '#000000',
+            'company': self.company_color_template or '#6F8192',
+            'company_address': self.company_address_color_template or '#6F8192',
+            'customer': self.customer_color_template or '#000000',
+            'customer_address': self.customer_address_color_template or '#000000',
+            'odd_party': self.odd_party_color_template or '#FFFFFF',
+            'even_party': self.even_party_color_template or '#f4f5f7',
+            'watermark_text': self.watermark_text_color_template or '#000000',
+        }
+
+    def _get_report_image_uri(self, image, color=None):
+        """Report image as a data URI, ready for an img src.
+
+        An SVG is given the intrinsic size its viewBox implies, and is
+        recoloured only when a colour is passed. Raster images carry their own
+        colours and dimensions and are passed through untouched."""
+        if not image:
+            return ''
+        source = bytes(image)
+        if image.mimetype.startswith('image/svg'):
+            markup = source.decode('utf-8', 'ignore')
+            if '<svg' in markup:
+                if color:
+                    markup = _paint_svg(markup, color)
+                markup = _flatten_svg_gradients(markup)
+                source = _size_svg(markup).encode('utf-8')
+        return image_data_uri(source)
+
+    def _get_report_logo_color(self, color=None):
+        """The single colour the Report Logo prints in, or None to leave the
+        artwork alone.
+
+        Templates pass the base colour of the design they are drawing; Report
+        Logo Color decides whether that is what gets used, a colour picked by
+        hand, or nothing at all."""
+        self.ensure_one()
+        if self.invoice_logo_color_mode_template == 'original':
+            return None
+        if self.invoice_logo_color_mode_template == 'custom':
+            return self.invoice_logo_color_template or '#000000'
+        return color or self.theme_color_template or '#000000'
+
+    def _get_report_logo_uri(self, color=None):
+        """Report Logo, coloured as Report Logo Color asks."""
+        self.ensure_one()
+        return self._get_report_image_uri(
+            self.invoice_logo_template, self._get_report_logo_color(color))
+
+    def _get_report_signature_uri(self):
+        """Signature, sized but never recoloured: it stands for whoever signs,
+        not for the design it sits in."""
+        self.ensure_one()
+        return self._get_report_image_uri(self.signature_template)
+
     def _get_font(self):
         return self.env['report.fonts'].search([('family', '=', 'Helvetica'), ('mode', '=', 'all')], limit=1)
 
@@ -175,7 +324,7 @@ class ResCompany(models.Model):
     odd_party_color_template = fields.Char(string="Table Odd Parity Color", required=True,
                                   help="Please set Hex color for Table Odd Parity.", default="#FFFFFF")
     even_party_color_template = fields.Char(string="Table Even Parity Color", required=True,
-                                   help="Please set Hex color for Table Even Parity.", default="#e6e8ed")
+                                   help="Please set Hex color for Table Even Parity.", default="#f4f5f7")
     # Label distinguished from is_company_bold_t to avoid a duplicate-label warning.
     is_company_bold_template = fields.Boolean(
         string="Display Company Name in Bold (Template)", default=False, help="Please check it if you want to show Company Name in Bold.")
@@ -191,6 +340,15 @@ class ResCompany(models.Model):
                                  help="This field holds the image used as Logo for Invoice template report")
     is_description_template = fields.Boolean(string="Display Product Description", default=True,
                                     help="Please check it if you want to show product description in report.")
+    invoice_logo_color_mode_template = fields.Selection(
+        selection=[('original', 'Original Colors'), ('theme', 'Template Base Color'), ('custom', 'Custom Color')],
+        string="Report Logo Color", required=True, default='original',
+        help="How the Report Logo is coloured on the report. Original Colors prints the logo exactly as uploaded. "
+             "Template Base Color recolours it to the Template Base Color. Custom Color recolours it to Report Logo "
+             "Custom Color. Recolouring needs an SVG logo; a PNG or JPG always prints in its own colours.")
+    invoice_logo_color_template = fields.Char(
+        string="Report Logo Custom Color", default="#000000",
+        help="Please set Hex color for the Report Logo. Used when Report Logo Color is Custom Color.")
     watermark_logo_template = fields.Binary("Report Watermark Logo", default=lambda self: self._get_default_image(
         False, True), help="Please set Watermark Logo for Report.")
     is_company_bold_t = fields.Boolean(string="Display Company Name in Bold", default=False,

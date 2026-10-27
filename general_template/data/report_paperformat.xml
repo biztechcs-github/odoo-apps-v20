@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Same A4 as base.paperformat_euro, but with less of the page reserved
+             for the header: the designs' header band is shorter than the 52mm
+             base.paperformat_euro sets aside, which left a visible empty strip
+             between the band and the first block of the body. Kept as a record of
+             this module rather than a change to the shared A4 format, so core
+             reports are untouched and uninstalling restores the previous layout. -->
+        <record id="paperformat_report_template" model="report.paperformat">
+            <field name="name">A4 Report Template</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">48</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">48</field>
+            <field name="dpi">90</field>
+            <field name="css_margins" eval="True"/>
+        </record>
+    </data>
+</odoo>

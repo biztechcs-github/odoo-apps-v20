@@ -86,8 +86,7 @@ class WebsiteMenu(models.Model):
     add_seperator_line = fields.Boolean(string='Add Separator line',
                                         default=True,
                                         help="Use to add a seperator line to seperate Main and its child")
-    category_ids = fields.Many2many("product.public.category", string="Category", domain=[
-                                    '|', '|', ('parent_id', '=', False), ('parent_id.parent_id', '=', False), ('parent_id.parent_id.parent_id', '=', False)])
+    category_ids = fields.Many2many("product.public.category", string="Category")
 
     # for new pages megamenu pro
     display_icon = fields.Binary(string="Display Icon")

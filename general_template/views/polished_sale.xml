@@ -9,181 +9,243 @@
             <t t-set="company" t-value="res_company"/>
         </t>
         <t t-call="general_template.sale_advanced_header"/>
-        <div class="article o_report_layout_standard" t-att-data-oe-id="o and o.id" t-att-data-oe-model="o and o._name" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <div class="article o_report_layout_standard o_polished_route" t-att-data-oe-id="o and o.id" t-att-data-oe-model="o and o._name" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="general_template.advanced_styles"/>
             <t t-out="0"/>
         </div>
-        <t t-call="general_template.template_footer"/>
+        <t t-call="general_template.advanced_footer"/>
     </template>
     <template id="sale_advanced_header">
-        <div class="header">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-3">
-                        <t t-if="o.company_id.invoice_logo">
-                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%; max-height: 100px;"/>
-                        </t>
-                    </div>
-                    <div class="col-3" style="padding-left:20px;">
-                        <t t-if="o.company_id.partner_id.email">
-                            <span><strong>Email:</strong></span><br/>
-                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.email"/><br/>
-                        </t>
-                    </div>
-                    <div class="col-2">
-                        <t t-if="o.company_id.phone">
-                            <span><strong>Phone:</strong></span><br/>
-                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.phone"/><br/>
-                            <span t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};">Monday to Friday</span>
-                        </t>
-                    </div>
-                    <div class="col-4">
-                        <t t-if="o.company_id.partner_id.name">
-                            <span><strong>Address:</strong></span><br/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-field="o.company_id.street"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.street2" t-field="o.company_id.street2"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};">
-                                <t t-if="o.company_id.city and o.company_id.state_id">
-                                    <span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/>
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <div class="header o_polished_route" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;' ">
+            <t t-call="general_template.advanced_styles"/>
+            <t t-set="rule_color" t-value="colors['primary']"/>
+            <div class="o_polished_route_band o_polished_route_hband">
+                <table class="roh" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td><t t-if="o.company_id.invoice_logo">
+                                <img class="lg" t-att-src="o.company_id._get_report_logo_uri(colors['primary'])" alt="Company Logo"/>
+                            </t></td>
+                        <td class="rc">
+                            <span t-field="o.company_id.name"/>
+                            <br/>
+                            <span t-out="o._get_street(o.company_id.partner_id)"/>
+                            <br/>
+                            <span t-out="o._get_address_details(o.company_id.partner_id)"/>
+                        </td>
+                    </tr>
+                </table>
+                <table class="pass2" t-attf-style="border: 1.5px solid #{rule_color};">
+                    <tr>
+                        <td class="pid" t-attf-style="border-right: 1px dashed #{rule_color};">
+                            <div class="dt"><t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+                                    <span t-if="o.state not in ['draft','sent']">Order</span>
+                                    <span t-if="o.state in ['draft','sent']">Quotation</span>
                                 </t>
-                                <t t-elif="o.company_id.city">
-                                    <span t-field="o.company_id.city"/>
-                                </t>
-                                <t t-elif="o.company_id.state_id">
-                                    <span t-field="o.company_id.state_id"/>
-                                </t>
-                            </section>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.zip" t-field="o.company_id.zip"/>
-                            <section t-attf-style="color: #{o.company_id and o.company_id.company_address_color or '#000000'};" t-if="o.company_id.country_id" t-field="o.company_id.country_id"/>
-                        </t>
-                    </div>
-                </div>
+                                <t t-if="env.context.get('proforma', False) or is_pro_forma">
+                                    <span>Pro-Forma Invoice</span>
+                                </t></div>
+                            <div class="no" t-att-style="'color: %s;' % rule_color"><span t-field="o.name"/></div>
+                        </td>
+                        <td class="pf" t-if="o.date_order"> <div class="lbl"> <span t-if="o.state not in ['draft','sent']">Date Ordered</span> <span t-if="o.state in ['draft','sent']">Quotation Date</span> </div> <div class="fv"><span t-field="o.date_order"/></div> </td>
+                        <td class="pf" t-if="o.client_order_ref"> <div class="lbl">Your Reference</div> <div class="fv"><span t-field="o.client_order_ref"/></div> </td>
+                        <td class="pf" t-if="o.validity_date"> <div class="lbl">Expiration Date</div> <div class="fv"><span t-field="o.validity_date"/></div> </td>
+                        <td class="pf" t-if="o.user_id"> <div class="lbl">Salesperson</div> <div class="fv"><span t-field="o.user_id"/></div> </td>
+                        <td class="pf" t-if="o.payment_term_id and o.payment_term_id.name or ''"> <div class="lbl">Payment Term</div> <div class="fv"><span t-out="o.payment_term_id and o.payment_term_id.name or '' "/></div> </td>
+                        <td class="stub" t-attf-style="border-left: 2px dashed #{rule_color};"><div class="hk">Total</div><div class="hv" t-att-style="'color: %s;' % rule_color"><span t-field="o.amount_total"/></div></td>
+                    </tr>
+                </table>
             </div>
-            <div>
-                <p t-attf-style="border-bottom:1px solid #{theme_color}; padding:5px;"/>
-            </div>
-            <t t-call="general_template.template_watermark"/>
+            <t t-call="general_template.templates_watermark"/>
         </div>
     </template>
     <template id="report_sale_advanced_main">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-call="general_template.sale_advanced_external_layout">
             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
-            <t t-set="theme_color" t-value="o.company_id and o.company_id.theme_color"/>
-            <t t-set="theme_text_color" t-value="o.company_id and o.company_id.theme_text_color"/>
-            <t t-set="company_color" t-value="o.company_id and o.company_id.company_color"/>
-            <t t-set="company_address_color" t-value="o.company_id and o.company_id.company_address_color"/>
-            <t t-set="customer_color" t-value="o.company_id and o.company_id.customer_color"/>
-            <t t-set="customer_address_color" t-value="o.company_id and o.company_id.customer_address_color"/>
-            <t t-set="text_color" t-value="o.company_id and o.company_id.text_color"/>
             <div class="page" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="oe_structure"/>
-                <!-- <t t-call="general_template.template_watermark"/> -->
-                 <div class="container-fluid" width="100%">
-                    <div class="row">
-                        <div align="left" class="col-4">
-                        <!-- <div style="width:50%;"> -->
-                            <t t-if="o.partner_shipping_id == o.partner_invoice_id
-                             and o.partner_invoice_id != o.partner_id
-                             or o.partner_shipping_id != o.partner_invoice_id">
-                                <t t-call="general_template.sale_templates_invoice_customer_details"/>
-                                <t t-if="o.partner_shipping_id != o.partner_invoice_id">
-                                    <t t-call="general_template.sale_templates_invoice_customer_shipping_details"/>
-                                </t>
+                <table class="parties" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <t t-call="general_template.advanced_sale_customer_details"/>
+                        </td>
+                        <td class="px">
+                            <t t-if="o.company_id.name">
+                                <p class="lbl">Pay to</p>
+                                <t t-call="general_template.templates_company_details"/>
                             </t>
-                        </div>
-                        <div align="right" class="col-8">
-                        <!-- <div style="width:50%; "> -->
-                            <table class="table table-borderless">
-                                <tr t-attf-style="color: #{o.company_id and o.company_id.theme_color or '#000000'};font-size:35px;">
-                                    <td style="padding-top: 0;">
-                                       <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
-                                           <span t-if="o.state not in ['draft','sent']">Order # </span>
-                                           <span t-if="o.state in ['draft','sent']">Quotation # </span>
-                                       </t>
-                                       <t t-if="env.context.get('proforma', False) or is_pro_forma">
-                                           <span>Pro-Forma Invoice # </span>
-                                       </t>
-                                       <span t-field="o.name"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                      <table class="table table-borderless">
-                                          <tbody>
-                                            <tr class="tr-border-radius" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};">
-                                                <td t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; ">
-                                                    <b t-if="o.state not in ['draft','sent']">Date Ordered:</b>
-                                                    <b t-if="o.state in ['draft','sent']">Quotation Date:</b>
-                                                    <span t-field="o.date_order"/>
-                                                </td>
-                                                <td t-if="o.client_order_ref" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                                    <b>Your Reference:</b><br/>
-                                                    <span t-field="o.client_order_ref"/>
-                                                </td>
-                                                <td t-if="o.user_id" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                                    <b>Salesperson:</b><br/>
-                                                    <span t-field="o.user_id"/>
-                                                </td>
-                                                <td t-if="o.payment_term_id and o.payment_term_id.name or ''" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                                    <b>Payment Term:</b><br/>
-                                                    <span t-out="o.payment_term_id and o.payment_term_id.name or '' "/>
-                                                </td>
-                                                <td t-if="o.validity_date" t-attf-style="background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                                    <b>Expiration Date:</b><br/>
-                                                    <span t-field="o.validity_date"/>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                      </table>
-                                    </td>                           
-                                </tr> 
-                                <tr>
-                                    <td>
-                                        <t t-call="general_template.sale_templates_customer_details"/>
-                                    </td>
-                                </tr>                       
-                            </table>
-                            
-                        </div>
-                    </div>
-                    <div t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; overflow: auto; " >
-                    </div>
-                    <div align="left" style="font-weight:bold; width:100%;" valign="top">
-                        <t t-call="general_template.sale_order_lines_tem"/>
-                        <t t-call="general_template.sale_order_lines_subtotal_tem"/>
-                    </div>
-                    <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
-                        <t t-call="general_template.template_total_amount_word"/>
-                    </div>
-                    <div class="left" style="color: #{text_color or '#000000'}; padding-top:20px; ">
-                        <t t-call="general_template.sale_templates_notes"/>
-                    </div>
-                    <div t-if="o.order_line and o.state in ['draft', 'sent']">
-                        <t t-call="general_template.sale_templates_suggested_order_line"/>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row" style="color: #{text_color or '#000000'};">
-                        <div class="col-9">
-                        </div> 
-                        <div class="col-3">                       
+                        </td>
+                    </tr>
+                </table>
+                <t t-call="general_template.advanced_sale_order_lines"/>
+                <table class="bside" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="bl" t-attf-style="color: #{colors['text']};">
+                            <t t-call="general_template.sale_templates_notes"/>
+                        </td>
+                        <td class="br">
+                            <t t-call="general_template.advanced_sale_totals"/>
+                        </td>
+                    </tr>
+                </table>
+                <div class="wline" t-attf-style="color: #{colors['text']};">
+                    <t t-call="general_template.template_total_amount_word"/>
+                </div>
+                <div t-if="o.order_line and o.state in ['draft', 'sent']">
+                    <t t-call="general_template.sale_templates_suggested_order_line"/>
+                </div>
+                <table class="fin" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td t-attf-style="color: #{colors['text']};"/>
+                        <td class="fsig" t-attf-style="color: #{colors['text']};">
                             <t t-if="o.sale_is_show_signature == True">
                                 <t t-call="general_template.report_sale_signature"/>
                             </t>
                             <t t-else="">
                                 <t t-call="general_template.report_signature"/>
                             </t>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <t t-call="general_template.report_barcode"/>
+                            <t t-call="general_template.report_barcode"/>
+                        </td>
+                    </tr>
+                </table>
                 <div class="oe_structure"/>
             </div>
         </t>
     </template>
+    <!-- Polished-only copies of the blocks whose look the design changes. The shared
+         general_template.* versions stay untouched so the other five designs
+         are unaffected. -->
+    <template id="advanced_sale_customer_details">
+        <p class="lbl">
+            <span t-if="o.partner_shipping_id == o.partner_id and o.partner_invoice_id == o.partner_id">Customer, Invoice and Shipping Address</span>
+            <span t-else="">Customer Address</span>
+        </p>
+        <t t-set="partner" t-value="o.partner_id"/>
+            <t t-call="general_template.advanced_partner_block"/>
+        <t t-if="o.partner_shipping_id == o.partner_invoice_id
+         and o.partner_invoice_id != o.partner_id
+         or o.partner_shipping_id != o.partner_invoice_id">
+            <p class="lbl">
+                <span t-if="o.partner_shipping_id == o.partner_invoice_id">Invoicing and Shipping Address</span>
+                <span t-if="o.partner_shipping_id != o.partner_invoice_id">Invoicing Address</span>
+            </p>
+            <t t-set="partner" t-value="o.partner_invoice_id"/>
+            <t t-call="general_template.advanced_partner_block"/>
+            <t t-if="o.partner_shipping_id != o.partner_invoice_id">
+                <p class="lbl">Shipping Address</p>
+                <t t-set="partner" t-value="o.partner_shipping_id"/>
+            <t t-call="general_template.advanced_partner_block"/>
+            </t>
+        </t>
+    </template>
+    <template id="advanced_sale_order_lines">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <t t-set="display_discount" t-value="any([l.discount for l in o.order_line])"/>
+        <t t-set="rule_color" t-value="colors['primary']"/>
+        <t t-set="th_style" t-value="'color: %s; border-bottom: 2px solid %s;' % (rule_color, rule_color)"/>
+        <table class="lines">
+            <thead>
+                <tr>
+                    <t t-set="colspan" t-value="5"/>
+                    <th t-att-style="th_style" class="r k-sr">Sr.</th>
+                    <th t-att-style="th_style" class="l k-image" t-if="o.company_id.add_product_image == True">
+                        <span>Image</span>
+                        <t t-set="colspan" t-value="colspan+1"/>
+                    </th>
+                    <th t-att-style="th_style" class="l k-product">Description</th>
+                    <th t-att-style="th_style" class="r k-qty">Quantity</th>
+                    <th t-att-style="th_style" class="r k-price">Unit Price</th>
+                    <th t-att-style="th_style" class="r k-disc" groups="product.group_discount_per_so_line" t-if="display_discount">
+                        <t t-set="colspan" t-value="colspan+1"/>Disc.%
+                    </th>
+                    <th t-att-style="th_style" class="r k-tax">Taxes</th>
+                    <th t-att-style="th_style" class="r k-amount">Price</th>
+                </tr>
+            </thead>
+            <tbody class="sale_tbody">
+                <t t-set="index_no" t-value="1"/>
+                <t t-set="current_subtotal" t-value="0"/>
+                <t t-foreach="o.order_line" t-as="line">
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+                    <t t-set="current_total" t-value="current_subtotal + line.price_total" t-if="o.company_id.tax_calculation_rounding_method == 'round_per_line'"/>
+                    <t t-if="line_odd">
+                        <t t-set="ol_color" t-value="colors['even_party']"/>
+                    </t>
+                    <t t-if="line_even">
+                        <t t-set="ol_color" t-value="colors['odd_party']"/>
+                    </t>
+                    <tr t-att-class="'sec' if line.display_type == 'line_section' else ('note' if line.display_type == 'line_note' else '')" t-att-style="'color: %s; background-color: %s;' % (colors['text'], ol_color)">
+                        <t t-if="not line.display_type">
+                            <td class="r k-sr"><span t-out="index_no"/></td>
+                            <td class="l k-image" t-if="o.company_id.add_product_image == True">
+                                <img class="thumb" t-if="line.product_id and line.product_id.image_1920" t-att-src="image_data_uri(line.product_id.image_1920)"/>
+                            </td>
+                            <td class="l k-product">
+                                <div class="pbody">
+                                    <div class="pname">
+                                        <span t-if="line.product_id" t-out="line.product_id.display_name"/>
+                                        <span t-else="" t-field="line.name" t-options="{'widget': 'text'}"/>
+                                    </div>
+                                    <div class="pd" t-if="o.company_id.is_description and line.product_id and line.name and line.name != line.product_id.display_name">
+                                        <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="r k-qty">
+                                <span t-field="line.product_uom_qty"/>
+                                <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                            </td>
+                            <td class="r k-price"><span t-field="line.price_unit"/></td>
+                            <td class="r k-disc" groups="product.group_discount_per_so_line" t-if="display_discount">
+                                <span t-field="line.discount"/>
+                            </td>
+                            <td class="r k-tax">
+                                <span t-out="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"/>
+                            </td>
+                            <td class="r k-amount"><span t-field="line.price_subtotal"/></td>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td class="r k-sr"><span t-out="index_no"/></td>
+                            <td t-att-colspan="colspan">
+                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                            </td>
+                            <t t-set="current_section" t-value="line"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td class="r k-sr"><span t-out="index_no"/></td>
+                            <td t-att-colspan="colspan">
+                                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                            </td>
+                        </t>
+                    </tr>
+                    <t t-set="index_no" t-value="index_no+1"/>
+                </t>
+            </tbody>
+        </table>
+    </template>
+    <template id="advanced_sale_totals">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
+        <table class="tot" t-attf-style="color: #{colors['primary']}; border-color: #{colors['primary']};">
+            <tr>
+                <td>Untaxed Amount</td>
+                <td class="r" t-out="o.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+            </tr>
+            <tr>
+                <td>Tax</td>
+                <td class="r" t-out="o.amount_tax" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+            </tr>
+            <tr class="tm_gray_bg">
+                <td><strong>Total</strong></td>
+                <td class="r" t-out="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+            </tr>
+        </table>
+    </template>
     <template id="report_sale_order_custom_advanced">
         <t t-call="web.html_container">
             <t t-as="o" t-foreach="docs">
-                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <t t-set="o" t-value="o.with_context(lang=lang)" /> 
                 <t t-call="general_template.report_sale_advanced_main" t-lang="lang"/>
             </t>
         </t>

@@ -20,6 +20,7 @@
         <t t-call="general_template.template_footer"/>
     </template>
     <template id="template_header">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
             <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tbody>
@@ -36,14 +37,14 @@
                                                             <tr>
                                                                 <td align="left" valign="middle">
                                                                     <t t-if="o.company_id.invoice_logo">
-                                                                        <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-height: 100px; max-width: 100%;"/>
+                                                                        <img t-att-src="o.company_id._get_report_logo_uri(colors['primary'])" style="height: auto; max-height: 100px; max-width: 100%;"/>
                                                                     </t>
                                                                 </td>
                                                             </tr>
                                                         </table>
                                                     </td>
                                                     <td align="right" rowspan="3" style="width:60%;">
-                                                        <p t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; text-align:center; text-transform:uppercase; padding:5px 0px; width:60%;font-size:35px">
+                                                        <p t-attf-style="color: #{colors['primary_text']};background-color: #{colors['primary']}; text-align:center; text-transform:uppercase; padding:5px 0px; width:60%;font-size:35px">
                                                             <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
                                                             <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
                                                             <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
@@ -66,15 +67,9 @@
         </div>
     </template>
     <template id="report_invoice_template_main">
+        <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
         <t t-call="general_template.template_external_layout">
             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
-            <t t-set="theme_color" t-value="o.company_id and o.company_id.theme_color"/>
-            <t t-set="theme_text_color" t-value="o.company_id and o.company_id.theme_text_color"/>
-            <t t-set="company_color" t-value="o.company_id and o.company_id.company_color"/>
-            <t t-set="company_address_color" t-value="o.company_id and o.company_id.company_address_color"/>
-            <t t-set="customer_color" t-value="o.company_id and o.company_id.customer_color"/>
-            <t t-set="customer_address_color" t-value="o.company_id and o.company_id.customer_address_color"/>
-            <t t-set="text_color" t-value="o.company_id and o.company_id.text_color"/>
             <div class="page" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <div class="oe_structure"/>
                 <!-- <t t-call="general_template.template_watermark"/> -->
@@ -82,56 +77,45 @@
                     <div class="container-fluid">
                         
                         <div class="row" valign="top" >
-                            <div class="col-4" colspan="1" style="margin-top:15px;">
-                                <div style="margin-right:15px;background-color:#C0C0C0; height:20px;border: 2px solid #C0C0C0;border-radius: 10px;padding: 5px;"></div>
-                            </div>
-                            <div class="col-8" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                <table class="table table-borderless">
-                                    <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold;background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
-                                        <td t-if="o.move_type == 'out_invoice'">
-                                            <b>Invoice Date:</b>
-                                            <span t-out="o._get_invoice_date()"/>
-                                        </td>
-                                        <td t-if="o.payment_reference">
-                                            <b>Invoice No:</b>
-                                            <span t-field="o.payment_reference"/>
-                                        </td>
-                                        <td t-if="o.ref">
-                                            <b>Reference:</b>
-                                            <span t-field="o.ref"/>
-
-                                        </td>
-                                        
-                                        <td t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'">
-                                            <b>Due Date:</b>
-                                            <span t-out="o._get_invoice_due_date()"/>
-                                        </td>
-                                        
-                                        <td t-if="o.source_id">
-                                            <b>Source:</b>
-                                            <span t-out="o.source_id.name"/>
-                                        </td>
-                                       
-                                        <td t-if="o.partner_id.ref">
-                                            <b>Customer code:</b>
-                                            <span t-out="o.partner_id.ref"/>
-                                        </td>
-                                        <td t-if="o.invoice_origin">
-                                            <b t-if="o.move_type in ('out_invoice','out_refund')">SO:</b>
-                                            <b t-if="o.move_type in ('in_invoice', 'in_refund')">PO:</b>
-                                            <span t-field="o.invoice_origin"/>
-
-                                        </td>
-                                        <td t-if="o._get_origin_date(o.invoice_origin)">
-                                            <b>Order Date:</b>
-                                            <span t-out="o._get_origin_date(o.invoice_origin)"/>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <div class="col-12" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']};">
+                                <div style="overflow:hidden;">
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.move_type == 'out_invoice'">
+                                        <div><b>Invoice Date</b></div>
+                                        <div style="font-weight:normal;"><span t-out="o._get_invoice_date()"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.payment_reference">
+                                        <div><b>Invoice No</b></div>
+                                        <div style="font-weight:normal;"><span t-field="o.payment_reference"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.ref">
+                                        <div><b>Reference</b></div>
+                                        <div style="font-weight:normal;"><span t-field="o.ref"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'">
+                                        <div><b>Due Date</b></div>
+                                        <div style="font-weight:normal;"><span t-out="o._get_invoice_due_date()"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.source_id">
+                                        <div><b>Source</b></div>
+                                        <div style="font-weight:normal;"><span t-out="o.source_id.name"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.partner_id.ref">
+                                        <div><b>Customer code</b></div>
+                                        <div style="font-weight:normal;"><span t-out="o.partner_id.ref"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o.invoice_origin">
+                                        <div><b><t t-if="o.move_type in ('out_invoice','out_refund')">SO</t><t t-if="o.move_type in ('in_invoice', 'in_refund')">PO</t></b></div>
+                                        <div style="font-weight:normal;"><span t-field="o.invoice_origin"/></div>
+                                    </div>
+                                    <div style="float:left; width:50%; padding:4px 12px; box-sizing:border-box;" t-if="o._get_origin_date(o.invoice_origin)">
+                                        <div><b>Order Date</b></div>
+                                        <div style="font-weight:normal;"><span t-out="o._get_origin_date(o.invoice_origin)"/></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div>
-                            <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; padding:5px"/>
+                            <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:5px"/>
                         </div>
                         <div class="row">
                             
@@ -143,12 +127,12 @@
                                 <t t-call="general_template.invoice_templates_customer_shipping_details"/>
                             </div>
                             <div class="col-3">
-                                <span t-attf-style="color: #{theme_color or '#ffffff'}; font-weight:bold;">Pay to:</span><br/>
+                                <span t-attf-style="color: #{colors['primary']}; font-weight:bold;">Pay to:</span><br/>
                                 <t t-call="general_template.templates_company_details"/>
                             </div>
                         </div>
                         <div>
-                            <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; padding:5px"/>
+                            <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:5px"/>
                         </div>
                         <div style="padding:5px 0px 0 0; font-weight:bold; width:100%;" >
                             <t t-call="general_template.report_invoice_order_lines"/>
@@ -160,16 +144,17 @@
                             <t t-call="general_template.template_total_amount_word"/>
                         </div>
                         <div t-if="not o._compute_payments_widget_reconciled_info()">
-                            <p t-att-style="'font-weight:bold; color:#000; margin-bottom:0; text-transform:capitalize; margin-top:8px; color: %s;' % (text_color)">
+                            <p t-att-style="'font-weight:bold; margin-bottom:0; text-transform:capitalize; margin-top:8px; color: %s;' % (colors['text'])">
                             Payment Status: 
                                 <span t-out="dict(o._fields['payment_state']._description_selection(o.env)).get(o.payment_state)"/>
                             </p>
                         </div>
-                        <div class="pull-left" style="color: #{text_color or '#000000'}; padding-top:5px; ">
+                        <div class="pull-left" style="color: #{colors['text']}; padding-top:5px; ">
                             <t t-call="general_template.report_invoice_notes"/>
                         </div>
-                        <div align="right"  style="color: #{text_color or '#000000'};">
+                        <div align="right"  style="color: #{colors['text']};">
                             <t t-call="general_template.report_invoice_signature"/>
+                            <t t-call="general_template.report_invoice_barcode"/>
                         </div>
                         <div class="oe_structure"/>
                     </div>
@@ -190,49 +175,91 @@
             <t t-call="general_template.report_invoice_payment_move_line"/>
         </xpath> -->
     </template>
-    <template id="account.report_invoice">
-        <t t-call="web.html_container">
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-                <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_template_id and o.partner_id.report_template_id.report_name or o.company_id and o.company_id.report_template_id and o.company_id.report_template_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_template_id or o.company_id and o.company_id.report_template_id">
-                    <t t-call="general_template.report_invoice_template_main" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_advanced_main" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_elegant_main" t-if="r_name == 'general_template.report_invoice_template_custom_elegant'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_exclusive_main" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_creative_main" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_incredible_main" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
-                </t>
-                <t t-else=''>
-                    <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
-                       t-call="account.report_invoice_document"
-                       t-lang="lang"/>
-                </t>
-            </t>
-        </t>
-    </template>
-    <template id="account.report_invoice_with_payments">
-        <t t-call="web.html_container">
-            <t t-as="o" t-foreach="docs">
-                <t t-set="lang" t-value="o.partner_id.lang"/>
-                <t t-set="print_with_payments" t-value="True"/>
-                <t t-set="r_name" t-value="o.report_template_id and o.report_template_id.report_name or o.partner_id and o.partner_id.report_template_id and o.partner_id.report_template_id.report_name or o.company_id and o.company_id.report_template_id and o.company_id.report_template_id.report_name"/>
-                <!-- <t t-set="real_name" t-value="r_name.split('.')"/> -->
-                <t t-if="o.report_template_id or o.partner_id and o.partner_id.report_template_id or o.company_id and o.company_id.report_template_id">
-                    <t t-call="general_template.report_invoice_template_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_advanced_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_elegant_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_elegant'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_exclusive_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_creative_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
-                    <t t-call="general_template.report_invoice_incredible_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
-                </t>
-                <t t-else=''>
-                     <t t-call="account.report_invoice">
-                        <t t-set="print_with_payments" t-value="True"/>
+    <!-- Inherit rather than redefine account.report_invoice: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_invoice_dispatch" inherit_id="account.report_invoice">
+        <xpath expr="." position="replace">
+            <t t-call="web.html_container">
+                <t t-as="o" t-foreach="docs">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <!-- general_template and biztech_report_template both define this template id,
+                         so which copy survives depends on module load order. Resolve the selection
+                         from whichever module's field is installed, record before partner before
+                         company, so the chosen design prints either way. -->
+                    <t t-set="has_biz" t-value="'report_template_inv_id' in o._fields"/>
+                    <t t-set="has_gen" t-value="'report_template_id' in o._fields"/>
+                    <t t-set="sel_rec" t-value="has_biz and o.report_template_inv_id or has_gen and o.report_template_id"/>
+                    <t t-set="sel_partner" t-value="has_biz and o.partner_id.report_template_inv_id or has_gen and o.partner_id.report_template_id"/>
+                    <t t-set="sel_company" t-value="has_biz and o.company_id.report_template_inv_id or has_gen and o.company_id.report_template_id"/>
+                    <t t-set="sel" t-value="sel_rec or sel_partner or sel_company"/>
+                    <t t-set="r_name" t-value="sel and sel.report_name"/>
+                    <t t-set="known" t-value="r_name and (r_name.startswith('general_template.report_invoice_template_custom') or r_name.startswith('biztech_report_template.report_main_invoice_'))"/>
+                    <t t-if="known">
+                        <t t-call="general_template.report_invoice_template_main" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_advanced_main" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_elegant_main" t-if="r_name == 'general_template.report_invoice_template_custom_elegant'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_exclusive_main" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_creative_main" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_incredible_main" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_3_template" t-if="r_name == 'biztech_report_template.report_main_invoice_3'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_4_template" t-if="r_name == 'biztech_report_template.report_main_invoice_4'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_5_template" t-if="r_name == 'biztech_report_template.report_main_invoice_5'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_6_template" t-if="r_name == 'biztech_report_template.report_main_invoice_6'" t-lang="lang"/>
+                    </t>
+                    <t t-else=''>
+                        <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                           t-call="account.report_invoice_document"
+                           t-lang="lang"/>
                     </t>
                 </t>
             </t>
-        </t>
+        </xpath>
+    </template>
+    <!-- Inherit rather than redefine account.report_invoice_with_payments: the core record keeps its own
+         arch, so uninstalling this module restores the standard design
+         instead of leaving an orphaned template behind. -->
+    <template id="report_invoice_with_payments_dispatch" inherit_id="account.report_invoice_with_payments">
+        <xpath expr="." position="replace">
+            <t t-call="web.html_container">
+                <t t-as="o" t-foreach="docs">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="print_with_payments" t-value="True"/>
+                    <!-- general_template and biztech_report_template both define this template id,
+                         so which copy survives depends on module load order. Resolve the selection
+                         from whichever module's field is installed, record before partner before
+                         company, so the chosen design prints either way. -->
+                    <t t-set="has_biz" t-value="'report_template_inv_id' in o._fields"/>
+                    <t t-set="has_gen" t-value="'report_template_id' in o._fields"/>
+                    <t t-set="sel_rec" t-value="has_biz and o.report_template_inv_id or has_gen and o.report_template_id"/>
+                    <t t-set="sel_partner" t-value="has_biz and o.partner_id.report_template_inv_id or has_gen and o.partner_id.report_template_id"/>
+                    <t t-set="sel_company" t-value="has_biz and o.company_id.report_template_inv_id or has_gen and o.company_id.report_template_id"/>
+                    <t t-set="sel" t-value="sel_rec or sel_partner or sel_company"/>
+                    <t t-set="r_name" t-value="sel and sel.report_name"/>
+                    <t t-set="known" t-value="r_name and (r_name.startswith('general_template.report_invoice_template_custom') or r_name.startswith('biztech_report_template.report_main_invoice_'))"/>
+                    <t t-if="known">
+                        <t t-call="general_template.report_invoice_template_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_advanced_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_advanced'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_elegant_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_elegant'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_exclusive_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_exclusive'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_creative_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_creative'" t-lang="lang"/>
+                        <t t-call="general_template.report_invoice_incredible_main_duplicate" t-if="r_name == 'general_template.report_invoice_template_custom_incredible'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_1_template" t-if="r_name == 'biztech_report_template.report_main_invoice_1'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_2_template" t-if="r_name == 'biztech_report_template.report_main_invoice_2'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_3_template" t-if="r_name == 'biztech_report_template.report_main_invoice_3'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_4_template" t-if="r_name == 'biztech_report_template.report_main_invoice_4'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_5_template" t-if="r_name == 'biztech_report_template.report_main_invoice_5'" t-lang="lang"/>
+                        <t t-call="biztech_report_template.report_main_invoice_6_template" t-if="r_name == 'biztech_report_template.report_main_invoice_6'" t-lang="lang"/>
+                    </t>
+                    <t t-else=''>
+                        <t t-if="o._get_name_invoice_report() == 'account.report_invoice_document'"
+                           t-call="account.report_invoice_document"
+                           t-lang="lang"/>
+                    </t>
+                </t>
+            </t>
+        </xpath>
     </template>
 </odoo>

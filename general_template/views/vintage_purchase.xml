@@ -16,6 +16,7 @@
             <t t-call="general_template.templates_footer"/>
         </template>
         <template id="purchase_delivery_creative_header">
+            <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
             <div class="header" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                 <table class="table table-borderless" border="0" cellpadding="0" cellspacing="0" width="100%">
                     <tbody>
@@ -32,14 +33,14 @@
                                                                 <tr>
                                                                     <td align="left" valign="top">
                                                                         <t t-if="o.company_id.invoice_logo">
-                                                                            <img t-att-src="image_data_uri(o.company_id.invoice_logo)" style="height: auto; max-width: 100%; max-height: 100px; padding-right: 15px;"/>
+                                                                            <img t-att-src="o.company_id._get_report_logo_uri(colors['primary'])" style="height: auto; max-width: 100%; max-height: 100px; padding-right: 15px;"/>
                                                                         </t>
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
                                                         <td align="right" rowspan="3" style="width:70%;" valign="middle">
-                                                            <p t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};background-color: #{o.company_id and o.company_id.theme_color or '#000000'}; text-align:center; text-transform:uppercase; padding:5px;font-size:30px">
+                                                            <p t-attf-style="color: #{colors['primary_text']};background-color: #{colors['primary']}; text-align:center; text-transform:uppercase; padding:5px;font-size:30px">
                                                                 <span t-if="o.state not in ['draft']">Purchase Order Confirmation # </span>
                                                                 <span t-if="o.state in ['draft']">Request for Quotation # </span>
                                                                 <span t-field="o.name"/>
@@ -59,15 +60,9 @@
             </div>
         </template>
         <template id="report_purchase_creative_main">
+            <t t-set="colors" t-value="o.company_id._get_report_colors()"/>
             <t t-call="general_template.purchase_delivery_creative_external_layout">
                 <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
-                <t t-set="theme_color" t-value="o.company_id and o.company_id.theme_color"/>
-                <t t-set="theme_text_color" t-value="o.company_id and o.company_id.theme_text_color"/>
-                <t t-set="company_color" t-value="o.company_id and o.company_id.company_color"/>
-                <t t-set="company_address_color" t-value="o.company_id and o.company_id.company_address_color"/>
-                <t t-set="customer_color" t-value="o.company_id and o.company_id.customer_color"/>
-                <t t-set="customer_address_color" t-value="o.company_id and o.company_id.customer_address_color"/>
-                <t t-set="text_color" t-value="o.company_id and o.company_id.text_color"/>
                 <div class="page" t-att-style="'font-family:'+o.company_id.font_id.family+';font-size:'+str(o.company_id.font_size)+'px;'">
                     <div class="oe_structure"/>
                     <!-- <t t-call="general_template.templates_watermark"/> -->
@@ -76,9 +71,9 @@
                         <div class="container-fluid">
                             <div class="row" >
                                 <div class="col-6" colspan="1" style="background-color:#C0C0C0; height:20px;border: 2px solid #C0C0C0;border-radius: 10px;padding: 5px;margin-right:0.5%;margin-top:2%"></div>
-                                <div class="col-6" t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                <div class="col-6" t-attf-style="color: #{colors['primary_text']};font-weight:bold; background-color: #{colors['primary']};">
                                     <table class="table table-borderless">
-                                        <tr t-attf-style="color: #{o.company_id and o.company_id.theme_text_color or '#000000'};font-weight:bold;background-color: #{o.company_id and o.company_id.theme_color or '#000000'};">
+                                        <tr t-attf-style="color: #{colors['primary_text']};font-weight:bold;background-color: #{colors['primary']};">
                                             <td>
                                                 <b t-if="o.state not in ['draft']">Date Ordered:</b>
                                                 <b t-if="o.state in ['draft']">Quotation Date:</b><br/>
@@ -97,7 +92,7 @@
                                 </div>
                             </div>     
                             <div>
-                                <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'};padding:0px 0px 10px 0px; width:100%;"/>
+                                <p t-attf-style="border-bottom:1px solid #{colors['primary']};padding:0px 0px 10px 0px; width:100%;"/>
                             </div>                       
                             <div class="row">
                                 
@@ -114,7 +109,7 @@
                                 </div>
                             </div>
                                 <div>
-                                    <p t-attf-style="border-bottom:1px solid #{theme_color or '#ececec'}; padding:0px 0px 10px 0px; width:100%;"/>
+                                    <p t-attf-style="border-bottom:1px solid #{colors['primary']}; padding:0px 0px 10px 0px; width:100%;"/>
                                 </div>
                                 <div>
                                     <t t-call="general_template.purchase_template_order_lines"/>
@@ -125,17 +120,17 @@
                                 <div t-attf-style="border-bottom:1px solid #{'#959595'}; padding:0px; text-align: right;">
                                     <t t-call="general_template.template_total_amount_word"/>
                                 </div>
-                                <!-- <div t-attf-style="color: #{text_color or '#000000'}; padding-top:5px; width:100%;" t-if="o.notes and o.company_id.is_show_notes == True">
+                                <!-- <div t-attf-style="color: #{colors['text']}; padding-top:5px; width:100%;" t-if="o.notes and o.company_id.is_show_notes == True">
                                     <p t-field="o.notes"/>
                                 </div> -->
-                                <div align="right" t-attf-style="color: #{text_color or '#000000'};">
+                                <div align="right" t-attf-style="color: #{colors['text']};">
                                     <t t-call="general_template.report_signature"/>
+                                <t t-call="general_template.report_barcode"/>
                                 </div>
                             </div>
                         </div>
                         <div class="oe_structure"/>
                     </div>
-                <t t-call="general_template.report_barcode"/>
             </t>
         </template>
         <template id="report_purchase_custom_creative">

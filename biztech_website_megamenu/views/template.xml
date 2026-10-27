@@ -116,6 +116,9 @@
                                                                                         <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                             <t t-out="c1.name"/>
                                                                                         </a>
+                                                                                        <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                            <t t-set="parent_category" t-value="c1"/>
+                                                                                        </t>
                                                                                     </li>
                                                                                 </t>
                                                                             </t>
@@ -179,6 +182,9 @@
                                                                                     <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                         <t t-out="c1.name"/>
                                                                                     </a>
+                                                                                    <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                        <t t-set="parent_category" t-value="c1"/>
+                                                                                    </t>
                                                                                 </li>
                                                                             </t>
                                                                         </ul>
@@ -224,6 +230,9 @@
                                                                                     <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                         <t t-out="c1.name"/>
                                                                                     </a>
+                                                                                    <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                        <t t-set="parent_category" t-value="c1"/>
+                                                                                    </t>
                                                                                 </li>
                                                                             </t>
                                                                         </t>
@@ -347,6 +356,9 @@
                                                                                         <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                             <t t-out="c1.name"/>
                                                                                         </a>
+                                                                                        <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                            <t t-set="parent_category" t-value="c1"/>
+                                                                                        </t>
                                                                                     </li>
                                                                                 </t>
                                                                             </t>
@@ -412,6 +424,9 @@
                                                                                         <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                             <t t-out="c1.name"/>
                                                                                         </a>
+                                                                                        <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                            <t t-set="parent_category" t-value="c1"/>
+                                                                                        </t>
                                                                                     </li>
                                                                                 </t>
                                                                             </t>
@@ -458,6 +473,9 @@
                                                                                     <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                         <t t-out="c1.name"/>
                                                                                     </a>
+                                                                                    <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                        <t t-set="parent_category" t-value="c1"/>
+                                                                                    </t>
                                                                                 </li>
                                                                             </t>
                                                                         </t>
@@ -581,6 +599,9 @@
                                                                                         <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                             <t t-out="c1.name"/>
                                                                                         </a>
+                                                                                        <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                            <t t-set="parent_category" t-value="c1"/>
+                                                                                        </t>
                                                                                     </li>
                                                                                 </t>
                                                                             </t>
@@ -646,6 +667,9 @@
                                                                                         <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                             <t t-out="c1.name"/>
                                                                                         </a>
+                                                                                        <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                            <t t-set="parent_category" t-value="c1"/>
+                                                                                        </t>
                                                                                     </li>
                                                                                 </t>
                                                                             </t>
@@ -692,6 +716,9 @@
                                                                                     <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                         <t t-out="c1.name"/>
                                                                                     </a>
+                                                                                    <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                        <t t-set="parent_category" t-value="c1"/>
+                                                                                    </t>
                                                                                 </li>
                                                                             </t>
                                                                         </t>
@@ -999,6 +1026,9 @@
                                                                                                 <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                                     <t t-out="c1.name"/>
                                                                                                 </a>
+                                                                                                <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                                    <t t-set="parent_category" t-value="c1"/>
+                                                                                                </t>
                                                                                             </li>
                                                                                         </t>
                                                                                     </t>
@@ -1123,6 +1153,9 @@
                                                                                             <a t-att-href="'/shop/category/%s' % slug(c1)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
                                                                                                 <t t-out="c1.name"/>
                                                                                             </a>
+                                                                                            <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                                                                                                <t t-set="parent_category" t-value="c1"/>
+                                                                                            </t>
                                                                                         </li>
                                                                                     </t>
                                                                                 </t>
@@ -1343,6 +1376,22 @@
         <xpath expr="//div[@id='top_menu_collapse']" position="attributes">
             <attribute name="class" add="hamburger_megamenu_custom" separator=" "/>
         </xpath>
+    </template>
+
+    <!-- Renders a category's selected descendants to any depth. Recurses until a
+         category has no child that was picked in the menu's Category field. -->
+    <template id="megamenu_category_subtree" name="Megamenu Category Subtree">
+        <t t-set="deeper_categories" t-value="parent_category.child_id.filtered(lambda c: c.id in cat_sub_menu_list)"/>
+        <ul t-if="deeper_categories" class="deeper-categories">
+            <li t-as="deep_category" t-foreach="deeper_categories" class="categories second-category">
+                <a t-att-href="'/shop/category/%s' % slug(deep_category)" t-att-style="'color: %s' %(submenu.sub_category_color) if submenu.customize_menu_colors and submenu.sub_category_color else ''">
+                    <t t-out="deep_category.name"/>
+                </a>
+                <t t-call="biztech_website_megamenu.megamenu_category_subtree">
+                    <t t-set="parent_category" t-value="deep_category"/>
+                </t>
+            </li>
+        </ul>
     </template>
 
 </odoo>
