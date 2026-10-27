@@ -43,6 +43,10 @@ header .container { position: relative; }
 .li-mega-menu .inline-block > ul > li.first-category.has_child.open > span.fa-chevron-right:after { right: 0px; width: 13px; transform: rotate(-135deg); }
 .li-mega-menu .inline-block > ul > li.first-category.has_child.open > ul { height: auto; border-bottom: 1px solid #ddd; }
 .li-mega-menu .inline-block > ul > li.first-category.has_child.open > ul > li { -webkit-transform: translateY(0); transform: translateY(0); opacity: 1; -webkit-transition: -webkit-transform 0.65s cubic-bezier(0.07, 0.34, 0.15, 1) 0.2s, opacity 0.65s cubic-bezier(0.07, 0.34, 0.15, 1) 0.2s; transition: transform 0.65s cubic-bezier(0.07, 0.34, 0.15, 1) 0.2s, opacity 0.65s cubic-bezier(0.07, 0.34, 0.15, 1) 0.2s; transition-delay: 0.2s, 0.2s; }
+/* Categories below the third level, emitted recursively by megamenu_category_subtree. */
+.li-mega-menu ul.deeper-categories { list-style: none; margin: 0; padding-left: 14px; }
+.li-mega-menu ul.deeper-categories > li.second-category > a { color: #000; padding: 3px 0; display: inline-block; vertical-align: top; width: 100%; }
+.li-mega-menu ul.deeper-categories > li.second-category:hover > a { color: #333; }
 
 /* Tab menu */
 .li-mega-menu .list_cat_megamenu .cat-tabs .category_container.mobile { display: none; }
