@@ -122,6 +122,29 @@ def _paint_svg(markup, color):
                   declaration, markup)
 
 
+def _flatten_svg_gradients(markup):
+    """Resolve every ``url(#...)`` paint to the plain colour it starts with.
+
+    wkhtmltopdf draws an SVG as vector content and silently drops any shape
+    filled from a gradient, so a logo built around one prints with a hole where
+    that shape should be. Nothing about how the gradient is declared changes
+    that, so the first stop stands in for the whole run: the shape comes back,
+    flat instead of graded. A ``url()`` naming anything else is left alone."""
+    stops = {}
+    for gradient in re.finditer(
+            r'<(linearGradient|radialGradient)\b[^>]*\bid\s*=\s*["\']([^"\']+)["\'][^>]*>(.*?)</\1>',
+            markup, re.S):
+        stop = re.search(
+            r'stop-color\s*[:=]\s*["\']?\s*(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))',
+            gradient.group(3))
+        if stop:
+            stops[gradient.group(2)] = stop.group(1)
+    if not stops:
+        return markup
+    return re.sub(r'url\(\s*#([^)\s]+)\s*\)',
+                  lambda match: stops.get(match.group(1), match.group(0)), markup)
+
+
 def _size_svg(markup):
     """Give a viewBox-only SVG the width and height it implies.
 
@@ -314,6 +337,7 @@ class ResCompany(models.Model):
             if '<svg' in markup:
                 if color:
                     markup = _paint_svg(markup, color)
+                markup = _flatten_svg_gradients(markup)
                 source = _size_svg(markup).encode('utf-8')
         return image_data_uri(source)
 

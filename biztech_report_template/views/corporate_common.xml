@@ -26,7 +26,7 @@
             .o_corp_bp .r { text-align: right; }
             .o_corp_bp .c { text-align: center; }
             .o_corp_bp .l { text-align: left; }
-            .o_corp_bp .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: 10px; font-weight: 700; color: #475569; line-height: 1.4; margin-bottom: 2px; }
+            .o_corp_bp .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: 10px; font-weight: 700; color: <t t-out="colors['primary']"/>; line-height: 1.4; margin-bottom: 2px; }
             .o_corp_bp .fv { font-size: 11px; white-space: nowrap; }
 
             /* Flat navy band, as the drawing-sheet header of the design.

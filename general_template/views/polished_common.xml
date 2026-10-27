@@ -26,7 +26,7 @@
             .o_polished_route .r { text-align: right; }
             .o_polished_route .c { text-align: center; }
             .o_polished_route .l { text-align: left; }
-            .o_polished_route .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: 9.5px; font-weight: 700; color: #b45309; line-height: 1.4; margin-bottom: 2px; }
+            .o_polished_route .lbl { text-transform: uppercase; letter-spacing: .08em; font-size: 9.5px; font-weight: 700; color: <t t-out="colors['primary']"/>; line-height: 1.4; margin-bottom: 2px; }
             .o_polished_route .fv { font-size: 11.5px; white-space: nowrap; }
 
             /* The design tints the head and foot of the sheet rather than

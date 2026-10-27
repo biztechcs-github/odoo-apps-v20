@@ -22,7 +22,7 @@
             .o_classic_onyx .r { text-align: right; }
             .o_classic_onyx .c { text-align: center; }
             .o_classic_onyx .l { text-align: left; }
-            .o_classic_onyx .lbl { text-transform: uppercase; letter-spacing: .06em; font-size: 10px; font-weight: 700; color: #b45309; line-height: 1.4; margin-bottom: 2px; }
+            .o_classic_onyx .lbl { text-transform: uppercase; letter-spacing: .06em; font-size: 10px; font-weight: 700; color: <t t-out="colors['primary']"/>; line-height: 1.4; margin-bottom: 2px; }
             .o_classic_onyx .fv { font-size: 11px; }
 
             /* Full-bleed band. Its fill is the company theme colour, so that is

@@ -20,7 +20,7 @@
             .o_bold_remit td, .o_bold_remit th { vertical-align: top; }
             .o_bold_remit .r { text-align: right; }
             .o_bold_remit .c { text-align: center; }
-            .o_bold_remit .lbl { text-transform: uppercase; letter-spacing: .06em; font-size: 10px; font-weight: 700; line-height: 1.4; margin-bottom: 2px; }
+            .o_bold_remit .lbl { text-transform: uppercase; letter-spacing: .06em; font-size: 10px; font-weight: 700; color: <t t-out="colors['primary']"/>; line-height: 1.4; margin-bottom: 2px; }
             .o_bold_remit .fv { font-size: 11px; }
 
             /* Flat navy band. report.scss gutters the page with 11mm of body

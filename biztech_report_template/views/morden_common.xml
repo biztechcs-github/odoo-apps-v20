@@ -26,7 +26,7 @@
             .o_modern_duet .r { text-align: right; }
             .o_modern_duet .c { text-align: center; }
             .o_modern_duet .l { text-align: left; }
-            .o_modern_duet .lbl { text-transform: uppercase; letter-spacing: .07em; font-size: 10px; font-weight: 700; color: #7e22ce; line-height: 1.4; margin-bottom: 2px; }
+            .o_modern_duet .lbl { text-transform: uppercase; letter-spacing: .07em; font-size: 10px; font-weight: 700; color: <t t-out="colors['primary']"/>; line-height: 1.4; margin-bottom: 2px; }
             .o_modern_duet .fv { font-size: 11.5px; }
 
             /* The design tints the head and foot of the sheet rather than
