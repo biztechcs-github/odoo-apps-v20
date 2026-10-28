@@ -3,241 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Local preview only: apps.odoo.com does NOT load Bootstrap, it loads this fork,
+       and it drops stylesheet blocks from descriptions - so every rule here is inline. -->
+  <link href="https://apps.odoo.com/web/assets/1/0ddfb5c/web.assets_frontend.min.css" rel="stylesheet">
   <title>Advance Mega Menu</title>
-  <style>
-    .aj-wrap{font-family:sans-serif;color:#21272b}
-    .aj-band{border-radius:16px;padding:40px;margin:24px 0;background-color:rgb(63 134 145 / 8%)}
-    .aj-band--solid{background:linear-gradient(135deg,#3f8590 0%,#2d6a74 100%);color:#fff}
-    .aj-h2{font-size:32px;font-weight:700;color:#3f8590;text-align:center;margin:0 0 12px;letter-spacing:-.5px}
-    .aj-band--solid .aj-h2{color:#fff}
-    .aj-sub{font-size:15px;line-height:26px;color:#4a7f88;text-align:center;max-width:780px;margin:0 auto 32px}
-    .aj-band--solid .aj-sub{color:rgba(255,255,255,.85)}
-    .aj-card{background:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)}
-    .aj-card h4{font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px}
-    .aj-card p{font-size:14px;line-height:24px;color:#555;margin:0}
-    .aj-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#3f8590;color:#fff;font-weight:700;font-size:15px;margin-bottom:12px}
-    .aj-chip{display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px}
-    .aj-stat{text-align:center;padding:16px}
-    .aj-stat b{display:block;font-size:34px;font-weight:700;line-height:1.1}
-    .aj-stat span{font-size:13px;opacity:.85}
-    .aj-tbl{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:12px;overflow:hidden;font-size:14px}
-    .aj-tbl th{background:#3f8590;color:#fff;text-align:left;padding:12px 16px;font-weight:600;font-size:13px;letter-spacing:.3px}
-    .aj-tbl td{padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top}
-    .aj-tbl td:first-child{font-weight:600;color:#21272b;white-space:nowrap}
-    .aj-tbl tr.aj-grp td{background:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase}
-    .aj-shot{border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%}
-    .aj-faq{background:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590}
-    .aj-faq h5{font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px}
-    .aj-faq p{font-size:14px;line-height:24px;color:#555;margin:0}
-    .aj-note{padding:20px;border-radius:10px;text-align:center;font-weight:700;font-size:16px;color:#842029;background:#f8d7da}
-    @media(max-width:767px){.aj-band{padding:24px 18px}.aj-h2{font-size:25px}}
-  </style>
 </head>
 <body>
-<div class="container aj-wrap">
+<div class="container" style="font-family:sans-serif;color:#21272b">
 
   <!-- ============ HERO ============ -->
-  <div class="aj-band text-center">
+  <div class="p-4 p-md-5 text-center" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
     <img src="icon.png" alt="Advance Mega Menu" style="width:88px;height:88px;border-radius:18px;margin-bottom:16px">
     <div style="margin-bottom:10px">
-      <span class="aj-chip" style="border-color:#3f8590;background:#3f8590;color:#fff">Odoo 20.0</span>
-      <span class="aj-chip">Website &amp; eCommerce</span>
+      <span style="display:inline-block;border:1px solid #3f8590;background-color:#3f8590;color:#fff;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Odoo 20.0</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Website &amp; eCommerce</span>
     </div>
     <h1 style="font-size:40px;font-weight:700;color:#3f8590;margin:0 0 14px;letter-spacing:-1px">Advance Mega Menu</h1>
-    <p class="aj-sub" style="margin-bottom:0">Turn any website menu into a rich, multi-column mega menu. Showcase product categories and sub categories, link website pages, add a category slider, a promotional image and a menu footer &mdash; all from the back end, with no template editing.</p>
+    <p style="font-size:15px;line-height:26px;color:#4a7f88;text-align:center;max-width:780px;margin:0 auto 32px;margin-bottom:0">Turn any website menu into a rich, multi-column mega menu. Showcase product categories and sub categories, link website pages, add a category slider, a promotional image and a menu footer &mdash; all from the back end, with no template editing.</p>
     <div style="margin-top:28px"><img src="advance-mega-menu.png" class="img-fluid" style="margin:auto" alt="Advance Mega Menu App"></div>
   </div>
 
   <!-- ============ STATS ============ -->
-  <div class="aj-band aj-band--solid">
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#3f8590;color:#fff">
     <div class="row">
-      <div class="col-6 col-md-3 aj-stat"><b>6</b><span>Mega menu layouts</span></div>
-      <div class="col-6 col-md-3 aj-stat"><b>2&ndash;4</b><span>Columns per menu</span></div>
-      <div class="col-6 col-md-3 aj-stat"><b>3</b><span>Category levels deep</span></div>
-      <div class="col-6 col-md-3 aj-stat"><b>&infin;</b><span>Mega menus per site</span></div>
+      <div class="col-6 col-md-3" style="text-align:center;padding:16px"><b style="display:block;font-size:34px;font-weight:700;line-height:1.1">6</b><span style="font-size:13px;color:rgba(255,255,255,.85)">Mega menu layouts</span></div>
+      <div class="col-6 col-md-3" style="text-align:center;padding:16px"><b style="display:block;font-size:34px;font-weight:700;line-height:1.1">2&ndash;4</b><span style="font-size:13px;color:rgba(255,255,255,.85)">Columns per menu</span></div>
+      <div class="col-6 col-md-3" style="text-align:center;padding:16px"><b style="display:block;font-size:34px;font-weight:700;line-height:1.1">3</b><span style="font-size:13px;color:rgba(255,255,255,.85)">Category levels deep</span></div>
+      <div class="col-6 col-md-3" style="text-align:center;padding:16px"><b style="display:block;font-size:34px;font-weight:700;line-height:1.1">&infin;</b><span style="font-size:13px;color:rgba(255,255,255,.85)">Mega menus per site</span></div>
     </div>
   </div>
 
   <!-- ============ WHY ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Why Your Store Needs It</h2>
-    <p class="aj-sub">A flat dropdown hides your catalogue. A mega menu puts it all one click away.</p>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Why Your Store Needs It</h2>
+    <p style="font-size:15px;line-height:26px;color:#4a7f88;text-align:center;max-width:780px;margin:0 auto 32px">A flat dropdown hides your catalogue. A mega menu puts it all one click away.</p>
     <div class="row g-3">
-      <div class="col-md-4"><div class="aj-card"><h4>Show the whole catalogue</h4><p>Main categories, sub categories and their children render together in one panel instead of a chain of nested dropdowns shoppers have to hunt through.</p></div></div>
-      <div class="col-md-4"><div class="aj-card"><h4>Promote while they browse</h4><p>A category slider, a static promotional image with its own HTML text, and a menu footer message turn navigation into merchandising space.</p></div></div>
-      <div class="col-md-4"><div class="aj-card"><h4>No developer required</h4><p>Every layout, colour, image and link is a field on the menu form. Nothing here asks you to touch a QWeb template or write SCSS.</p></div></div>
+      <div class="col-md-4"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Show the whole catalogue</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Main categories, sub categories and their children render together in one panel instead of a chain of nested dropdowns shoppers have to hunt through.</p></div></div>
+      <div class="col-md-4"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Promote while they browse</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">A category slider, a static promotional image with its own HTML text, and a menu footer message turn navigation into merchandising space.</p></div></div>
+      <div class="col-md-4"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">No developer required</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Every layout, colour, image and link is a field on the menu form. Nothing here asks you to touch a QWeb template or write SCSS.</p></div></div>
     </div>
   </div>
 
   <!-- ============ SIX LAYOUTS ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Six Mega Menu Layouts</h2>
-    <p class="aj-sub">Choose a layout per menu in the <strong>Megamenu View Type</strong> field. Every menu on your site can use a different one.</p>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Six Mega Menu Layouts</h2>
+    <p style="font-size:15px;line-height:26px;color:#4a7f88;text-align:center;max-width:780px;margin:0 auto 32px">Choose a layout per menu in the <strong>Megamenu View Type</strong> field. Every menu on your site can use a different one.</p>
 
     <div class="row g-3">
-      <div class="col-12"><div class="aj-card">
-        <h4>1. Category Mega Menu</h4>
+      <div class="col-12"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)">
+        <h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">1. Category Mega Menu</h4>
         <p style="margin-bottom:6px"><strong>Shows:</strong> main categories with their sub categories across your chosen number of columns, plus an optional moving category slider or a static image on the left or right.</p>
         <p style="margin-bottom:14px"><strong>Best for:</strong> stores whose catalogue is the main navigation.</p>
-        <img src="menu-1.png" class="aj-shot" alt="Category Mega Menu">
+        <img src="menu-1.png" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Category Mega Menu">
       </div></div>
 
-      <div class="col-12"><div class="aj-card">
-        <h4>2. List Category Mega Menu</h4>
+      <div class="col-12"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)">
+        <h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">2. List Category Mega Menu</h4>
         <p style="margin-bottom:6px"><strong>Shows:</strong> a tabbed list &mdash; main categories down the left, the selected category's sub categories and description on the right.</p>
         <p style="margin-bottom:14px"><strong>Best for:</strong> deep catalogues where a flat grid would overflow.</p>
-        <img src="menu-2.png" class="aj-shot" alt="List Category Mega Menu">
+        <img src="menu-2.png" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="List Category Mega Menu">
       </div></div>
 
-      <div class="col-md-6"><div class="aj-card">
-        <h4>3. Pages Mega Menu</h4>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)">
+        <h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">3. Pages Mega Menu</h4>
         <p style="margin-bottom:6px"><strong>Shows:</strong> website pages and their child menus laid out inside the panel.</p>
         <p style="margin-bottom:14px"><strong>Best for:</strong> company, service and content sites.</p>
-        <img src="menu-3.png" class="aj-shot" alt="Pages Mega Menu">
+        <img src="menu-3.png" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages Mega Menu">
       </div></div>
 
-      <div class="col-md-6"><div class="aj-card">
-        <h4>4. Pages Mega Menu Pro</h4>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)">
+        <h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">4. Pages Mega Menu Pro</h4>
         <p style="margin-bottom:6px"><strong>Shows:</strong> the same page links, each with a display icon and a short description.</p>
         <p style="margin-bottom:14px"><strong>Best for:</strong> service menus that need explaining, not just listing.</p>
-        <img src="menu-4.png" class="aj-shot" alt="Pages Mega Menu Pro">
+        <img src="menu-4.png" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages Mega Menu Pro">
       </div></div>
 
-      <div class="col-md-6"><div class="aj-card">
-        <h4>5. Pages Mega Menu Pro Max</h4>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)">
+        <h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">5. Pages Mega Menu Pro Max</h4>
         <p style="margin-bottom:6px"><strong>Shows:</strong> icons and descriptions plus a static image block with its own rich-text content and a menu footer.</p>
         <p style="margin-bottom:14px"><strong>Best for:</strong> a flagship menu that doubles as a landing panel.</p>
-        <img src="menu-5.png" class="aj-shot" alt="Pages Mega Menu Pro Max">
+        <img src="menu-5.png" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages Mega Menu Pro Max">
       </div></div>
 
-      <div class="col-md-6"><div class="aj-card">
-        <h4>6. Pages &amp; Category Mega Menu</h4>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)">
+        <h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">6. Pages &amp; Category Mega Menu</h4>
         <p style="margin-bottom:6px"><strong>Shows:</strong> website pages and product categories side by side in a single panel.</p>
         <p style="margin-bottom:14px"><strong>Best for:</strong> shops that sell and publish in equal measure.</p>
-        <img src="menu-6.png" class="aj-shot" alt="Pages and Category Mega Menu">
+        <img src="menu-6.png" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages and Category Mega Menu">
       </div></div>
     </div>
   </div>
 
   <!-- ============ SETUP ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Set Up In Four Steps</h2>
-    <p class="aj-sub">Everything happens on the standard menu form under <strong>Website &rsaquo; Site &rsaquo; Menus</strong>.</p>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Set Up In Four Steps</h2>
+    <p style="font-size:15px;line-height:26px;color:#4a7f88;text-align:center;max-width:780px;margin:0 auto 32px">Everything happens on the standard menu form under <strong>Website &rsaquo; Site &rsaquo; Menus</strong>.</p>
     <div class="row g-3">
-      <div class="col-md-3"><div class="aj-card"><div class="aj-num">1</div><h4>Turn it on</h4><p>Open a menu and tick <strong>Is megamenu...?</strong> &mdash; the full set of mega menu options appears on the form.</p></div></div>
-      <div class="col-md-3"><div class="aj-card"><div class="aj-num">2</div><h4>Pick a layout</h4><p>Set <strong>Megamenu View Type</strong> to one of the six layouts, and <strong>Megamenu type</strong> to 2, 3 or 4 columns.</p></div></div>
-      <div class="col-md-3"><div class="aj-card"><div class="aj-num">3</div><h4>Add content</h4><p>Select your categories or pages, then optionally a slider, a static image, category images and a footer message.</p></div></div>
-      <div class="col-md-3"><div class="aj-card"><div class="aj-num">4</div><h4>Style it</h4><p>Set a background image or colour, custom main and sub category colours, a menu icon and a separator line.</p></div></div>
+      <div class="col-md-3"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><div class="d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;border-radius:50%;background-color:#3f8590;color:#fff;font-weight:700;font-size:15px;margin-bottom:12px">1</div><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Turn it on</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Open a menu and tick <strong>Is megamenu...?</strong> &mdash; the full set of mega menu options appears on the form.</p></div></div>
+      <div class="col-md-3"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><div class="d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;border-radius:50%;background-color:#3f8590;color:#fff;font-weight:700;font-size:15px;margin-bottom:12px">2</div><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Pick a layout</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Set <strong>Megamenu View Type</strong> to one of the six layouts, and <strong>Megamenu type</strong> to 2, 3 or 4 columns.</p></div></div>
+      <div class="col-md-3"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><div class="d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;border-radius:50%;background-color:#3f8590;color:#fff;font-weight:700;font-size:15px;margin-bottom:12px">3</div><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Add content</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Select your categories or pages, then optionally a slider, a static image, category images and a footer message.</p></div></div>
+      <div class="col-md-3"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><div class="d-inline-flex align-items-center justify-content-center" style="width:34px;height:34px;border-radius:50%;background-color:#3f8590;color:#fff;font-weight:700;font-size:15px;margin-bottom:12px">4</div><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Style it</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Set a background image or colour, custom main and sub category colours, a menu icon and a separator line.</p></div></div>
     </div>
 
     <div class="row g-3" style="margin-top:22px">
-      <div class="col-md-6"><div class="aj-card" style="padding:14px"><img src="manual/02-list-category-megamenu.jpg" class="aj-shot" alt="List Category Mega Menu configuration"></div></div>
-      <div class="col-md-6"><div class="aj-card" style="padding:14px"><img src="manual/03-pages-megamenu.jpg" class="aj-shot" alt="Pages Mega Menu configuration"></div></div>
-      <div class="col-md-6"><div class="aj-card" style="padding:14px"><img src="manual/04-pages-megamenu-pro.jpg" class="aj-shot" alt="Pages Mega Menu Pro configuration"></div></div>
-      <div class="col-md-6"><div class="aj-card" style="padding:14px"><img src="manual/05-pages-megamenu-pro-max.jpg" class="aj-shot" alt="Pages Mega Menu Pro Max configuration"></div></div>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15);padding:14px"><img src="manual/02-list-category-megamenu.jpg" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="List Category Mega Menu configuration"></div></div>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15);padding:14px"><img src="manual/03-pages-megamenu.jpg" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages Mega Menu configuration"></div></div>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15);padding:14px"><img src="manual/04-pages-megamenu-pro.jpg" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages Mega Menu Pro configuration"></div></div>
+      <div class="col-md-6"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15);padding:14px"><img src="manual/05-pages-megamenu-pro-max.jpg" style="border-radius:10px;border:1px solid rgba(63,134,145,.2);width:100%" alt="Pages Mega Menu Pro Max configuration"></div></div>
     </div>
   </div>
 
   <!-- ============ OPTION REFERENCE ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Every Option, In One Place</h2>
-    <p class="aj-sub">The complete set of fields the app adds to a website menu.</p>
-    <table class="aj-tbl">
-      <thead><tr><th style="width:34%">Option</th><th>What it does</th></tr></thead>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Every Option, In One Place</h2>
+    <p style="font-size:15px;line-height:26px;color:#4a7f88;text-align:center;max-width:780px;margin:0 auto 32px">The complete set of fields the app adds to a website menu.</p>
+    <table style="width:100%;border-collapse:separate;border-spacing:0;background-color:#fff;border-radius:12px;font-size:14px">
+      <thead><tr><th style="background-color:#3f8590;color:#fff;text-align:left;padding:12px 16px;font-weight:600;font-size:13px;letter-spacing:.3px;width:34%;border-top-left-radius:12px">Option</th><th style="background-color:#3f8590;color:#fff;text-align:left;padding:12px 16px;font-weight:600;font-size:13px;letter-spacing:.3px;border-top-right-radius:12px">What it does</th></tr></thead>
       <tbody>
-        <tr class="aj-grp"><td colspan="2">Layout</td></tr>
-        <tr><td>Is megamenu...?</td><td>Turns the menu into a mega menu and reveals all options below.</td></tr>
-        <tr><td>Megamenu View Type</td><td>Chooses one of the six layouts.</td></tr>
-        <tr><td>Megamenu type</td><td>2, 3 or 4 columns inside the panel.</td></tr>
-        <tr><td>Add Separator line</td><td>Draws a line separating a main entry from its children.</td></tr>
+        <tr><td colspan="2" style="padding:11px 16px;background-color:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase">Layout</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Is megamenu...?</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Turns the menu into a mega menu and reveals all options below.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Megamenu View Type</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Chooses one of the six layouts.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Megamenu type</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">2, 3 or 4 columns inside the panel.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Add Separator line</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Draws a line separating a main entry from its children.</td></tr>
 
-        <tr class="aj-grp"><td colspan="2">Styling</td></tr>
-        <tr><td>Want to set megamenu background</td><td>Enables a background for the panel.</td></tr>
-        <tr><td>Megamenu background selection</td><td>Use either a background image or a background colour.</td></tr>
-        <tr><td>Background image for megamenu</td><td>The image used when image mode is selected.</td></tr>
-        <tr><td>Background color for megamenu</td><td>Hex colour used when colour mode is selected.</td></tr>
-        <tr><td>Want to customize menu colors</td><td>Unlocks the two colour fields below.</td></tr>
-        <tr><td>Main category color</td><td>Text colour for main category entries.</td></tr>
-        <tr><td>Sub category color</td><td>Text colour for sub category entries.</td></tr>
-        <tr><td>Want to display menu icon</td><td>Shows a small icon next to the menu label in the navbar.</td></tr>
-        <tr><td>Menu Icon</td><td>The icon image itself.</td></tr>
+        <tr><td colspan="2" style="padding:11px 16px;background-color:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase">Styling</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Want to set megamenu background</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Enables a background for the panel.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Megamenu background selection</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Use either a background image or a background colour.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Background image for megamenu</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">The image used when image mode is selected.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Background color for megamenu</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Hex colour used when colour mode is selected.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Want to customize menu colors</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Unlocks the two colour fields below.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Main category color</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Text colour for main category entries.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Sub category color</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Text colour for sub category entries.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Want to display menu icon</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Shows a small icon next to the menu label in the navbar.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Menu Icon</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">The icon image itself.</td></tr>
 
-        <tr class="aj-grp"><td colspan="2">Categories</td></tr>
-        <tr><td>Category</td><td>The product categories shown, up to three levels deep.</td></tr>
-        <tr><td>Display category image</td><td>Shows the main category's own image inside the panel.</td></tr>
-        <tr><td>Category image display position</td><td>Places that image at the top or the bottom.</td></tr>
-        <tr><td>Mega Menu Description</td><td>A translatable short description per category, shown below the category slider. Set on the category itself.</td></tr>
+        <tr><td colspan="2" style="padding:11px 16px;background-color:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase">Categories</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Category</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">The product categories shown, up to three levels deep.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Display category image</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Shows the main category's own image inside the panel.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Category image display position</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Places that image at the top or the bottom.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Mega Menu Description</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">A translatable short description per category, shown below the category slider. Set on the category itself.</td></tr>
 
-        <tr class="aj-grp"><td colspan="2">Slider &amp; static image</td></tr>
-        <tr><td>Special features</td><td>Choose either a category slider or a static image for the panel.</td></tr>
-        <tr><td>Slider label</td><td>Heading above the slider. Translatable, defaults to &ldquo;Latest&rdquo;.</td></tr>
-        <tr><td>Category slider position</td><td>Slider on the left or the right.</td></tr>
-        <tr><td>Static image</td><td>A promotional image placed inside the panel.</td></tr>
-        <tr><td>Static image position</td><td>Image on the left or the right.</td></tr>
-        <tr><td>Static Image Description</td><td>Rich-text content shown with the static image.</td></tr>
+        <tr><td colspan="2" style="padding:11px 16px;background-color:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase">Slider &amp; static image</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Special features</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Choose either a category slider or a static image for the panel.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Slider label</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Heading above the slider. Translatable, defaults to &ldquo;Latest&rdquo;.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Category slider position</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Slider on the left or the right.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Static image</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">A promotional image placed inside the panel.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Static image position</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Image on the left or the right.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Static Image Description</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Rich-text content shown with the static image.</td></tr>
 
-        <tr class="aj-grp"><td colspan="2">Pages</td></tr>
-        <tr><td>Pages</td><td>The website menus linked inside the page layouts.</td></tr>
-        <tr><td>Display Icon</td><td>An icon per page entry in the Pro layouts.</td></tr>
-        <tr><td>Description</td><td>A short line of text per page entry.</td></tr>
+        <tr><td colspan="2" style="padding:11px 16px;background-color:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase">Pages</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Pages</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">The website menus linked inside the page layouts.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Display Icon</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">An icon per page entry in the Pro layouts.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Description</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">A short line of text per page entry.</td></tr>
 
-        <tr class="aj-grp"><td colspan="2">Footer</td></tr>
-        <tr><td>Display menu footer</td><td>Adds a footer strip at the bottom of the panel.</td></tr>
-        <tr><td>Footer content</td><td>Translatable rich-text message, for example a seasonal offer.</td></tr>
+        <tr><td colspan="2" style="padding:11px 16px;background-color:#f3f8f9;color:#3f8590;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase">Footer</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Display menu footer</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Adds a footer strip at the bottom of the panel.</td></tr>
+        <tr><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top;font-weight:600;color:#21272b;white-space:nowrap">Footer content</td><td style="padding:11px 16px;border-top:1px solid #eef3f4;color:#555;line-height:22px;vertical-align:top">Translatable rich-text message, for example a seasonal offer.</td></tr>
       </tbody>
     </table>
   </div>
 
   <!-- ============ HIGHLIGHTS ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Key Highlights</h2>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Key Highlights</h2>
     <div class="text-center">
-      <span class="aj-chip">Six ready mega menu layouts</span>
-      <span class="aj-chip">2, 3 or 4 columns</span>
-      <span class="aj-chip">Categories up to three levels</span>
-      <span class="aj-chip">Movable category slider</span>
-      <span class="aj-chip">Slider left or right</span>
-      <span class="aj-chip">Static image left or right</span>
-      <span class="aj-chip">Rich-text image description</span>
-      <span class="aj-chip">Background image or colour</span>
-      <span class="aj-chip">Custom category colours</span>
-      <span class="aj-chip">Menu icon in the navbar</span>
-      <span class="aj-chip">Separator lines</span>
-      <span class="aj-chip">Category images, top or bottom</span>
-      <span class="aj-chip">Per-category descriptions</span>
-      <span class="aj-chip">Translatable footer &amp; labels</span>
-      <span class="aj-chip">Website pages inside menus</span>
-      <span class="aj-chip">Icons &amp; text per page entry</span>
-      <span class="aj-chip">Unlimited mega menus</span>
-      <span class="aj-chip">Multi-website ready</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Six ready mega menu layouts</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">2, 3 or 4 columns</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Categories up to three levels</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Movable category slider</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Slider left or right</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Static image left or right</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Rich-text image description</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Background image or colour</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Custom category colours</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Menu icon in the navbar</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Separator lines</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Category images, top or bottom</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Per-category descriptions</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Translatable footer &amp; labels</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Website pages inside menus</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Icons &amp; text per page entry</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Unlimited mega menus</span>
+      <span style="display:inline-block;border:1px solid #3f8691;color:#3f8691;border-radius:30px;padding:7px 18px;font-size:14px;font-weight:500;margin:5px">Multi-website ready</span>
     </div>
   </div>
 
   <!-- ============ COMPATIBILITY ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Compatibility &amp; Requirements</h2>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Compatibility &amp; Requirements</h2>
     <div class="row g-3">
-      <div class="col-md-4"><div class="aj-card"><h4>Odoo 20.0</h4><p>Built for Odoo 20. Community and Enterprise both supported.</p></div></div>
-      <div class="col-md-4"><div class="aj-card"><h4>Requires Website &amp; eCommerce</h4><p>Depends on the standard <strong>website</strong> and <strong>website_sale</strong> apps, which install automatically.</p></div></div>
-      <div class="col-md-4"><div class="aj-card"><h4>Demo data included</h4><p>Install on a database with demo data to get six example mega menus already configured.</p></div></div>
+      <div class="col-md-4"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Odoo 20.0</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Built for Odoo 20. Community and Enterprise both supported.</p></div></div>
+      <div class="col-md-4"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Requires Website &amp; eCommerce</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Depends on the standard <strong>website</strong> and <strong>website_sale</strong> apps, which install automatically.</p></div></div>
+      <div class="col-md-4"><div style="background-color:#fff;border-radius:12px;padding:24px;height:100%;border:1px solid rgba(63,134,145,.15)"><h4 style="font-size:18px;font-weight:700;color:#3f8691;margin:0 0 8px">Demo data included</h4><p style="font-size:14px;line-height:24px;color:#555;margin:0">Install on a database with demo data to get six example mega menus already configured.</p></div></div>
     </div>
   </div>
 
   <!-- ============ FAQ ============ -->
-  <div class="aj-band">
-    <h2 class="aj-h2">Frequently Asked Questions</h2>
-    <div class="aj-faq"><h5>How many mega menus can I create?</h5><p>As many as you like. Any website menu can be switched into a mega menu, and each one keeps its own layout, content and styling.</p></div>
-    <div class="aj-faq"><h5>Can different websites have different mega menus?</h5><p>Yes. Menus belong to a website, so each website in a multi-website database has its own mega menus.</p></div>
-    <div class="aj-faq"><h5>How deep can the category tree go?</h5><p>Up to three levels &mdash; a category, its sub categories and their children.</p></div>
-    <div class="aj-faq"><h5>Can the text be translated?</h5><p>Yes. The footer content, the slider label and the per-category mega menu description are all translatable fields.</p></div>
-    <div class="aj-faq"><h5>Do I need to edit templates or write code?</h5><p>No. Every option is a field on the menu form in the back end.</p></div>
-    <div class="aj-faq"><h5>Can I use a slider and a static image in the same menu?</h5><p>The <strong>Special features</strong> field selects one or the other for a given menu. Use separate menus if you want both on your site.</p></div>
+  <div class="p-4 p-md-5" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Frequently Asked Questions</h2>
+    <div style="background-color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590"><h5 style="font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px">How many mega menus can I create?</h5><p style="font-size:14px;line-height:24px;color:#555;margin:0">As many as you like. Any website menu can be switched into a mega menu, and each one keeps its own layout, content and styling.</p></div>
+    <div style="background-color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590"><h5 style="font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px">Can different websites have different mega menus?</h5><p style="font-size:14px;line-height:24px;color:#555;margin:0">Yes. Menus belong to a website, so each website in a multi-website database has its own mega menus.</p></div>
+    <div style="background-color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590"><h5 style="font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px">How deep can the category tree go?</h5><p style="font-size:14px;line-height:24px;color:#555;margin:0">Up to three levels &mdash; a category, its sub categories and their children.</p></div>
+    <div style="background-color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590"><h5 style="font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px">Can the text be translated?</h5><p style="font-size:14px;line-height:24px;color:#555;margin:0">Yes. The footer content, the slider label and the per-category mega menu description are all translatable fields.</p></div>
+    <div style="background-color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590"><h5 style="font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px">Do I need to edit templates or write code?</h5><p style="font-size:14px;line-height:24px;color:#555;margin:0">No. Every option is a field on the menu form in the back end.</p></div>
+    <div style="background-color:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;border-left:4px solid #3f8590"><h5 style="font-size:16px;font-weight:700;color:#21272b;margin:0 0 6px">Can I use a slider and a static image in the same menu?</h5><p style="font-size:14px;line-height:24px;color:#555;margin:0">The <strong>Special features</strong> field selects one or the other for a given menu. Use separate menus if you want both on your site.</p></div>
   </div>
 
   <!-- ============ CROSS SELL ============ -->
-  <div class="aj-band text-center">
-    <h2 class="aj-h2">Our Odoo eCommerce Apps</h2>
+  <div class="p-4 p-md-5 text-center" style="border-radius:16px;margin:24px 0;background-color:#f1f5f6">
+    <h2 class="fs-3 text-center" style="font-weight:700;color:#3f8590;margin:0 0 12px;letter-spacing:-.5px">Our Odoo eCommerce Apps</h2>
     <div class="row" style="margin-top:28px">
       <div class="col-md-3">
         <a href="https://apps.odoo.com/apps/themes/20.0/theme_scita" target="_blank"><img src="scita_theme_icon.png" class="img-fluid" style="margin:auto" alt="Theme Scita"></a>
@@ -259,7 +233,7 @@
   </div>
 
   <!-- ============ SUPPORT ============ -->
-  <div style="margin-top:30px;padding:110px 40px 20px;background-color:rgb(63 134 145 / 8%);border-radius:30px" class="overflow-hidden">
+  <div style="margin-top:30px;padding:110px 40px 20px;background-color:#f1f5f6;border-radius:30px" class="overflow-hidden">
     <div class="position-relative">
       <img src="images/support_2.png" class="img img-fluid position-absolute h-100" alt="Odoo Ready Partner">
       <div class="position-relative" style="z-index:1;padding:30px 20px">
@@ -274,7 +248,7 @@
     </div>
   </div>
 
-  <div class="aj-note" style="margin:20px 0 30px">
+  <div style="padding:20px;border-radius:10px;text-align:center;font-weight:700;font-size:16px;color:#842029;background-color:#f8d7da;margin:20px 0 30px">
     The current version includes new features and UI upgrades that may not be available in older versions.
   </div>
 </div>
